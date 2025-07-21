@@ -275,7 +275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1939149c35cb89c4bbb74baf9c46abca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downRaycastDistance: 1
+  downRaycastDistance: 1.1
 --- !u!1 &413389497
 GameObject:
   m_ObjectHideFlags: 0

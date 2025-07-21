@@ -46,7 +46,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
         walkForceThisFrame = Vector3.zero;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         mouseXRotation = 0f;
@@ -57,10 +59,11 @@ public class PlayerController : MonoBehaviour
         // Apply the current movement force to the Rigidbody2D
         if (walkForceThisFrame != Vector3.zero)
         {
-            //Debug.Log("Applying force: " + walkForceThisFrame);
+            // Rotate the walk force based on the player's current rotation
+            Vector3 rotatedWalkForce = Quaternion.Euler(0f, transform.eulerAngles.y, 0f) * walkForceThisFrame;
 
             // Calculate the new velocity based on the current force and the Rigidbody's existing velocity
-            Vector3 newVelocity = rb.linearVelocity + (walkForceThisFrame * Time.deltaTime);
+            Vector3 newVelocity = rb.linearVelocity + (rotatedWalkForce * Time.deltaTime);
 
             //apply the force if this will not make the player exceed the maximum speed
             if (new Vector2(newVelocity.x, newVelocity.z).magnitude < groundMaxHorizSpeed)
@@ -102,6 +105,11 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Cannot jump, not grounded");
     }
 
+    /// <summary>
+    /// Method to handle the look input from the player.
+    /// This method is called when the mouse is moved
+    /// </summary>
+    /// <param name="inputValue"></param>
     private void OnLook(InputValue inputValue)
     {
         // This method can be used to handle player look input if needed

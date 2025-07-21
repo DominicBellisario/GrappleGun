@@ -16,7 +16,7 @@ public class Raycasts : MonoBehaviour
     {
         get { return Physics.Raycast(transform.position, Vector3.down, downRaycastDistance, LayerMask.GetMask("Surface")); }
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
