@@ -97,12 +97,12 @@ public class PlayerController : MonoBehaviour
         // if the player grounded, jump
         if (GetComponent<Raycasts>().DownRaycastHit)
         {
-            Debug.Log("Jump");
+            //Debug.Log("Jump");
             // Apply an impulse force to the Rigidbody2D to make the player jump
             rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             return;
         }
-        Debug.Log("Cannot jump, not grounded");
+        //Debug.Log("Cannot jump, not grounded");
     }
 
     /// <summary>
@@ -112,16 +112,18 @@ public class PlayerController : MonoBehaviour
     /// <param name="inputValue"></param>
     private void OnLook(InputValue inputValue)
     {
-        // This method can be used to handle player look input if needed
-        // Currently, it does nothing but can be expanded for camera control or other purposes
         Vector2 lookInput = inputValue.Get<Vector2>();
         //Debug.Log("Look input: " + lookInput);
+
         //rotate the parent object horizontally
         transform.Rotate(Vector3.up, lookInput.x * xMouseSensitivity * Time.deltaTime);
+
         //rotate the camera vertically
         mouseXRotation -= lookInput.y * yMouseSensitivity * Time.deltaTime;
+        //clamp the vertical rotation to prevent flipping
         mouseXRotation = Mathf.Clamp(mouseXRotation, -90f, 90f);
-        Debug.Log("mouseXRotation: " + mouseXRotation);
+        //Debug.Log("mouseXRotation: " + mouseXRotation);
+
         // Apply the clamped rotation to the camera
         playerCam.transform.localRotation = Quaternion.Euler(mouseXRotation, 0f, 0f);
     }

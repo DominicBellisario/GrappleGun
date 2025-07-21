@@ -197,7 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 415133717}
   jumpForce: 5
-  walkAcceleration: 50
+  walkAcceleration: 20
   groundMaxHorizSpeed: 5
   xMouseSensitivity: 50
   yMouseSensitivity: 50
@@ -575,7 +575,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603649671}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 1db60729cc6939249a3af82a6f76015d, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
