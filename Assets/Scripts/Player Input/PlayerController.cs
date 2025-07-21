@@ -4,6 +4,11 @@ using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerController : MonoBehaviour
 {
+    /// <summary>
+    /// the player's first person camera
+    /// </summary>
+    [SerializeField] GameObject playerCam;
+
     [Header("Movement Values")]
     /// <summary>
     /// The force applied when the player jumps.
@@ -18,6 +23,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [SerializeField] float groundMaxHorizSpeed;
 
+    [Header("Mouse Settings")]
+    [SerializeField] float xMouseSensitivity;
+    [SerializeField] float yMouseSensitivity;
+
     /// <summary>
     /// The Rigidbody component attached to the player.
     /// </summary>
@@ -26,12 +35,21 @@ public class PlayerController : MonoBehaviour
     /// The current force applied to the player this frame.
     /// </summary>
     Vector3 walkForceThisFrame;
+    /// <summary>
+    /// The current rotation of the mouse on the X axis.
+    /// this is needed becuause getting the mouse rotation from the camera
+    /// can cause the camera to flip when looking up and down.
+    /// </summary>
+    float mouseXRotation;
 
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         walkForceThisFrame = Vector3.zero;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        mouseXRotation = 0f;
     }
 
     void Update()
@@ -73,8 +91,30 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnJump()
     {
-        Debug.Log("Jump");
-        // Apply an impulse force to the Rigidbody2D to make the player jump
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        // if the player grounded, jump
+        if (GetComponent<Raycasts>().DownRaycastHit)
+        {
+            Debug.Log("Jump");
+            // Apply an impulse force to the Rigidbody2D to make the player jump
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            return;
+        }
+        Debug.Log("Cannot jump, not grounded");
+    }
+
+    private void OnLook(InputValue inputValue)
+    {
+        // This method can be used to handle player look input if needed
+        // Currently, it does nothing but can be expanded for camera control or other purposes
+        Vector2 lookInput = inputValue.Get<Vector2>();
+        //Debug.Log("Look input: " + lookInput);
+        //rotate the parent object horizontally
+        transform.Rotate(Vector3.up, lookInput.x * xMouseSensitivity * Time.deltaTime);
+        //rotate the camera vertically
+        mouseXRotation -= lookInput.y * yMouseSensitivity * Time.deltaTime;
+        mouseXRotation = Mathf.Clamp(mouseXRotation, -90f, 90f);
+        Debug.Log("mouseXRotation: " + mouseXRotation);
+        // Apply the clamped rotation to the camera
+        playerCam.transform.localRotation = Quaternion.Euler(mouseXRotation, 0f, 0f);
     }
 }

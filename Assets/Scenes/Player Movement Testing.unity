@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 400498966}
   - component: {fileID: 400498969}
   - component: {fileID: 400498968}
+  - component: {fileID: 400498970}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -194,9 +195,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f1f817458804d74da26edf8f251f8ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCam: {fileID: 415133717}
   jumpForce: 5
   walkAcceleration: 50
   groundMaxHorizSpeed: 5
+  xMouseSensitivity: 50
+  yMouseSensitivity: 50
 --- !u!114 &400498969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,6 +263,19 @@ MonoBehaviour:
   m_DefaultActionMap: BasicGameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &400498970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 400498965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1939149c35cb89c4bbb74baf9c46abca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  downRaycastDistance: 1
 --- !u!1 &413389497
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +410,7 @@ GameObject:
   - component: {fileID: 415133718}
   - component: {fileID: 415133721}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: Player Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -639,7 +656,7 @@ GameObject:
   - component: {fileID: 1252216443}
   - component: {fileID: 1252216442}
   - component: {fileID: 1252216441}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
