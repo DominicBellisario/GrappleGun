@@ -59,21 +59,30 @@ public class PlayerController : MonoBehaviour
         // Apply the current movement force to the Rigidbody2D
         if (walkForceThisFrame != Vector3.zero)
         {
+            //Debug.Log("Walk force this frame: " + walkForceThisFrame);
+
             // Rotate the walk force based on the player's current rotation
             Vector3 rotatedWalkForce = Quaternion.Euler(0f, transform.eulerAngles.y, 0f) * walkForceThisFrame;
+            //Debug.Log("Rotated Walk force this frame: " + rotatedWalkForce);
 
             // Calculate the new velocity based on the current force and the Rigidbody's existing velocity
             Vector3 newVelocity = rb.linearVelocity + (rotatedWalkForce * Time.deltaTime);
 
             //apply the force if this will not make the player exceed the maximum speed
-            if (new Vector2(newVelocity.x, newVelocity.z).magnitude < groundMaxHorizSpeed)
+            if (new Vector2(newVelocity.x, newVelocity.z).magnitude <= groundMaxHorizSpeed)
             {
                 // Clamp the velocity to the maximum speed
                 newVelocity.x = Mathf.Clamp(newVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed);
                 newVelocity.z = Mathf.Clamp(newVelocity.z, -groundMaxHorizSpeed, groundMaxHorizSpeed);
                 //apply the velocity
                 rb.linearVelocity = newVelocity;
+                Debug.Log("Applied velocity");
             }
+            else
+            {
+                Debug.Log("Did not apply velocity");
+            }
+            //Debug.Log("New velocity: " + rb.linearVelocity);
         }
     }
 
