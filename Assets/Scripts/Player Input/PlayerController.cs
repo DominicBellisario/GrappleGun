@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Scripting.APIUpdating;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,6 +18,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [SerializeField] float walkAcceleration;
     /// <summary>
+    /// The acceleration applied to the player when moving in the air.
+    /// </summary>
+    [SerializeField] float airAcceleration;
+    /// <summary>
     /// The maximum speed the player can reach while only walking
     /// </summary>
     [SerializeField] float groundMaxHorizSpeed;
@@ -34,7 +37,7 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// The current force applied to the player this frame.
     /// </summary>
-    Vector3 walkForceThisFrame;
+    Vector2 movementInputThisFrame;
     /// <summary>
     /// The current rotation of the mouse on the X axis.
     /// this is needed becuause getting the mouse rotation from the camera
@@ -47,7 +50,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        walkForceThisFrame = Vector3.zero;
+        movementInputThisFrame = Vector2.zero;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -57,32 +60,12 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // Apply the current movement force to the Rigidbody2D
-        if (walkForceThisFrame != Vector3.zero)
+        if (movementInputThisFrame != Vector2.zero)
         {
-            //Debug.Log("Walk force this frame: " + walkForceThisFrame);
-
-            // Rotate the walk force based on the player's current rotation
-            Vector3 rotatedWalkForce = Quaternion.Euler(0f, transform.eulerAngles.y, 0f) * walkForceThisFrame;
-            //Debug.Log("Rotated Walk force this frame: " + rotatedWalkForce);
-
-            // Calculate the new velocity based on the current force and the Rigidbody's existing velocity
-            Vector3 newVelocity = rb.linearVelocity + (rotatedWalkForce * Time.deltaTime);
-
-            //apply the force if this will not make the player exceed the maximum speed
-            if (new Vector2(newVelocity.x, newVelocity.z).magnitude <= groundMaxHorizSpeed)
-            {
-                // Clamp the velocity to the maximum speed
-                newVelocity.x = Mathf.Clamp(newVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed);
-                newVelocity.z = Mathf.Clamp(newVelocity.z, -groundMaxHorizSpeed, groundMaxHorizSpeed);
-                //apply the velocity
-                rb.linearVelocity = newVelocity;
-                Debug.Log("Applied velocity");
-            }
-            else
-            {
-                Debug.Log("Did not apply velocity");
-            }
-            //Debug.Log("New velocity: " + rb.linearVelocity);
+            // If the player is grounded, apply the walk acceleration
+            if (GetComponent<Raycasts>().DownRaycastHit) { MovePlayer(walkAcceleration); }
+            // If the player is in the air, apply the air acceleration
+            else { MovePlayer(airAcceleration); }
         }
     }
 
@@ -93,8 +76,30 @@ public class PlayerController : MonoBehaviour
     /// <param name="inputValue"></param>
     private void OnMove(InputValue inputValue)
     {
-        Vector2 velocity = inputValue.Get<Vector2>() * walkAcceleration;
-        walkForceThisFrame = new Vector3(velocity.x, rb.linearVelocity.y, velocity.y);
+        movementInputThisFrame = inputValue.Get<Vector2>();
+    }
+
+    private void MovePlayer(float acceleration)
+    {
+        // apply the desired acceleration to the movement input
+        Vector3 walkForceThisFrame = new Vector3(movementInputThisFrame.x, 0f, movementInputThisFrame.y) * acceleration;
+
+        // Rotate the walk force based on the player's current rotation
+        Vector3 rotatedWalkForce = Quaternion.Euler(0f, transform.eulerAngles.y, 0f) * walkForceThisFrame;
+
+        // Calculate the new velocity based on the current force and the Rigidbody's existing velocity
+        Vector3 newVelocity = rb.linearVelocity + (rotatedWalkForce * Time.deltaTime);
+
+        //apply the force if this will not make the player exceed the maximum speed
+        if (new Vector2(newVelocity.x, newVelocity.z).magnitude <= groundMaxHorizSpeed + 1f)
+        {
+            // Clamp the velocity to the maximum speed
+            newVelocity.x = Mathf.Clamp(newVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed);
+            newVelocity.z = Mathf.Clamp(newVelocity.z, -groundMaxHorizSpeed, groundMaxHorizSpeed);
+
+            //apply the velocity
+            rb.linearVelocity = newVelocity;
+        }
     }
 
     /// <summary>

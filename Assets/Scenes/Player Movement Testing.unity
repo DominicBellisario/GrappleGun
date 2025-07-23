@@ -198,6 +198,7 @@ MonoBehaviour:
   playerCam: {fileID: 415133717}
   jumpForce: 5
   walkAcceleration: 20
+  airAcceleration: 10
   groundMaxHorizSpeed: 5
   xMouseSensitivity: 50
   yMouseSensitivity: 50
