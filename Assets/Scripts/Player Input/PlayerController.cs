@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [SerializeField] GameObject playerCam;
 
-    [Header("Movement Values")]
+    [Header("Standard Movement Values")]
     /// <summary>
     /// The force applied when the player jumps.
     /// </summary>
@@ -25,6 +26,16 @@ public class PlayerController : MonoBehaviour
     /// The maximum speed the player can reach while only walking
     /// </summary>
     [SerializeField] float groundMaxHorizSpeed;
+
+    [Header("Boost Settings")]
+    /// <summary>
+    /// The upwards force applied to the player when boosting.
+    /// </summary>
+    [SerializeField] float boostForce;
+    /// <summary>
+    /// The horizontal force applied to the player when pressing WASD when boosting.
+    /// </summary>
+    [SerializeField] float boostAcceleration;
 
     [Header("Mouse Settings")]
     [SerializeField] float xMouseSensitivity;
@@ -45,6 +56,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     float mouseXRotation;
 
+    /// <summary>
+    /// keeps track of whether the player is boosting or not.
+    /// </summary>
+    bool isBoosting;
+
 
     void Start()
     {
@@ -55,6 +71,8 @@ public class PlayerController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         mouseXRotation = 0f;
+
+        isBoosting = false;
     }
 
     void Update()
@@ -64,7 +82,9 @@ public class PlayerController : MonoBehaviour
         {
             // If the player is grounded, apply the walk acceleration
             if (GetComponent<Raycasts>().DownRaycastHit) { MovePlayer(walkAcceleration); }
-            // If the player is in the air, apply the air acceleration
+            // If the player is in the air and boosting, apply the boost acceleration
+            else if (isBoosting) { MovePlayer(boostAcceleration); }
+            // If the player is in the air and not boosting, apply the air acceleration
             else { MovePlayer(airAcceleration); }
         }
     }
@@ -106,17 +126,41 @@ public class PlayerController : MonoBehaviour
     /// Method to handle the jump action input from the player.
     /// This method is called when the jump key is pressed.
     /// </summary>
-    private void OnJump()
+    private void OnJump(InputValue inputValue)
     {
-        // if the player grounded, jump
-        if (GetComponent<Raycasts>().DownRaycastHit)
+        Debug.Log("Jump input received: " + inputValue.isPressed);
+        // if the button was pressed
+        if (inputValue.isPressed)
         {
-            //Debug.Log("Jump");
-            // Apply an impulse force to the Rigidbody2D to make the player jump
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            return;
+            // if the player is grounded, jump
+            if (GetComponent<Raycasts>().DownRaycastHit)
+            {
+                //Debug.Log("Jump");
+                // Apply an impulse force to the Rigidbody2D to make the player jump
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+            // if the player is not grounded, activate the boost
+            else
+            {
+                isBoosting = true;
+                StartCoroutine(Boost());
+            }
         }
-        //Debug.Log("Cannot jump, not grounded");
+        // if the button was released, stop boosting
+        else
+        {
+            isBoosting = false;
+        }
+    }
+
+    IEnumerator Boost()
+    {
+        // Apply the boost force upwards
+        while (isBoosting)
+        {
+            rb.AddForce(boostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
+            yield return null;
+        }
     }
 
     /// <summary>
