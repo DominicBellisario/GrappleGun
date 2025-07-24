@@ -205,6 +205,7 @@ MonoBehaviour:
   boostAcceleration: 10
   xMouseSensitivity: 50
   yMouseSensitivity: 50
+  grappleSpawn: {fileID: 754482859}
 --- !u!114 &400498969
 MonoBehaviour:
   m_ObjectHideFlags: 0
