@@ -12,8 +12,7 @@ public class PlayerController : MonoBehaviour
     /// The Rigidbody component attached to the player.
     /// </summary>
     Rigidbody rb;
-    
-    [SerializeField] GameObject projectile;
+
 
     [Header("Standard Movement Values")]
     /// <summary>
@@ -67,8 +66,8 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// The point where the grapple will be spawned from.
     /// </summary>
-    [SerializeField] GameObject grappleSpawn;
-    bool isGrappling;
+    [SerializeField] GameObject grappleStart;
+    [SerializeField] GameObject grappleHead;
 
 
     void Start()
@@ -82,7 +81,6 @@ public class PlayerController : MonoBehaviour
         mouseXRotation = 0f;
 
         isBoosting = false;
-        isGrappling = false;
     }
 
     void Update()
@@ -206,10 +204,13 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Grapple input received: " + inputValue.isPressed);
         if (inputValue.isPressed)
         {
-            //spawn a new projectile
-            GameObject newProjectile = Instantiate(projectile, grappleSpawn.transform.position, playerCam.transform.rotation);
-            // launch it towards where the camera is looking
-            newProjectile.GetComponent<GrappleHead>().Launch(playerCam.GetComponent<Raycasts>().ForwardRaycastHit.point);
+            // launch the grapple head towards the point hit by the forward raycast
+            grappleHead.GetComponent<GrappleHead>().Launch(playerCam.GetComponent<Raycasts>().ForwardRaycastHit.point);
+        }
+        else
+        {
+            // return the grapple head to the gun
+            grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
         }
     }
 }
