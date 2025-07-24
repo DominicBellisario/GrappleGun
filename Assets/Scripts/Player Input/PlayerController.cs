@@ -8,6 +8,12 @@ public class PlayerController : MonoBehaviour
     /// the player's first person camera
     /// </summary>
     [SerializeField] GameObject playerCam;
+    /// <summary>
+    /// The Rigidbody component attached to the player.
+    /// </summary>
+    Rigidbody rb;
+    
+    [SerializeField] GameObject projectile;
 
     [Header("Standard Movement Values")]
     /// <summary>
@@ -26,6 +32,11 @@ public class PlayerController : MonoBehaviour
     /// The maximum speed the player can reach while only walking
     /// </summary>
     [SerializeField] float groundMaxHorizSpeed;
+    /// <summary>
+    /// The current force applied to the player this frame.
+    /// </summary>
+    Vector2 movementInputThisFrame;
+
 
     [Header("Boost Settings")]
     /// <summary>
@@ -36,19 +47,15 @@ public class PlayerController : MonoBehaviour
     /// The horizontal force applied to the player when pressing WASD when boosting.
     /// </summary>
     [SerializeField] float boostAcceleration;
+    /// <summary>
+    /// keeps track of whether the player is boosting or not.
+    /// </summary>
+    bool isBoosting;
+
 
     [Header("Mouse Settings")]
     [SerializeField] float xMouseSensitivity;
     [SerializeField] float yMouseSensitivity;
-
-    /// <summary>
-    /// The Rigidbody component attached to the player.
-    /// </summary>
-    Rigidbody rb;
-    /// <summary>
-    /// The current force applied to the player this frame.
-    /// </summary>
-    Vector2 movementInputThisFrame;
     /// <summary>
     /// The current rotation of the mouse on the X axis.
     /// this is needed becuause getting the mouse rotation from the camera
@@ -56,10 +63,12 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     float mouseXRotation;
 
+    [Header("Grapple Settings")]
     /// <summary>
-    /// keeps track of whether the player is boosting or not.
+    /// The point where the grapple will be spawned from.
     /// </summary>
-    bool isBoosting;
+    [SerializeField] GameObject grappleSpawn;
+    bool isGrappling;
 
 
     void Start()
@@ -73,6 +82,7 @@ public class PlayerController : MonoBehaviour
         mouseXRotation = 0f;
 
         isBoosting = false;
+        isGrappling = false;
     }
 
     void Update()
@@ -81,7 +91,7 @@ public class PlayerController : MonoBehaviour
         if (movementInputThisFrame != Vector2.zero)
         {
             // If the player is grounded, apply the walk acceleration
-            if (GetComponent<Raycasts>().DownRaycastHit) { MovePlayer(walkAcceleration); }
+            if (GetComponent<Raycasts>().DownRaycastHit.collider != null) { MovePlayer(walkAcceleration); }
             // If the player is in the air and boosting, apply the boost acceleration
             else if (isBoosting) { MovePlayer(boostAcceleration); }
             // If the player is in the air and not boosting, apply the air acceleration
@@ -133,7 +143,7 @@ public class PlayerController : MonoBehaviour
         if (inputValue.isPressed)
         {
             // if the player is grounded, jump
-            if (GetComponent<Raycasts>().DownRaycastHit)
+            if (GetComponent<Raycasts>().DownRaycastHit.collider != null)
             {
                 //Debug.Log("Jump");
                 // Apply an impulse force to the Rigidbody2D to make the player jump
@@ -184,5 +194,22 @@ public class PlayerController : MonoBehaviour
 
         // Apply the clamped rotation to the camera
         playerCam.transform.localRotation = Quaternion.Euler(mouseXRotation, 0f, 0f);
+    }
+
+    /// <summary>
+    /// Method to handle the grapple input from the player.
+    /// This method is called when the grapple key is pressed.
+    /// </summary>
+    /// <param name="inputValue"></param>
+    private void OnGrapple(InputValue inputValue)
+    {
+        //Debug.Log("Grapple input received: " + inputValue.isPressed);
+        if (inputValue.isPressed)
+        {
+            //spawn a new projectile
+            GameObject newProjectile = Instantiate(projectile, grappleSpawn.transform.position, playerCam.transform.rotation);
+            // launch it towards where the camera is looking
+            newProjectile.GetComponent<GrappleHead>().Launch(playerCam.GetComponent<Raycasts>().ForwardRaycastHit.point);
+        }
     }
 }

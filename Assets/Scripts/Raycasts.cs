@@ -6,26 +6,43 @@ public class Raycasts : MonoBehaviour
     /// distance to check for a raycast hit downwards
     /// </summary>
     [SerializeField] float downRaycastDistance;
-
-    Rigidbody rb;
+    [SerializeField] float forwardRaycastDistance;
 
     /// <summary>
-    /// Checks if there is a raycast hit downwards
+    /// sends a raycast downwards from the player
     /// </summary>
-    public bool DownRaycastHit
+    public RaycastHit DownRaycastHit
     {
-        get { return Physics.Raycast(transform.position, Vector3.down, downRaycastDistance, LayerMask.GetMask("Surface")); }
+        get
+        {
+            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, downRaycastDistance, LayerMask.GetMask("Surface")))
+            {
+                return hit;
+            }
+            return new RaycastHit(); // return an empty RaycastHit if no hit
+        }
     }
 
-    void Start()
+    /// <summary>
+    /// sends a raycast forward from the player
+    /// </summary>
+    public RaycastHit ForwardRaycastHit
     {
-        rb = GetComponent<Rigidbody>();
+        get
+        {
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, forwardRaycastDistance, LayerMask.GetMask("Surface")))
+            {
+                return hit;
+            }
+            return new RaycastHit(); // return an empty RaycastHit if no hit
+        }
     }
 
     void OnDrawGizmos()
     {
         // Draw a ray in the editor to visualize the raycast
         Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, Vector3.down * downRaycastDistance);
+        Gizmos.DrawRay(transform.position, -transform.up * downRaycastDistance);
+        Gizmos.DrawRay(transform.position, transform.forward * forwardRaycastDistance);
     }
 }
