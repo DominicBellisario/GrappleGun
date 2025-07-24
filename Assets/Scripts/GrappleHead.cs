@@ -48,11 +48,12 @@ public class GrappleHead : MonoBehaviour
             // Move towards the grapple start position
             Vector3 direction = (grappleStartPos.transform.position - transform.position).normalized;
             rb.MovePosition(transform.position + launchSpeed * 3f * Time.deltaTime * direction);
+            rb.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(-90, 0, 0);
             yield return null;
         }
 
         // Once close enough, snap to the grapple start position
-        transform.position = grappleStartPos.transform.position;
+        transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
     }
 
@@ -79,10 +80,11 @@ public class GrappleHead : MonoBehaviour
     /// <returns></returns>
     private IEnumerator FollowTarget()
     {
+        Quaternion initialRotation = transform.rotation;
         while (grapplePoint != null)
         {
             // match the rotation and position of the target
-            transform.SetPositionAndRotation(grapplePoint.transform.position, grapplePoint.transform.rotation);
+            transform.SetPositionAndRotation(grapplePoint.transform.position, grapplePoint.transform.rotation * initialRotation);
             yield return null;
         }
     }
