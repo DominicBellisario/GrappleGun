@@ -7,6 +7,8 @@ public class GrappleHead : MonoBehaviour
 {
     Rigidbody rb;
     GameObject grapplePoint;
+
+    [SerializeField] GameObject player;
     [SerializeField] GameObject grapplePointPrefab;
     [SerializeField] GameObject grappleStartPos;
 
@@ -20,7 +22,8 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] float returnSpeed;
 
     public void Launch(Vector3 target)
-    {   // Stop any existing return coroutine
+    {
+        // Stop any existing return coroutine
         StopAllCoroutines();
 
         //detatch the grapple head from the grapple
@@ -37,6 +40,9 @@ public class GrappleHead : MonoBehaviour
 
     public IEnumerator ReturnToGun()
     {
+        //cannot launch gun while returning
+        player.GetComponent<PlayerController>().CanUseGrapple = false;
+
         // Disable physics while returning
         rb.isKinematic = true;
 
@@ -55,6 +61,8 @@ public class GrappleHead : MonoBehaviour
         // Once close enough, snap to the grapple start position
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
+
+        player.GetComponent<PlayerController>().CanUseGrapple = true;
     }
 
     void OnCollisionEnter(Collision collision)

@@ -70,6 +70,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject grappleHead;
 
 
+    public bool CanUseGrapple { get; set; }
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -81,6 +84,8 @@ public class PlayerController : MonoBehaviour
         mouseXRotation = 0f;
 
         isBoosting = false;
+
+        CanUseGrapple = true;
     }
 
     void Update()
@@ -202,6 +207,7 @@ public class PlayerController : MonoBehaviour
     private void OnGrapple(InputValue inputValue)
     {
         //Debug.Log("Grapple input received: " + inputValue.isPressed);
+        if (!CanUseGrapple) return;
         if (inputValue.isPressed)
         {
             // launch the grapple head towards the point hit by the forward raycast
