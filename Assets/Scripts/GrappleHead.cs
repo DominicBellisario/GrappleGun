@@ -31,6 +31,7 @@ public class GrappleHead : MonoBehaviour
 
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
 
         // Calculate the direction to the target
         Vector3 direction = (target - transform.position).normalized;
@@ -53,7 +54,7 @@ public class GrappleHead : MonoBehaviour
         {
             // Move towards the grapple start position
             Vector3 direction = (grappleStartPos.transform.position - transform.position).normalized;
-            rb.MovePosition(transform.position + launchSpeed * 3f * Time.deltaTime * direction);
+            rb.MovePosition(transform.position + returnSpeed * Time.deltaTime * direction);
             rb.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(-90, 0, 0);
             yield return null;
         }
@@ -61,6 +62,7 @@ public class GrappleHead : MonoBehaviour
         // Once close enough, snap to the grapple start position
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
+        rb.interpolation = RigidbodyInterpolation.None;
 
         player.GetComponent<PlayerController>().CanUseGrapple = true;
     }
