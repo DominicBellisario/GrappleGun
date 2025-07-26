@@ -31,9 +31,7 @@ public class GrapplePhysics : MonoBehaviour
         joint.yMotion = ConfigurableJointMotion.Limited;
         joint.zMotion = ConfigurableJointMotion.Limited;
 
-        SoftJointLimit limit = new SoftJointLimit();
-        limit.limit = currentRopeLength;
-        joint.linearLimit = limit;
+        SetSoftJointLimit(currentRopeLength);
 
         // Allow rotation (free swinging)
         joint.angularXMotion = ConfigurableJointMotion.Free;
@@ -53,13 +51,18 @@ public class GrapplePhysics : MonoBehaviour
             {
                 currentRopeLength = distanceToGrapple;
 
-                SoftJointLimit limit = new SoftJointLimit();
-                limit.limit = currentRopeLength;
-                joint.linearLimit = limit;
+                SetSoftJointLimit(currentRopeLength);
             }
 
             joint.connectedAnchor = grappleHead.transform.position;
         }
+    }
+
+    private void SetSoftJointLimit(float ropeLength)
+    {
+        SoftJointLimit limit = new SoftJointLimit();
+        limit.limit = ropeLength;
+        joint.linearLimit = limit;
     }
 
     public void DestroyGrapple()

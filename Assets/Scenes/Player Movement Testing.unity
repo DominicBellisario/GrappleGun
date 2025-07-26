@@ -208,6 +208,7 @@ MonoBehaviour:
   yMouseSensitivity: 50
   grappleStart: {fileID: 754482859}
   grappleHead: {fileID: 2125224231}
+  reelInForce: 200
 --- !u!114 &400498969
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [SerializeField] GameObject grappleStart;
     [SerializeField] GameObject grappleHead;
+    [SerializeField] float reelInForce;
 
 
     public bool CanUseGrapple { get; set; }
@@ -216,6 +217,15 @@ public class PlayerController : MonoBehaviour
         {
             // return the grapple head to the gun
             grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+        }
+    }
+
+    private void OnReel(InputValue inputValue)
+    {
+        float value = inputValue.Get<Vector2>().y;
+        if (value == -1)
+        {
+            rb.AddForce((grappleHead.transform.position - transform.position).normalized * reelInForce);
         }
     }
 }
