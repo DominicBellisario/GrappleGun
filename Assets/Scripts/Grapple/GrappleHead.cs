@@ -7,6 +7,7 @@ public class GrappleHead : MonoBehaviour
 {
     Rigidbody rb;
     GameObject grapplePoint;
+    bool detectCollisions;
 
     [SerializeField] GameObject player;
     [SerializeField] GameObject grapplePointPrefab;
@@ -21,6 +22,11 @@ public class GrappleHead : MonoBehaviour
     /// </summary>
     [SerializeField] float returnSpeed;
 
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        detectCollisions = true;
+    }
     public void Launch(Vector3 target)
     {
         // Stop any existing return coroutine
@@ -29,7 +35,7 @@ public class GrappleHead : MonoBehaviour
         //detatch the grapple head from the grapple
         transform.SetParent(null);
 
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
 
@@ -47,6 +53,9 @@ public class GrappleHead : MonoBehaviour
         // Disable physics while returning
         rb.isKinematic = true;
 
+        //remove any possible character joint
+        player.GetComponent<GrapplePhysics>().DestroyGrapple();
+
         //destroy the grapple point if it exists
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
@@ -63,6 +72,7 @@ public class GrappleHead : MonoBehaviour
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
         rb.interpolation = RigidbodyInterpolation.None;
+        detectCollisions = true;
 
         player.GetComponent<PlayerController>().CanUseGrapple = true;
     }
@@ -70,8 +80,9 @@ public class GrappleHead : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
         // If the grapple head collides with a surface, stop it
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Surface"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Surface") && detectCollisions)
         {
+            detectCollisions = false;
             rb.linearVelocity = Vector3.zero; // Stop movement
             rb.isKinematic = true; // Disable physics
 
@@ -79,7 +90,11 @@ public class GrappleHead : MonoBehaviour
             grapplePoint = Instantiate(grapplePointPrefab, transform.position, Quaternion.identity);
             // Set the grapple point's parent to the collided object
             grapplePoint.transform.SetParent(collision.transform);
+            //make the grapple head match the point's transform
             StartCoroutine(FollowTarget());
+
+            //create a character joint
+            player.GetComponent<GrapplePhysics>().CreateGrapple();
         }
     }
 

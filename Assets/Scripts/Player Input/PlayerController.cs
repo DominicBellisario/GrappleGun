@@ -60,7 +60,7 @@ public class PlayerController : MonoBehaviour
     /// this is needed becuause getting the mouse rotation from the camera
     /// can cause the camera to flip when looking up and down.
     /// </summary>
-    float mouseXRotation;
+    Vector2 mouseRotation;
 
     [Header("Grapple Settings")]
     /// <summary>
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        mouseXRotation = 0f;
+        mouseRotation = Vector2.zero;
 
         isBoosting = false;
 
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
         Vector3 walkForceThisFrame = new Vector3(movementInputThisFrame.x, 0f, movementInputThisFrame.y) * acceleration;
 
         // Rotate the walk force based on the player's current rotation
-        Vector3 rotatedWalkForce = Quaternion.Euler(0f, transform.eulerAngles.y, 0f) * walkForceThisFrame;
+        Vector3 rotatedWalkForce = Quaternion.Euler(0f, playerCam.transform.eulerAngles.y, 0f) * walkForceThisFrame;
 
         // Calculate the new velocity based on the current force and the Rigidbody's existing velocity
         Vector3 newVelocity = rb.linearVelocity + (rotatedWalkForce * Time.deltaTime);
@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnJump(InputValue inputValue)
     {
-        Debug.Log("Jump input received: " + inputValue.isPressed);
+        //Debug.Log("Jump input received: " + inputValue.isPressed);
         // if the button was pressed
         if (inputValue.isPressed)
         {
@@ -186,17 +186,16 @@ public class PlayerController : MonoBehaviour
         Vector2 lookInput = inputValue.Get<Vector2>();
         //Debug.Log("Look input: " + lookInput);
 
-        //rotate the parent object horizontally
-        transform.Rotate(Vector3.up, lookInput.x * xMouseSensitivity * Time.deltaTime);
+        //rotate the camera horizontally
+        mouseRotation.y += lookInput.x * xMouseSensitivity * Time.deltaTime;
 
         //rotate the camera vertically
-        mouseXRotation -= lookInput.y * yMouseSensitivity * Time.deltaTime;
+        mouseRotation.x -= lookInput.y * yMouseSensitivity * Time.deltaTime;
         //clamp the vertical rotation to prevent flipping
-        mouseXRotation = Mathf.Clamp(mouseXRotation, -90f, 90f);
-        //Debug.Log("mouseXRotation: " + mouseXRotation);
+        mouseRotation.x = Mathf.Clamp(mouseRotation.x, -90f, 90f);
 
         // Apply the clamped rotation to the camera
-        playerCam.transform.localRotation = Quaternion.Euler(mouseXRotation, 0f, 0f);
+        playerCam.transform.localRotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0f);
     }
 
     /// <summary>
