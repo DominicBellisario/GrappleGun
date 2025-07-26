@@ -21,11 +21,26 @@ public class GrappleHead : MonoBehaviour
     /// The speed at which the grapple head returns to the gun.
     /// </summary>
     [SerializeField] float returnSpeed;
+    /// <summary>
+    /// the maximum range of the grapple
+    /// </summary>
+    [SerializeField] float maxDistance;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         detectCollisions = true;
+    }
+
+    void Update()
+    {
+        if (!rb.isKinematic)
+        {
+            if (Vector3.Distance(transform.position, player.transform.position) > maxDistance)
+            {
+                StartCoroutine(ReturnToGun());
+            }
+        }
     }
     public void Launch(Vector3 target)
     {
@@ -53,17 +68,19 @@ public class GrappleHead : MonoBehaviour
         // Disable physics while returning
         rb.isKinematic = true;
 
-        //remove any possible character joint
+        //remove any possible grapple joint
         player.GetComponent<GrapplePhysics>().DestroyGrapple();
 
         //destroy the grapple point if it exists
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
+        float i = 0f;
         while (Vector3.Distance(transform.position, grappleStartPos.transform.position) > 0.25f)
         {
+            i++;
             // Move towards the grapple start position
             Vector3 direction = (grappleStartPos.transform.position - transform.position).normalized;
-            rb.MovePosition(transform.position + returnSpeed * Time.deltaTime * direction);
+            rb.MovePosition(transform.position + returnSpeed * Time.deltaTime * direction * (1 + (i * 0.02f)));
             rb.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(-90, 0, 0);
             yield return null;
         }

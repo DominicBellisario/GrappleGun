@@ -6,13 +6,16 @@ public class GrapplePhysics : MonoBehaviour
 {
     ConfigurableJoint joint;
     [SerializeField] GameObject grappleHead;
+    private float currentRopeLength;
 
     /// <summary>
-    /// creates and sets up a character joint.
+    /// creates and sets up a configurable joint
     /// Called when the grapple head hits an object
     /// </summary>
     public void CreateGrapple()
     {
+        currentRopeLength = Vector3.Distance(transform.position, grappleHead.transform.position);
+
         //create joint
         joint = gameObject.AddComponent<ConfigurableJoint>();
 
@@ -23,38 +26,44 @@ public class GrapplePhysics : MonoBehaviour
         //set anchor to player position
         joint.anchor = Vector3.zero;
 
-        // Calculate current rope length (distance from player to grapple point)
-        float currentDistance = Vector3.Distance(transform.position, grappleHead.transform.position);
-
         // limit position movement
         joint.xMotion = ConfigurableJointMotion.Limited;
         joint.yMotion = ConfigurableJointMotion.Limited;
         joint.zMotion = ConfigurableJointMotion.Limited;
 
-        // Set linear limit (the max rope length)
-        SoftJointLimit limit = new();
-        limit.limit = currentDistance;
+        SoftJointLimit limit = new SoftJointLimit();
+        limit.limit = currentRopeLength;
         joint.linearLimit = limit;
-
 
         // Allow rotation (free swinging)
         joint.angularXMotion = ConfigurableJointMotion.Free;
         joint.angularYMotion = ConfigurableJointMotion.Free;
         joint.angularZMotion = ConfigurableJointMotion.Free;
-
-        joint.connectedAnchor = grappleHead.transform.position;
-
-        StartCoroutine(UpdateGrapplePosition());
     }
 
-    private IEnumerator UpdateGrapplePosition()
+    void Update()
     {
-        yield return null;
+        //reel in the grapple if the player goes towards the grapple point
+        if (joint != null)
+        {
+            float distanceToGrapple = Vector3.Distance(transform.position, joint.connectedAnchor);
+
+            // Only shrink the rope if player is closer
+            if (distanceToGrapple < currentRopeLength)
+            {
+                currentRopeLength = distanceToGrapple;
+
+                SoftJointLimit limit = new SoftJointLimit();
+                limit.limit = currentRopeLength;
+                joint.linearLimit = limit;
+            }
+
+            joint.connectedAnchor = grappleHead.transform.position;
+        }
     }
 
     public void DestroyGrapple()
     {
-        StopAllCoroutines();
         Destroy(joint);
         joint = null;
     }
