@@ -4,7 +4,7 @@ using UnityEngine.TextCore.Text;
 
 public class GrapplePhysics : MonoBehaviour
 {
-    CharacterJoint joint;
+    ConfigurableJoint joint;
     [SerializeField] GameObject grappleHead;
 
     /// <summary>
@@ -13,35 +13,43 @@ public class GrapplePhysics : MonoBehaviour
     /// </summary>
     public void CreateGrapple()
     {
-        joint = gameObject.AddComponent<CharacterJoint>();
+        //create joint
+        joint = gameObject.AddComponent<ConfigurableJoint>();
 
-        //change the angular limits
-        SoftJointLimit swing1Limit = joint.swing1Limit;
-        swing1Limit.limit = 360f;
-        joint.swing1Limit = swing1Limit;
-        SoftJointLimit swing2Limit = joint.swing2Limit;
-        swing2Limit.limit = 360f;
-        joint.swing2Limit = swing2Limit;
+        // Set connectedAnchor to where the grapple hit
+        joint.autoConfigureConnectedAnchor = false;
+        joint.connectedAnchor = grappleHead.transform.position;
 
-        // Example: Change the low and high twist limits
-        SoftJointLimit lowTwistLimit = joint.lowTwistLimit;
-        lowTwistLimit.limit = -20f;
-        joint.lowTwistLimit = lowTwistLimit;
+        //set anchor to player position
+        joint.anchor = Vector3.zero;
 
-        SoftJointLimit highTwistLimit = joint.highTwistLimit;
-        highTwistLimit.limit = 20f;
-        joint.highTwistLimit = highTwistLimit;
+        // Calculate current rope length (distance from player to grapple point)
+        float currentDistance = Vector3.Distance(transform.position, grappleHead.transform.position);
+
+        // limit position movement
+        joint.xMotion = ConfigurableJointMotion.Limited;
+        joint.yMotion = ConfigurableJointMotion.Limited;
+        joint.zMotion = ConfigurableJointMotion.Limited;
+
+        // Set linear limit (the max rope length)
+        SoftJointLimit limit = new();
+        limit.limit = currentDistance;
+        joint.linearLimit = limit;
+
+
+        // Allow rotation (free swinging)
+        joint.angularXMotion = ConfigurableJointMotion.Free;
+        joint.angularYMotion = ConfigurableJointMotion.Free;
+        joint.angularZMotion = ConfigurableJointMotion.Free;
+
+        joint.connectedAnchor = grappleHead.transform.position;
 
         StartCoroutine(UpdateGrapplePosition());
     }
 
     private IEnumerator UpdateGrapplePosition()
     {
-        while (true)
-        {
-            joint.anchor = grappleHead.transform.position - transform.position;
-            yield return null;
-        }
+        yield return null;
     }
 
     public void DestroyGrapple()
