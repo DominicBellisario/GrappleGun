@@ -7,6 +7,7 @@ public class Raycasts : MonoBehaviour
     /// </summary>
     [SerializeField] float downRaycastDistance;
     [SerializeField] float forwardRaycastDistance;
+    [SerializeField] LayerMask targetableLayers;
 
     /// <summary>
     /// sends a raycast downwards from the player
@@ -15,7 +16,7 @@ public class Raycasts : MonoBehaviour
     {
         get
         {
-            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, downRaycastDistance, LayerMask.GetMask("Surface")))
+            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, downRaycastDistance, targetableLayers))
             {
                 return hit;
             }
@@ -30,7 +31,7 @@ public class Raycasts : MonoBehaviour
     {
         get
         {
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, forwardRaycastDistance, LayerMask.GetMask("Surface")))
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, forwardRaycastDistance, targetableLayers))
             {
                 return hit;
             }

@@ -12,7 +12,7 @@ public class GrapplePhysics : MonoBehaviour
     /// creates and sets up a configurable joint
     /// Called when the grapple head hits an object
     /// </summary>
-    public void CreateGrapple()
+    public void CreateGrapple(float elasticity, float damper)
     {
         currentRopeLength = Vector3.Distance(transform.position, grappleHead.transform.position);
 
@@ -37,6 +37,17 @@ public class GrapplePhysics : MonoBehaviour
         joint.angularXMotion = ConfigurableJointMotion.Free;
         joint.angularYMotion = ConfigurableJointMotion.Free;
         joint.angularZMotion = ConfigurableJointMotion.Free;
+
+        // set elasticity
+        JointDrive drive = new();
+        drive.positionSpring = elasticity; // How elastic it is
+        drive.positionDamper = damper; // How much it resists movement
+        drive.maximumForce = Mathf.Infinity;
+
+        // Apply to axes you want to be elastic
+        joint.xDrive = drive;
+        joint.yDrive = drive;
+        joint.zDrive = drive;
     }
 
     void Update()

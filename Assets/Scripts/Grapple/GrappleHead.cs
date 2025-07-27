@@ -13,7 +13,6 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject grapplePointPrefab;
     [SerializeField] GameObject grappleStartPos;
-    [SerializeField] RopeBarUI ropeBarUI;
 
     [Header("Grapple Settings")]
     /// <summary>
@@ -106,23 +105,29 @@ public class GrappleHead : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        // If the grapple head collides with a surface, stop it
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Surface") && detectCollisions)
-        {
-            detectCollisions = false;
-            rb.linearVelocity = Vector3.zero; // Stop movement
-            rb.isKinematic = true; // Disable physics
+        if (!detectCollisions) return;
 
-            //create a new game object to represent the grapple point
-            grapplePoint = Instantiate(grapplePointPrefab, transform.position, Quaternion.identity);
-            // Set the grapple point's parent to the collided object
-            grapplePoint.transform.SetParent(collision.transform);
-            //make the grapple head match the point's transform
-            StartCoroutine(FollowTarget());
+        // If the grapple head collides with a surface, create a normal, non elastic grapple
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Surface")) { CreateGrapplePoint(collision, 0f, 0f); }
+        // If it collides with a bird, create an elastic grapple that pulls the player toward it
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Bird")) { CreateGrapplePoint(collision, 20f, 10f); }
+    }
 
-            //create a character joint
-            player.GetComponent<GrapplePhysics>().CreateGrapple();
-        }
+    private void CreateGrapplePoint(Collision collision, float elasticity, float damper)
+    {
+        detectCollisions = false;
+        rb.linearVelocity = Vector3.zero; // Stop movement
+        rb.isKinematic = true; // Disable physics
+
+        //create a new game object to represent the grapple point
+        grapplePoint = Instantiate(grapplePointPrefab, transform.position, Quaternion.identity);
+        // Set the grapple point's parent to the collided object
+        grapplePoint.transform.SetParent(collision.transform);
+        //make the grapple head match the point's transform
+        StartCoroutine(FollowTarget());
+
+        //create a character joint
+        player.GetComponent<GrapplePhysics>().CreateGrapple(elasticity, damper);
     }
 
     /// <summary>
