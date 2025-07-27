@@ -722,7 +722,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   downRaycastDistance: 0
-  forwardRaycastDistance: 1000
+  forwardRaycastDistance: 250
+  targetableLayers:
+    serializedVersion: 2
+    m_Bits: 136
 --- !u!1 &8899434119458475185
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,7 +784,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -889,6 +892,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   downRaycastDistance: 1.1
   forwardRaycastDistance: 0
+  targetableLayers:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &721245642031836973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -901,4 +907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eac1474f5b923c64a898ee618b68fe0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCam: {fileID: 5014280314240808219}
   grappleHead: {fileID: 2831276443190014990}
+  launchForce: 1000

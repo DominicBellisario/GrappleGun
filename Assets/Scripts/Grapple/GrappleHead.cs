@@ -56,32 +56,37 @@ public class GrappleHead : MonoBehaviour
         // Stop any existing return coroutine
         StopAllCoroutines();
 
-        //detatch the grapple head from the grapple
+        // detatch the grapple head from the grapple
         transform.SetParent(null);
 
-        //rb = GetComponent<Rigidbody>();
+        // rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
 
         // Calculate the direction to the target
-        Vector3 direction = (target - transform.position).normalized;
+        Vector3 direction;
+        // use the raycast point to calcaulte the direction
+        if (target != Vector3.zero) { direction = (target - transform.position).normalized; }
+        // use the camera forward
+        else { direction = player.GetComponentInChildren<Camera>().gameObject.transform.forward; }
+
         // Set the velocity
         rb.linearVelocity = direction * launchSpeed;
     }
 
     public IEnumerator ReturnToGun()
     {
-        //cannot launch gun while returning
+        // cannot launch gun while returning
         player.GetComponent<PlayerController>().CanUseGrapple = false;
 
         // Disable physics while returning
         rb.isKinematic = true;
         detectCollisions = true;
 
-        //remove any possible grapple joint
+        // remove any possible grapple joint
         player.GetComponent<GrapplePhysics>().DestroyGrapple();
 
-        //destroy the grapple point if it exists
+        // destroy the grapple point if it exists
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
         float i = 0f;
@@ -105,7 +110,7 @@ public class GrappleHead : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        //can only act on one collision event
+        // can only act on one collision event
         if (!detectCollisions) return;
         detectCollisions = false;
 
@@ -125,11 +130,11 @@ public class GrappleHead : MonoBehaviour
 
     private void CreateGrapplePoint(Collision collision, float elasticity, float damper)
     {
-        
+
         rb.linearVelocity = Vector3.zero; // Stop movement
         rb.isKinematic = true; // Disable physics
 
-        //create a new game object to represent the grapple point
+        // create a new game object to represent the grapple point
         grapplePoint = Instantiate(grapplePointPrefab, transform.position, Quaternion.identity);
         // Set the grapple point's parent to the collided object
         grapplePoint.transform.SetParent(collision.transform);

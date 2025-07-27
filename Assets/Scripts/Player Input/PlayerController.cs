@@ -105,6 +105,21 @@ public class PlayerController : MonoBehaviour
             // If the player is in the air and not boosting, apply the air acceleration
             else { MovePlayer(airAcceleration); }
         }
+
+        //apply boost when boosting
+        if (isBoosting)
+        {
+            rb.AddForce(boostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
+        }
+
+        //speed is hard capped while grounded, prevents sliding at high entry speeds
+        if (GetComponent<Raycasts>().DownRaycastHit.collider != null)
+        {
+            rb.linearVelocity = new Vector3(
+                Mathf.Clamp(rb.linearVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed),
+                rb.linearVelocity.y,
+                Mathf.Clamp(rb.linearVelocity.z, -groundMaxHorizSpeed, groundMaxHorizSpeed));
+        }
     }
 
     /// <summary>
@@ -161,23 +176,12 @@ public class PlayerController : MonoBehaviour
             else
             {
                 isBoosting = true;
-                StartCoroutine(Boost());
             }
         }
         // if the button was released, stop boosting
         else
         {
             isBoosting = false;
-        }
-    }
-
-    IEnumerator Boost()
-    {
-        // Apply the boost force upwards
-        while (isBoosting)
-        {
-            rb.AddForce(boostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
-            yield return null;
         }
     }
 
