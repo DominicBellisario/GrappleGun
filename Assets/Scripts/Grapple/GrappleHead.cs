@@ -105,17 +105,27 @@ public class GrappleHead : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        //can only act on one collision event
         if (!detectCollisions) return;
+        detectCollisions = false;
 
         // If the grapple head collides with a surface, create a normal, non elastic grapple
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Surface")) { CreateGrapplePoint(collision, 0f, 0f); }
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Surface"))
+        {
+            CreateGrapplePoint(collision, 0f, 0f);
+        }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Bird")) { CreateGrapplePoint(collision, 20f, 10f); }
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Bird"))
+        {
+            CreateGrapplePoint(collision, 20f, 10f);
+            //player cannot use the grapple until they are pulled in fully
+            player.GetComponent<PlayerController>().CanUseGrapple = false;
+        }
     }
 
     private void CreateGrapplePoint(Collision collision, float elasticity, float damper)
     {
-        detectCollisions = false;
+        
         rb.linearVelocity = Vector3.zero; // Stop movement
         rb.isKinematic = true; // Disable physics
 
@@ -126,12 +136,12 @@ public class GrappleHead : MonoBehaviour
         //make the grapple head match the point's transform
         StartCoroutine(FollowTarget());
 
-        //create a character joint
+        //create a configurable joint
         player.GetComponent<GrapplePhysics>().CreateGrapple(elasticity, damper);
     }
 
     /// <summary>
-    /// attach the head to the target
+    /// attach the head to the grapple point
     /// stops running when the grapple point is destroyed
     /// </summary>
     /// <returns></returns>

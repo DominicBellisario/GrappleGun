@@ -5,8 +5,19 @@ using UnityEngine.TextCore.Text;
 public class GrapplePhysics : MonoBehaviour
 {
     ConfigurableJoint joint;
+    float currentRopeLength;
+    Rigidbody rb;
+    [SerializeField] GameObject playerCam;
     [SerializeField] GameObject grappleHead;
-    private float currentRopeLength;
+    /// <summary>
+    /// the force applied to the player when detatching from a bird
+    /// </summary>
+    [SerializeField] float launchForce;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     /// <summary>
     /// creates and sets up a configurable joint
@@ -52,9 +63,10 @@ public class GrapplePhysics : MonoBehaviour
 
     void Update()
     {
-        //reel in the grapple if the player goes towards the grapple point
+
         if (joint != null)
         {
+            //reel in the grapple if the player goes towards the grapple point
             float distanceToGrapple = Vector3.Distance(transform.position, joint.connectedAnchor);
 
             // Only shrink the rope if player is closer
@@ -66,6 +78,18 @@ public class GrapplePhysics : MonoBehaviour
             }
 
             joint.connectedAnchor = grappleHead.transform.position;
+
+            // if the grapple is elastic wait until the player is close
+            if (joint.xDrive.positionSpring == 0) return;
+            if (distanceToGrapple <= 10f)
+            {
+                //detatch the grapple
+                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                //reset velocity
+                rb.linearVelocity = Vector3.zero;
+                //apply a force to the player in the direction the player is looking
+                rb.AddForce(playerCam.transform.forward * launchForce);
+            }
         }
     }
 
