@@ -9,10 +9,13 @@ public class GrappleHead : MonoBehaviour
     GameObject grapplePoint;
     bool detectCollisions;
 
+    [Header("Game Objects")]
     [SerializeField] GameObject player;
     [SerializeField] GameObject grapplePointPrefab;
     [SerializeField] GameObject grappleStartPos;
+    [SerializeField] RopeBarUI ropeBarUI;
 
+    [Header("Grapple Settings")]
     /// <summary>
     /// The speed at which the grapple head is launched from the gun
     /// </summary>
@@ -24,7 +27,14 @@ public class GrappleHead : MonoBehaviour
     /// <summary>
     /// the maximum range of the grapple
     /// </summary>
-    [SerializeField] float maxDistance;
+    public float maxDistance;
+
+    public bool IsAttached { get { return !detectCollisions; } }
+
+    /// <summary>
+    /// the current distance between the grapple head and the launcher
+    /// </summary>
+    public float CurrentRopeLength { get { return Vector3.Distance(transform.position, grappleStartPos.transform.position); } }
 
     void Start()
     {
@@ -36,7 +46,7 @@ public class GrappleHead : MonoBehaviour
     {
         if (!rb.isKinematic)
         {
-            if (Vector3.Distance(transform.position, player.transform.position) > maxDistance)
+            if (CurrentRopeLength > maxDistance)
             {
                 StartCoroutine(ReturnToGun());
             }
@@ -67,6 +77,7 @@ public class GrappleHead : MonoBehaviour
 
         // Disable physics while returning
         rb.isKinematic = true;
+        detectCollisions = true;
 
         //remove any possible grapple joint
         player.GetComponent<GrapplePhysics>().DestroyGrapple();
@@ -75,7 +86,7 @@ public class GrappleHead : MonoBehaviour
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
         float i = 0f;
-        while (Vector3.Distance(transform.position, grappleStartPos.transform.position) > 0.25f)
+        while (CurrentRopeLength > 0.25f)
         {
             i++;
             // Move towards the grapple start position
@@ -89,7 +100,6 @@ public class GrappleHead : MonoBehaviour
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
         rb.interpolation = RigidbodyInterpolation.None;
-        detectCollisions = true;
 
         player.GetComponent<PlayerController>().CanUseGrapple = true;
     }

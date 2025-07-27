@@ -71,6 +71,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float reelInForce;
 
 
+    /// <summary>
+    /// wether or not the grapple can be shot
+    /// if it is coming back to the player, it cannot be shot
+    /// </summary>
     public bool CanUseGrapple { get; set; }
 
 
@@ -223,7 +227,7 @@ public class PlayerController : MonoBehaviour
     private void OnReel(InputValue inputValue)
     {
         float value = inputValue.Get<Vector2>().y;
-        if (value == -1)
+        if (value == -1 && grappleHead.GetComponent<GrappleHead>().IsAttached)
         {
             rb.AddForce((grappleHead.transform.position - transform.position).normalized * reelInForce);
         }
