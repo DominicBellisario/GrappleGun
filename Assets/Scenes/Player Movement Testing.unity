@@ -4295,8 +4295,8 @@ GameObject:
   - component: {fileID: 1295993586}
   - component: {fileID: 1295993585}
   - component: {fileID: 1295993584}
-  m_Layer: 3
-  m_Name: Surface (38)
+  m_Layer: 8
+  m_Name: No Grap Surface (38)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4361,7 +4361,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2fdd60cd13a66164bbb34aee3fa795ef, type: 2}
+  - {fileID: 2100000, guid: 9ec3580bfc1363d43a63a245ec80b73f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

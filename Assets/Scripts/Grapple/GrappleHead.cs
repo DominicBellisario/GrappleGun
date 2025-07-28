@@ -126,6 +126,11 @@ public class GrappleHead : MonoBehaviour
             //player cannot use the grapple until they are pulled in fully
             player.GetComponent<PlayerController>().CanUseGrapple = false;
         }
+        // If it collides with a non grappleable surface, send the grapple back
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("No Grapple"))
+        {
+            StartCoroutine(ReturnToGun());
+        }
     }
 
     private void CreateGrapplePoint(Collision collision, float elasticity, float damper)
