@@ -147,8 +147,8 @@ public class PlayerController : MonoBehaviour
         if (new Vector2(newVelocity.x, newVelocity.z).magnitude <= groundMaxHorizSpeed + 1f)
         {
             // Clamp the velocity to the maximum speed
-            newVelocity.x = Mathf.Clamp(newVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed);
-            newVelocity.z = Mathf.Clamp(newVelocity.z, -groundMaxHorizSpeed, groundMaxHorizSpeed);
+            //newVelocity.x = Mathf.Clamp(newVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed);
+            //newVelocity.z = Mathf.Clamp(newVelocity.z, -groundMaxHorizSpeed, groundMaxHorizSpeed);
 
             //apply the velocity
             rb.linearVelocity = newVelocity;
