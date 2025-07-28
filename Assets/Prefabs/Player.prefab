@@ -462,7 +462,7 @@ MonoBehaviour:
   grappleStartPos: {fileID: 1328603308791807764}
   launchSpeed: 100
   returnSpeed: 150
-  maxDistance: 200
+  maxDistance: 100
 --- !u!135 &175901087420589709
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -870,8 +870,8 @@ MonoBehaviour:
   jumpForce: 5
   walkAcceleration: 40
   airAcceleration: 5
-  groundMaxHorizSpeed: 5
-  boostForce: 9
+  groundMaxHorizSpeed: 6
+  boostForce: 12
   boostAcceleration: 10
   xMouseSensitivity: 50
   yMouseSensitivity: 50
@@ -890,7 +890,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1939149c35cb89c4bbb74baf9c46abca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  downRaycastDistance: 1.1
+  downRaycastDistance: 0.6
   forwardRaycastDistance: 0
   targetableLayers:
     serializedVersion: 2

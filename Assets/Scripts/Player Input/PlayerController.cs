@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
         Vector3 newVelocity = rb.linearVelocity + (slopeAdjustedForce * Time.deltaTime);
 
         //apply the force if this will not make the player exceed the maximum speed
-        if (new Vector2(newVelocity.x, newVelocity.z).magnitude <= groundMaxHorizSpeed + 1f)
+        if (new Vector2(newVelocity.x, newVelocity.z).magnitude <= groundMaxHorizSpeed)
         {
             //apply the velocity
             rb.linearVelocity = newVelocity;
