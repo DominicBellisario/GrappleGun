@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
             //apply the velocity
             rb.linearVelocity = newVelocity;
         }
+        
     }
 
     /// <summary>
