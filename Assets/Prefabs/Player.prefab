@@ -871,8 +871,10 @@ MonoBehaviour:
   walkAcceleration: 40
   airAcceleration: 5
   groundMaxHorizSpeed: 6
-  boostForce: 12
+  boostForce: 13
   boostAcceleration: 10
+  boostFuelUse: 50
+  boostFuelRegen: 50
   xMouseSensitivity: 50
   yMouseSensitivity: 50
   grappleStart: {fileID: 1328603308791807764}

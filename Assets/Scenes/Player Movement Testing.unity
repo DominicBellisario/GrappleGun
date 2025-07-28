@@ -7287,18 +7287,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: boostForce
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: boostFuelUse
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: boostFuelRegen
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
