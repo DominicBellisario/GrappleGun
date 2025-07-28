@@ -46,6 +46,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     [SerializeField] float boostAcceleration;
     /// <summary>
+    /// the amount of boost fuel spent per second while using boost. max fuel is 100 
+    /// </summary>
+    [SerializeField] float boostFuelUse;
+    /// <summary>
+    /// the regen rate for boost fuel while grounded. max fuel is 100
+    /// </summary>
+    [SerializeField] float boostFuelRegen;
+    /// <summary>
     /// keeps track of whether the player is boosting or not.
     /// </summary>
     bool isBoosting;
@@ -76,6 +84,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public bool CanUseGrapple { get; set; }
 
+    /// <summary>
+    /// the current amount of boost fuel
+    /// </summary>
+    public float CurrentBoostFuel { get; set; }
+
 
     void Start()
     {
@@ -88,18 +101,19 @@ public class PlayerController : MonoBehaviour
         mouseRotation = Vector2.zero;
 
         isBoosting = false;
+        CurrentBoostFuel = 100f;
 
         CanUseGrapple = true;
     }
 
     void Update()
     {
+        //get the current surface the player is on, if any
+        RaycastHit downRaycastHit = GetComponent<Raycasts>().DownRaycastHit;
+
         // Apply the current movement force to the Rigidbody2D
         if (movementInputThisFrame != Vector2.zero)
         {
-            //get the current surface the player is on, if any
-            RaycastHit downRaycastHit = GetComponent<Raycasts>().DownRaycastHit;
-
             // If the player is grounded, apply the walk acceleration
             if (downRaycastHit.collider != null) { MovePlayer(downRaycastHit, walkAcceleration); }
             // If the player is in the air and boosting, apply the boost acceleration
@@ -111,11 +125,20 @@ public class PlayerController : MonoBehaviour
         //apply boost when boosting
         if (isBoosting)
         {
-            rb.AddForce(boostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
+            if (CurrentBoostFuel > 0f)
+            {
+                rb.AddForce(boostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
+                CurrentBoostFuel -= boostFuelUse * Time.deltaTime;
+            }
+        }
+        //recharge boost when grounded
+        else if (downRaycastHit.collider != null && CurrentBoostFuel < 100f)
+        {
+            CurrentBoostFuel += boostFuelRegen * Time.deltaTime;
         }
 
         //speed is hard capped while grounded, prevents sliding at high entry speeds
-        if (GetComponent<Raycasts>().DownRaycastHit.collider != null)
+        if (downRaycastHit.collider != null)
         {
             rb.linearVelocity = new Vector3(
                 Mathf.Clamp(rb.linearVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed),
@@ -159,7 +182,7 @@ public class PlayerController : MonoBehaviour
             //apply the velocity
             rb.linearVelocity = newVelocity;
         }
-        
+
     }
 
     /// <summary>

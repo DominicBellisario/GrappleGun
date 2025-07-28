@@ -5,13 +5,11 @@ public class RopeBarUI : MonoBehaviour
 {
     Slider slider;
     [SerializeField] Image bar;
-    [SerializeField] Image background;
     [SerializeField] GrappleHead grappleHead;
 
     [Header("Colors")]
     [SerializeField] Color idleColor;
     [SerializeField] Color maxColor;
-    [SerializeField] Color backgroundColor;
     [SerializeField] Color hitColor;
 
     void Start()
