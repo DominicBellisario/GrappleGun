@@ -868,7 +868,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 5014280314240808219}
   jumpForce: 5
-  walkAcceleration: 20
+  walkAcceleration: 40
   airAcceleration: 5
   groundMaxHorizSpeed: 5
   boostForce: 9

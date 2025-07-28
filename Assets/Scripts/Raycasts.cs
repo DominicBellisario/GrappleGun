@@ -16,7 +16,7 @@ public class Raycasts : MonoBehaviour
     {
         get
         {
-            if (Physics.Raycast(transform.position, -transform.up, out RaycastHit hit, downRaycastDistance, targetableLayers))
+            if (Physics.SphereCast(transform.position, 0.5f, -transform.up, out RaycastHit hit, downRaycastDistance, targetableLayers))
             {
                 return hit;
             }

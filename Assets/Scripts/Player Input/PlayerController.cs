@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -98,12 +97,15 @@ public class PlayerController : MonoBehaviour
         // Apply the current movement force to the Rigidbody2D
         if (movementInputThisFrame != Vector2.zero)
         {
+            //get the current surface the player is on, if any
+            RaycastHit downRaycastHit = GetComponent<Raycasts>().DownRaycastHit;
+
             // If the player is grounded, apply the walk acceleration
-            if (GetComponent<Raycasts>().DownRaycastHit.collider != null) { MovePlayer(walkAcceleration); }
+            if (downRaycastHit.collider != null) { MovePlayer(downRaycastHit, walkAcceleration); }
             // If the player is in the air and boosting, apply the boost acceleration
-            else if (isBoosting) { MovePlayer(boostAcceleration); }
+            else if (isBoosting) { MovePlayer(downRaycastHit, boostAcceleration); }
             // If the player is in the air and not boosting, apply the air acceleration
-            else { MovePlayer(airAcceleration); }
+            else { MovePlayer(downRaycastHit, airAcceleration); }
         }
 
         //apply boost when boosting
@@ -132,7 +134,7 @@ public class PlayerController : MonoBehaviour
         movementInputThisFrame = inputValue.Get<Vector2>();
     }
 
-    private void MovePlayer(float acceleration)
+    private void MovePlayer(RaycastHit downRaycastHit, float acceleration)
     {
         // apply the desired acceleration to the movement input
         Vector3 walkForceThisFrame = new Vector3(movementInputThisFrame.x, 0f, movementInputThisFrame.y) * acceleration;
@@ -140,16 +142,20 @@ public class PlayerController : MonoBehaviour
         // Rotate the walk force based on the player's current rotation
         Vector3 rotatedWalkForce = Quaternion.Euler(0f, playerCam.transform.eulerAngles.y, 0f) * walkForceThisFrame;
 
+        // Get the normal of the slope the player is on, if any
+        Vector3 slopeNormal = Vector3.up;
+        if (downRaycastHit.collider != null) { slopeNormal = downRaycastHit.normal; }
+        Debug.Log(slopeNormal);
+
+        // project movement force onto the slope
+        Vector3 slopeAdjustedForce = Vector3.ProjectOnPlane(rotatedWalkForce, slopeNormal);
+
         // Calculate the new velocity based on the current force and the Rigidbody's existing velocity
-        Vector3 newVelocity = rb.linearVelocity + (rotatedWalkForce * Time.deltaTime);
+        Vector3 newVelocity = rb.linearVelocity + (slopeAdjustedForce * Time.deltaTime);
 
         //apply the force if this will not make the player exceed the maximum speed
         if (new Vector2(newVelocity.x, newVelocity.z).magnitude <= groundMaxHorizSpeed + 1f)
         {
-            // Clamp the velocity to the maximum speed
-            //newVelocity.x = Mathf.Clamp(newVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed);
-            //newVelocity.z = Mathf.Clamp(newVelocity.z, -groundMaxHorizSpeed, groundMaxHorizSpeed);
-
             //apply the velocity
             rb.linearVelocity = newVelocity;
         }
