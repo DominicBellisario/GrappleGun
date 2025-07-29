@@ -989,7 +989,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 583657415675710911, guid: 368c11e0d1844b94cbf7700575c9d0c5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -57.5
+      value: -53.5
       objectReference: {fileID: 0}
     - target: {fileID: 583657415675710911, guid: 368c11e0d1844b94cbf7700575c9d0c5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1946,6 +1946,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 721245642031836973, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: autoDetatchTime
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1985,6 +1989,10 @@ PrefabInstance:
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193393544656630102, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name

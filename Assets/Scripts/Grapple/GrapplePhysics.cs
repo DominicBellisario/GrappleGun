@@ -17,10 +17,16 @@ public class GrapplePhysics : MonoBehaviour
     /// the distance from the bird the player must be before launching
     /// </summary>
     [SerializeField] float launchRadius;
+    /// <summary>
+    /// if attached to a bird for longer than this, stop grappling to avoid softlock
+    /// </summary>
+    [SerializeField] float autoDetatchTime;
+    float timer;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        timer = 0;
     }
 
     /// <summary>
@@ -85,14 +91,23 @@ public class GrapplePhysics : MonoBehaviour
 
             // if the grapple is elastic wait until the player is close
             if (joint.xDrive.positionSpring == 0) return;
+            timer += Time.deltaTime;
             if (distanceToGrapple <= launchRadius)
             {
+                timer = 0;
                 //detatch the grapple
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
                 //reset velocity
                 rb.linearVelocity = Vector3.zero;
                 //apply a force to the player in the direction the player is looking
                 rb.AddForce(playerCam.transform.forward * launchForce);
+            }
+            // if the player is grappling for too long, they are stuck. detatch them
+            else if (timer >= autoDetatchTime)
+            {
+                timer = 0;
+                //detatch the grapple
+                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
             }
         }
     }
