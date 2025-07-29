@@ -7,10 +7,16 @@ public class GrapplePhysics : MonoBehaviour
     Rigidbody rb;
     [SerializeField] GameObject playerCam;
     [SerializeField] GameObject grappleHead;
+
+    [Header("Bird Settings")]
     /// <summary>
     /// the force applied to the player when detatching from a bird
     /// </summary>
     [SerializeField] float launchForce;
+    /// <summary>
+    /// the distance from the bird the player must be before launching
+    /// </summary>
+    [SerializeField] float launchRadius;
 
     void Start()
     {
@@ -79,7 +85,7 @@ public class GrapplePhysics : MonoBehaviour
 
             // if the grapple is elastic wait until the player is close
             if (joint.xDrive.positionSpring == 0) return;
-            if (distanceToGrapple <= 10f)
+            if (distanceToGrapple <= launchRadius)
             {
                 //detatch the grapple
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());

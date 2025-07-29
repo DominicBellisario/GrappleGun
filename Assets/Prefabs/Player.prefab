@@ -437,7 +437,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 576
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -645,7 +645,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 511
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -688,7 +688,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -871,7 +871,7 @@ MonoBehaviour:
   walkAcceleration: 40
   airAcceleration: 5
   groundMaxHorizSpeed: 6
-  boostForce: 13
+  boostForce: 11
   boostAcceleration: 10
   boostFuelUse: 50
   boostFuelRegen: 50
@@ -912,3 +912,4 @@ MonoBehaviour:
   playerCam: {fileID: 5014280314240808219}
   grappleHead: {fileID: 2831276443190014990}
   launchForce: 1000
+  launchRadius: 3

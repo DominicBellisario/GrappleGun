@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: No Grap Wall
-  m_Shader: {fileID: -6465566751694194690, guid: 28265c835fec28241873ca431fd154b2, type: 3}
+  m_Name: Inviz Wall
+  m_Shader: {fileID: -6465566751694194690, guid: cda546ff1321a5649bf0b756bf24c6d7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -196,14 +196,14 @@ Material:
     - _Metallic3: 0
     - _NumLayersCount: 1
     - _OcclusionStrength: 1
-    - _Opacity: 1
+    - _Opacity: 0.25
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _Sharpness: 2
     - _Shininess: 0
-    - _Smoothness: 0.5
+    - _Smoothness: 0
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5
@@ -222,7 +222,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.3207547, g: 0.3207547, b: 0.3207547, a: 1}
-    - _Base_Color: {r: 0.6981132, g: 0.3786935, b: 0.3786935, a: 1}
+    - _Base_Color: {r: 1, g: 1, b: 0, a: 1}
     - _Color: {r: 0.32075468, g: 0.32075468, b: 0.32075468, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
