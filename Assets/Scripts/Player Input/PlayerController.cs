@@ -168,7 +168,6 @@ public class PlayerController : MonoBehaviour
         // Get the normal of the slope the player is on, if any
         Vector3 slopeNormal = Vector3.up;
         if (downRaycastHit.collider != null) { slopeNormal = downRaycastHit.normal; }
-        Debug.Log(slopeNormal);
 
         // project movement force onto the slope
         Vector3 slopeAdjustedForce = Vector3.ProjectOnPlane(rotatedWalkForce, slopeNormal);
