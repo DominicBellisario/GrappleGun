@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 607269664082048786}
   - component: {fileID: 7981543217143027007}
   - component: {fileID: 8833788364807180369}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Pillar
-  m_TagString: Untagged
+  m_TagString: Normal Grap Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

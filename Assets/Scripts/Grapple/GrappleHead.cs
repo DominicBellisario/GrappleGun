@@ -114,20 +114,20 @@ public class GrappleHead : MonoBehaviour
         if (!detectCollisions) return;
         detectCollisions = false;
 
-        // If the grapple head collides with a surface, create a normal, non elastic grapple
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Surface"))
+        // If the grapple head collides with a standard surface, create a non elastic grapple
+        if (collision.gameObject.CompareTag("Normal Grap Surface"))
         {
             CreateGrapplePoint(collision, 0f, 0f);
         }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("Bird"))
+        else if (collision.gameObject.CompareTag("Bird"))
         {
             CreateGrapplePoint(collision, 20f, 10f);
             //player cannot use the grapple until they are pulled in fully
             player.GetComponent<PlayerController>().CanUseGrapple = false;
         }
         // If it collides with a non grappleable surface, send the grapple back
-        else if (collision.gameObject.layer == LayerMask.NameToLayer("No Grapple"))
+        else if (collision.gameObject.CompareTag("No Grap Surface"))
         {
             StartCoroutine(ReturnToGun());
         }

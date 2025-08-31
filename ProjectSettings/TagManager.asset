@@ -3,18 +3,22 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Bird
+  - Normal Grap Surface
+  - No Grap Surface
+  - Inviz Wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Surface
+  - Player
   - Water
   - UI
-  - Player
-  - Bird
-  - No Grapple
-  - Inviz Wall
+  - Standard
+  - Grapple Only
+  - Player Only
+  - 
   - 
   - 
   - 

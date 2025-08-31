@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6071196840419705305}
   - component: {fileID: 820142412690846153}
   - component: {fileID: 647737665518538550}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Floor
-  m_TagString: Untagged
+  m_TagString: Normal Grap Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

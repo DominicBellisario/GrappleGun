@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1532521133751091153}
   - component: {fileID: 6855471472557550374}
   - component: {fileID: 3510048621648051951}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Glass
-  m_TagString: Untagged
+  m_TagString: No Grap Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

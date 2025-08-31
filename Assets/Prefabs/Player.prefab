@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7409436450376730385}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Grapple Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8125758925082755258}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Grapple Start Pos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 8907145607321960621}
   - component: {fileID: 8956739141161235299}
   - component: {fileID: 6453099090750549722}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: PlayerObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 9171247054807366321}
   - component: {fileID: 848818635214343056}
   - component: {fileID: 7468389709411882216}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 6843973337259231705}
   - component: {fileID: 4075675839506298894}
   - component: {fileID: 175901087420589709}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grapple Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 576
+    m_Bits: 776
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -476,7 +476,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 264
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 3794677035537276643}
   - component: {fileID: 7255723243164604641}
   - component: {fileID: 2214854318075925622}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Grapple Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -583,7 +583,7 @@ GameObject:
   - component: {fileID: 7163672596665268574}
   - component: {fileID: 4745060654054115085}
   - component: {fileID: 8222699119728412252}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Player Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -740,7 +740,7 @@ GameObject:
   - component: {fileID: 474877638669497655}
   - component: {fileID: 72448625921142688}
   - component: {fileID: 721245642031836973}
-  m_Layer: 6
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -896,7 +896,7 @@ MonoBehaviour:
   forwardRaycastDistance: 0
   targetableLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 320
 --- !u!114 &721245642031836973
 MonoBehaviour:
   m_ObjectHideFlags: 0
