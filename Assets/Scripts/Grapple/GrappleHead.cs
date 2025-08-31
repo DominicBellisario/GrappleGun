@@ -72,6 +72,19 @@ public class GrappleHead : MonoBehaviour
 
         // Set the velocity
         rb.linearVelocity = direction * launchSpeed;
+
+        //ignore collisions if the grapple is launched while already touching something
+        Collider headCollider = GetComponent<Collider>();
+        Collider[] overlaps = Physics.OverlapSphere(headCollider.bounds.center, 0.1f);
+
+        foreach (Collider col in overlaps)
+        {
+            if (col != headCollider) // avoid self
+            {
+                Physics.IgnoreCollision(headCollider, col, true);
+                StartCoroutine(ReenableCollision(headCollider, col));
+            }
+        }
     }
 
     public IEnumerator ReturnToGun()
@@ -164,5 +177,21 @@ public class GrappleHead : MonoBehaviour
             transform.SetPositionAndRotation(grapplePoint.transform.position, grapplePoint.transform.rotation * initialRotation);
             yield return null;
         }
+    }
+
+    /// <summary>
+    /// once the head is not hitting anything, turn back on its collisions
+    /// </summary>
+    /// <param name="hookCol"></param>
+    /// <param name="col"></param>
+    /// <returns></returns>
+    IEnumerator ReenableCollision(Collider hookCol, Collider col)
+    {
+        // Wait until hook is no longer inside
+        while (hookCol.bounds.Intersects(col.bounds))
+        {
+            yield return null;
+        }
+        Physics.IgnoreCollision(hookCol, col, false);
     }
 }
