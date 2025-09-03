@@ -9,9 +9,10 @@ public class JumpPad : MonoBehaviour
 
     [Header("Gizmo Settings")]
     // how many segments to draw
-    [SerializeField] int resolution = 30;
+    [SerializeField] int segments = 30;
     // time between points      
-    [SerializeField] float timeStep = 0.1f;    
+    [SerializeField] float timeStep = 0.1f;
+    [SerializeField] LayerMask gizmoMask;
 
     public Vector3 GetLaunchForceAndActivatePad()
     {
@@ -28,21 +29,29 @@ public class JumpPad : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        //uses kenumatic equasions to predict the player's trajectory
         Gizmos.color = Color.yellow;
 
-        Vector3 startPos = transform.position;
         Vector3 velocity = transform.up * launchForce;
 
-        Vector3 previousPoint = startPos;
+        Vector3 previousPoint = transform.position;
 
-        for (int i = 1; i <= resolution; i++)
+        for (int i = 1; i <= segments; i++)
         {
             float t = i * timeStep;
-            Vector3 newPoint = startPos + velocity * t + 0.5f * Physics.gravity * (t * t);
+            Vector3 newPoint = transform.position + velocity * t + t * t * 0.5f * Physics.gravity;
 
-            Gizmos.DrawLine(previousPoint, newPoint);
-            previousPoint = newPoint;
+            // Check for collision between previousPoint and newPoint
+            if (Physics.Raycast(previousPoint, (newPoint - previousPoint).normalized, out RaycastHit hit, (newPoint - previousPoint).magnitude, gizmoMask))
+            {
+                Gizmos.DrawLine(previousPoint, hit.point);
+                // Stop drawing once collision is detected
+                break;
+            }
+            else
+            {
+                Gizmos.DrawLine(previousPoint, newPoint);
+                previousPoint = newPoint;
+            }
         }
     }
 }

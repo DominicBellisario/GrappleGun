@@ -1,6 +1,9 @@
+using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(Raycasts))]
 public class PlayerController : MonoBehaviour
 {
     /// <summary>
@@ -159,29 +162,31 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer(RaycastHit downRaycastHit, float acceleration)
     {
-        // apply the desired acceleration to the movement input
-        Vector3 walkForceThisFrame = new Vector3(movementInputThisFrame.x, 0f, movementInputThisFrame.y) * acceleration;
+        // Apply the desired acceleration to the movement input in local space
+        Vector3 inputForce = new Vector3(movementInputThisFrame.x, 0f, movementInputThisFrame.y) * acceleration;
 
-        // Rotate the walk force based on the player's current rotation
-        Vector3 rotatedWalkForce = Quaternion.Euler(0f, playerCam.transform.eulerAngles.y, 0f) * walkForceThisFrame;
+        // Rotate input to match camera/player orientation
+        Vector3 worldForce = playerCam.transform.TransformDirection(inputForce);
+        worldForce.y = 0f; // prevent vertical movement from camera tilt
 
-        // Get the normal of the slope the player is on, if any
-        Vector3 slopeNormal = Vector3.up;
-        if (downRaycastHit.collider != null) { slopeNormal = downRaycastHit.normal; }
+        // Get slope normal (default to up if no hit)
+        Vector3 slopeNormal = downRaycastHit.collider ? downRaycastHit.normal : Vector3.up;
 
-        // project movement force onto the slope
-        Vector3 slopeAdjustedForce = Vector3.ProjectOnPlane(rotatedWalkForce, slopeNormal);
+        // Project force onto slope plane
+        Vector3 slopeForce = Vector3.ProjectOnPlane(worldForce, slopeNormal);
 
-        // Calculate the new velocity based on the current force and the Rigidbody's existing velocity
-        Vector3 newVelocity = rb.linearVelocity + (slopeAdjustedForce * Time.deltaTime);
+        // Predict new velocity
+        Vector3 newVelocity = rb.linearVelocity + slopeForce * Time.deltaTime;
 
-        //apply the force if this will not make the player exceed the maximum speed
-        if (new Vector2(newVelocity.x, newVelocity.z).magnitude <= groundMaxHorizSpeed)
+        // Horizontal speed checks without Vector2 allocations
+        float newSpeed = Mathf.Sqrt(newVelocity.x * newVelocity.x + newVelocity.z * newVelocity.z);
+        float currentSpeed = Mathf.Sqrt(rb.linearVelocity.x * rb.linearVelocity.x + rb.linearVelocity.z * rb.linearVelocity.z);
+
+        // Only apply if under speed cap or slowing player down
+        if (newSpeed < currentSpeed || newSpeed <= groundMaxHorizSpeed)
         {
-            //apply the velocity
             rb.linearVelocity = newVelocity;
         }
-
     }
 
     /// <summary>
