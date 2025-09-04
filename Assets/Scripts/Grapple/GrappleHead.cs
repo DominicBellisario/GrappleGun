@@ -103,12 +103,12 @@ public class GrappleHead : MonoBehaviour
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
         float i = 0f;
-        while (CurrentRopeLength > 0.25f)
+        while (CurrentRopeLength > 0.5f)
         {
             i++;
             // Move towards the grapple start position
             Vector3 direction = (grappleStartPos.transform.position - transform.position).normalized;
-            rb.MovePosition(transform.position + returnSpeed * Time.deltaTime * direction * (1 + (i * 0.02f)));
+            rb.MovePosition(transform.position + returnSpeed * Time.deltaTime * direction * (1 + (i * 0.02f))); // gets faster the longer it comes back
             rb.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(-90, 0, 0);
             yield return null;
         }

@@ -165,9 +165,17 @@ public class PlayerController : MonoBehaviour
         // Apply the desired acceleration to the movement input in local space
         Vector3 inputForce = new Vector3(movementInputThisFrame.x, 0f, movementInputThisFrame.y) * acceleration;
 
-        // Rotate input to match camera/player orientation
-        Vector3 worldForce = playerCam.transform.TransformDirection(inputForce);
-        worldForce.y = 0f; // prevent vertical movement from camera tilt
+        // Get the camera's yaw-only rotation (ignore pitch and roll)
+        Vector3 camForward = playerCam.transform.forward;
+        camForward.y = 0f;
+        camForward.Normalize();
+
+        Vector3 camRight = playerCam.transform.right;
+        camRight.y = 0f;
+        camRight.Normalize();
+
+        // Build world-space force based on camera yaw
+        Vector3 worldForce = camRight * inputForce.x + camForward * inputForce.z;
 
         // Get slope normal (default to up if no hit)
         Vector3 slopeNormal = downRaycastHit.collider ? downRaycastHit.normal : Vector3.up;
@@ -235,7 +243,7 @@ public class PlayerController : MonoBehaviour
         //rotate the camera vertically
         mouseRotation.x -= lookInput.y * yMouseSensitivity * Time.deltaTime;
         //clamp the vertical rotation to prevent flipping
-        mouseRotation.x = Mathf.Clamp(mouseRotation.x, -90f, 90f);
+        mouseRotation.x = Mathf.Clamp(mouseRotation.x, -85f, 85f);
 
         // Apply the clamped rotation to the camera
         playerCam.transform.localRotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0f);

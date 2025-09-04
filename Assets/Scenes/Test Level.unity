@@ -5267,6 +5267,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8222699119728412252, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: targetableLayers.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
       value: Player
