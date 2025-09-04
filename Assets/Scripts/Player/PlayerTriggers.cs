@@ -18,13 +18,14 @@ public class PlayerTriggers : MonoBehaviour
             //reset velocity and launch in the direction the pad is facing
             rb.linearVelocity = Vector3.zero;
             rb.AddForce(trigger.gameObject.GetComponent<JumpPad>().GetLaunchForceAndActivatePad(), ForceMode.VelocityChange);
-            StartCoroutine(Test());
+            StartCoroutine(SwitchInterpolation());
         }
     } 
 
-    IEnumerator Test()
+    IEnumerator SwitchInterpolation()
     {
-        yield return new WaitForSeconds(0.05f);
-        Debug.Log(rb.linearVelocity);
+        rb.interpolation = RigidbodyInterpolation.None;
+        yield return new WaitForSeconds(0.1f);
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
     }
 }
