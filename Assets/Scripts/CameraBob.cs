@@ -7,6 +7,7 @@ public class CameraBob : MonoBehaviour
     [SerializeField] Raycasts playerRays;
 
     [Header("Settings")]
+    [SerializeField] AnimationCurve bobCurve;   // the curve the bob follows
     [SerializeField] float bobFrequency = 6f;   // how fast the bob oscillates
     [SerializeField] float bobHeight = 0.05f;   // how high the camera moves
     [SerializeField] float smooth = 8f;         // smooths movement
@@ -25,10 +26,10 @@ public class CameraBob : MonoBehaviour
         if (playerRb.linearVelocity.magnitude > 0.1f && playerRays.DownRaycastHit.collider != null)
         {
             // increment timer based on movement speed
-            timer += Time.deltaTime * bobFrequency * playerRb.linearVelocity.magnitude;
+            timer += Time.deltaTime * bobFrequency * Mathf.Clamp(playerRb.linearVelocity.magnitude, 0, 2);
 
             // vertical bobbing
-            float bobOffset = Mathf.Sin(timer) * bobHeight;
+            float bobOffset = (bobCurve.Evaluate(timer % 1) - 0.5f) * 2f * bobHeight;
 
             // apply to position
             Vector3 targetPosition = initialPosition + Vector3.up * bobOffset;

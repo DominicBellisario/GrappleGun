@@ -18,6 +18,7 @@ public class Raycasts : MonoBehaviour
         {
             if (Physics.SphereCast(transform.position, 0.5f, -transform.up, out RaycastHit hit, downRaycastDistance, targetableLayers))
             {
+                //Debug.Log("ground");
                 return hit;
             }
             return new RaycastHit(); // return an empty RaycastHit if no hit

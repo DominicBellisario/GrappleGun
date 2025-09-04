@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
         // Predict new velocity
         Vector3 newVelocity = rb.linearVelocity + slopeForce * Time.deltaTime;
 
-        // Horizontal speed checks without Vector2 allocations
+        // Horizontal speed checks
         float newSpeed = Mathf.Sqrt(newVelocity.x * newVelocity.x + newVelocity.z * newVelocity.z);
         float currentSpeed = Mathf.Sqrt(rb.linearVelocity.x * rb.linearVelocity.x + rb.linearVelocity.z * rb.linearVelocity.z);
 

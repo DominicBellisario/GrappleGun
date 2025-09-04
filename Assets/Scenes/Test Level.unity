@@ -272,8 +272,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraBob
   playerRb: {fileID: 1438032874}
   playerRays: {fileID: 2122118921}
-  bobFrequency: 1.5
-  bobHeight: 0.1
+  bobCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.5679958
+      outSlope: 2.5679958
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08085404
+    - serializedVersion: 3
+      time: 0.8019104
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -11.285014
+      outSlope: -11.285014
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.056449857
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  bobFrequency: 0.7
+  bobHeight: 0.3
   smooth: 8
 --- !u!1001 &53636438
 PrefabInstance:
@@ -5222,6 +5255,10 @@ PrefabInstance:
     - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: airAcceleration
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: boostAcceleration
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
