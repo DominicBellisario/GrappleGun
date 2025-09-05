@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     /// the player's first person camera
     /// </summary>
     [SerializeField] GameObject playerCam;
+    [SerializeField] GunLag grappleObject;
     /// <summary>
     /// The Rigidbody component attached to the player.
     /// </summary>
@@ -247,6 +248,9 @@ public class PlayerController : MonoBehaviour
 
         // Apply the clamped rotation to the camera
         playerCam.transform.localRotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0f);
+
+        //rotate the gun to lag slightly behind the movement
+        grappleObject.lookInput = lookInput;
     }
 
     /// <summary>
