@@ -9,6 +9,7 @@ TagManager:
   - No Grap Surface
   - Inviz Wall
   - Jump Pad
+  - Target
   layers:
   - Default
   - TransparentFX

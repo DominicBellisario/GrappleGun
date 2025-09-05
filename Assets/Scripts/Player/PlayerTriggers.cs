@@ -20,6 +20,12 @@ public class PlayerTriggers : MonoBehaviour
             rb.AddForce(trigger.gameObject.GetComponent<JumpPad>().GetLaunchForceAndActivatePad(), ForceMode.VelocityChange);
             StartCoroutine(SwitchInterpolation());
         }
+
+        else if (trigger.gameObject.CompareTag("Target"))
+        {
+            rb.linearVelocity = Vector3.zero;
+            transform.position = new Vector3(0, 50, -20);
+        }
     } 
 
     IEnumerator SwitchInterpolation()

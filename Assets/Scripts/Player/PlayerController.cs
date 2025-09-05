@@ -163,10 +163,9 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayer(RaycastHit downRaycastHit, float acceleration)
     {
-        // Apply the desired acceleration to the movement input in local space
+        // Input force alligned to the world grid
         Vector3 inputForce = new Vector3(movementInputThisFrame.x, 0f, movementInputThisFrame.y) * acceleration;
 
-        // Get the camera's yaw-only rotation (ignore pitch and roll)
         Vector3 camForward = playerCam.transform.forward;
         camForward.y = 0f;
         camForward.Normalize();
@@ -175,27 +174,28 @@ public class PlayerController : MonoBehaviour
         camRight.y = 0f;
         camRight.Normalize();
 
-        // Build world-space force based on camera yaw
+        //the force slligned to the camera
         Vector3 worldForce = camRight * inputForce.x + camForward * inputForce.z;
 
-        // Get slope normal (default to up if no hit)
+        // apply the force tagental to the normal of the surface the player is on
         Vector3 slopeNormal = downRaycastHit.collider ? downRaycastHit.normal : Vector3.up;
-
-        // Project force onto slope plane
         Vector3 slopeForce = Vector3.ProjectOnPlane(worldForce, slopeNormal);
 
-        // Predict new velocity
-        Vector3 newVelocity = rb.linearVelocity + slopeForce * Time.deltaTime;
-
-        // Horizontal speed checks
-        float newSpeed = Mathf.Sqrt(newVelocity.x * newVelocity.x + newVelocity.z * newVelocity.z);
-        float currentSpeed = Mathf.Sqrt(rb.linearVelocity.x * rb.linearVelocity.x + rb.linearVelocity.z * rb.linearVelocity.z);
-
-        // Only apply if under speed cap or slowing player down
-        if (newSpeed < currentSpeed || newSpeed <= groundMaxHorizSpeed)
+        Vector3 horizVel = new(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        if (horizVel.magnitude >= groundMaxHorizSpeed)
         {
-            rb.linearVelocity = newVelocity;
+            // Already at/above max speed = only keep sideways input
+            Vector3 velDir = horizVel.normalized;
+            float dot = Vector3.Dot(slopeForce, velDir);
+
+            if (dot > 0f)
+            {
+                slopeForce -= velDir * dot; // remove forward component
+            }
         }
+
+        // Apply velocity change
+        rb.linearVelocity += slopeForce * Time.deltaTime;
     }
 
     /// <summary>
@@ -244,7 +244,7 @@ public class PlayerController : MonoBehaviour
         //rotate the camera vertically
         mouseRotation.x -= lookInput.y * yMouseSensitivity * Time.deltaTime;
         //clamp the vertical rotation to prevent flipping
-        mouseRotation.x = Mathf.Clamp(mouseRotation.x, -85f, 85f);
+        mouseRotation.x = Mathf.Clamp(mouseRotation.x, -89f, 89f);
 
         // Apply the clamped rotation to the camera
         playerCam.transform.localRotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0f);
