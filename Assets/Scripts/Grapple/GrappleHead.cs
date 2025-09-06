@@ -24,6 +24,10 @@ public class GrappleHead : MonoBehaviour
     /// </summary>
     [SerializeField] float returnSpeed;
     /// <summary>
+    /// the range at which the head snaps to the start pos when returning
+    /// </summary>
+    [SerializeField] float returnRadius;
+    /// <summary>
     /// the maximum range of the grapple
     /// </summary>
     public float maxDistance;
@@ -103,7 +107,7 @@ public class GrappleHead : MonoBehaviour
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
         float i = 0f;
-        while (CurrentRopeLength > 0.5f)
+        while (CurrentRopeLength > returnRadius)
         {
             i++;
             // Move towards the grapple start position

@@ -239,10 +239,10 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Look input: " + lookInput);
 
         //rotate the camera horizontally
-        mouseRotation.y += lookInput.x * xMouseSensitivity * Time.deltaTime;
+        mouseRotation.y += lookInput.x * xMouseSensitivity;
 
         //rotate the camera vertically
-        mouseRotation.x -= lookInput.y * yMouseSensitivity * Time.deltaTime;
+        mouseRotation.x -= lookInput.y * yMouseSensitivity;
         //clamp the vertical rotation to prevent flipping
         mouseRotation.x = Mathf.Clamp(mouseRotation.x, -89f, 89f);
 
