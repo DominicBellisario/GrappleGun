@@ -7,7 +7,7 @@ public class Raycasts : MonoBehaviour
     /// </summary>
     [SerializeField] float downRaycastDistance;
     [SerializeField] float forwardRaycastDistance;
-    [SerializeField] LayerMask targetableLayers;
+    public LayerMask targetableLayers;
 
     /// <summary>
     /// sends a raycast downwards from the player

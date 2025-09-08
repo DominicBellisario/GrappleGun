@@ -2445,7 +2445,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 652446329622223477, guid: 7837f0d5d1c82c9469fbeab3f7f4c116, type: 3}
       propertyPath: m_LocalScale.x
-      value: 31.999866
+      value: 39.999416
       objectReference: {fileID: 0}
     - target: {fileID: 652446329622223477, guid: 7837f0d5d1c82c9469fbeab3f7f4c116, type: 3}
       propertyPath: m_LocalScale.z
@@ -2453,7 +2453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 652446329622223477, guid: 7837f0d5d1c82c9469fbeab3f7f4c116, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -134
+      value: -130.0015
       objectReference: {fileID: 0}
     - target: {fileID: 652446329622223477, guid: 7837f0d5d1c82c9469fbeab3f7f4c116, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3964,11 +3964,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 652446329622223477, guid: 45f8de44e8048fa4784c78a0e745fced, type: 3}
       propertyPath: m_LocalScale.z
-      value: 7.9982295
+      value: 8.923625
       objectReference: {fileID: 0}
     - target: {fileID: 652446329622223477, guid: 45f8de44e8048fa4784c78a0e745fced, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -46.475906
+      value: -46.0133
       objectReference: {fileID: 0}
     - target: {fileID: 652446329622223477, guid: 45f8de44e8048fa4784c78a0e745fced, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5449,6 +5449,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: crosshair
+      value: 
+      objectReference: {fileID: 1601435998}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5496,7 +5500,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5014280314240808219, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1537139746}
   m_SourcePrefab: {fileID: 100100000, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
 --- !u!54 &1438032874 stripped
 Rigidbody:
@@ -5847,6 +5854,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f8de44e8048fa4784c78a0e745fced, type: 3}
+--- !u!1 &1537139739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5014280314240808219, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+  m_PrefabInstance: {fileID: 1438032873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1537139746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537139739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93eb6789e69003c4a8261e78ed04003a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrappleRangeRaycast
+  crosshair: {fileID: 1601435998}
+  grapple: {fileID: 1438032875}
 --- !u!1001 &1571722573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6178,8 +6204,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7145818949375194239, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1601435998}
   m_SourcePrefab: {fileID: 100100000, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+--- !u!1 &1601435997 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7145818949375194239, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+  m_PrefabInstance: {fileID: 1601435996}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1601435998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601435997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9498d51518bb4a247919b9a9efad9754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Crosshair
+  defaultColor: {r: 1, g: 0, b: 0, a: 1}
+  standardGrappleColor: {r: 0, g: 1, b: 0, a: 1}
+  specialGrappleColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1001 &1620665247
 PrefabInstance:
   m_ObjectHideFlags: 0

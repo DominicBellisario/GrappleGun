@@ -81,7 +81,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject grappleHead;
     [SerializeField] float reelInForce;
 
-
     /// <summary>
     /// wether or not the grapple can be shot
     /// if it is coming back to the player, it cannot be shot
