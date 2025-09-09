@@ -5872,7 +5872,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GrappleRangeRaycast
   crosshair: {fileID: 1601435998}
-  grapple: {fileID: 1438032875}
 --- !u!1001 &1571722573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8873,12 +8872,18 @@ MonoBehaviour:
   boostAcceleration: 20
   boostFuelUse: 50
   boostFuelRegen: 50
+  dashChargeTime: 0.5
+  dashForce: 20
   xMouseSensitivity: 0.25
   yMouseSensitivity: 0.25
   reelInForce: 100
-  launchForce: 1000
-  launchRadius: 3
-  autoDetatchTime: 4
+  grappleLaunchSpeed: 100
+  grappleReturnSpeed: 100
+  grappleReturnRadius: 1
+  grappleMaxDistance: 100
+  birdLaunchForce: 20
+  birdLaunchRadius: 3
+  birdAutoDetatchTime: 4
 --- !u!1001 &2362161955796627275
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -88,7 +88,7 @@ public class GrapplePhysics : MonoBehaviour
                 //reset velocity
                 rb.linearVelocity = Vector3.zero;
                 //apply a force to the player in the direction the player is looking
-                rb.AddForce(playerCam.transform.forward * gvar.BirdLaunchForce);
+                rb.AddForce(playerCam.transform.forward * gvar.BirdLaunchForce, ForceMode.Impulse);
             }
             // if the player is grappling for too long, they are stuck. detatch them
             else if (timer >= gvar.BirdAutoDetatchTime)

@@ -3,21 +3,20 @@ using UnityEngine;
 public class GrappleRangeRaycast : MonoBehaviour
 {
     [SerializeField] Crosshair crosshair;
-    static float raycastRange;
     LayerMask mask;
-    GVar gvar;
+    static float raycastRange;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        gvar = GVar.Instance;
-        raycastRange = gvar.GrappleMaxDistance;
+        raycastRange = GVar.Instance.GrappleMaxDistance;
         mask = GetComponent<Raycasts>().targetableLayers;
     }
 
     // Update is called once per frame
     void Update()
     {
+        //shoot a raycast that shows the max range of the grapple
         Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, raycastRange, mask);
         crosshair.UpdateCrosshair(hit.collider);
     }

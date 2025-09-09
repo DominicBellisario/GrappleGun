@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -25,6 +26,11 @@ public class PlayerController : MonoBehaviour
     /// keeps track of whether the player is boosting or not.
     /// </summary>
     bool isBoosting;
+
+    /// <summary>
+    /// keeps track of wether the player dashed already.
+    /// </summary>
+    bool canDash;
 
     /// <summary>
     /// The current rotation of the mouse on the X axis.
@@ -66,6 +72,8 @@ public class PlayerController : MonoBehaviour
 
         isBoosting = false;
         CurrentBoostFuel = 100f;
+
+        canDash = true; 
 
         CanUseGrapple = true;
     }
@@ -243,5 +251,23 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce((grappleHead.transform.position - transform.position).normalized * gvar.ReelInForce);
         }
+    }
+
+    private void OnDash(InputValue inputValue)
+    {
+        if (inputValue.isPressed)
+        {
+            
+        }
+    }
+
+    private IEnumerator Dash()
+    {
+        float timer = 0;
+        while (true)
+        {
+            timer += Time.deltaTime;
+        }
+
     }
 }
