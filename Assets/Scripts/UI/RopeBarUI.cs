@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class RopeBarUI : MonoBehaviour
 {
     Slider slider;
+    GVar gvar;
     [SerializeField] Image bar;
     [SerializeField] GrappleHead grappleHead;
 
@@ -14,8 +15,9 @@ public class RopeBarUI : MonoBehaviour
 
     void Start()
     {
+        gvar = GVar.Instance;
         slider = GetComponent<Slider>();
-        slider.maxValue = grappleHead.maxDistance;
+        slider.maxValue = gvar.GrappleMaxDistance;
     }
 
     void Update()
@@ -29,12 +31,12 @@ public class RopeBarUI : MonoBehaviour
         // change bar color according to the length of the rope 
         else if (!grappleHead.IsAttached)
         {
-            ChangeImageColor(bar, Color.Lerp(idleColor, maxColor, Mathf.Clamp(grappleHead.CurrentRopeLength / grappleHead.maxDistance, 0, 1)));
+            ChangeImageColor(bar, Color.Lerp(idleColor, maxColor, Mathf.Clamp(grappleHead.CurrentRopeLength / gvar.GrappleMaxDistance, 0, 1)));
         }
         // if attatched, make the fill image the hit color
         else
         {
-            ChangeImageColor(bar, Color.Lerp(idleColor, hitColor, Mathf.Clamp(grappleHead.CurrentRopeLength / grappleHead.maxDistance, 0, 1)));
+            ChangeImageColor(bar, Color.Lerp(idleColor, hitColor, Mathf.Clamp(grappleHead.CurrentRopeLength / gvar.GrappleMaxDistance, 0, 1)));
         }
     }
 

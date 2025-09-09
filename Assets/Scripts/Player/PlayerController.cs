@@ -16,56 +16,16 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     Rigidbody rb;
 
-
-    [Header("Standard Movement Values")]
-    /// <summary>
-    /// The force applied when the player jumps.
-    /// </summary>
-    [SerializeField] float jumpForce;
-    /// <summary>
-    /// The acceleration applied to the player when moving on the ground.
-    /// </summary>
-    [SerializeField] float walkAcceleration;
-    /// <summary>
-    /// The acceleration applied to the player when moving in the air.
-    /// </summary>
-    [SerializeField] float airAcceleration;
-    /// <summary>
-    /// The maximum speed the player can reach while only walking
-    /// </summary>
-    [SerializeField] float groundMaxHorizSpeed;
     /// <summary>
     /// The current force applied to the player this frame.
     /// </summary>
     Vector2 movementInputThisFrame;
 
-
-    [Header("Boost Settings")]
-    /// <summary>
-    /// The upwards force applied to the player when boosting.
-    /// </summary>
-    [SerializeField] float boostForce;
-    /// <summary>
-    /// The horizontal force applied to the player when pressing WASD when boosting.
-    /// </summary>
-    [SerializeField] float boostAcceleration;
-    /// <summary>
-    /// the amount of boost fuel spent per second while using boost. max fuel is 100 
-    /// </summary>
-    [SerializeField] float boostFuelUse;
-    /// <summary>
-    /// the regen rate for boost fuel while grounded. max fuel is 100
-    /// </summary>
-    [SerializeField] float boostFuelRegen;
     /// <summary>
     /// keeps track of whether the player is boosting or not.
     /// </summary>
     bool isBoosting;
 
-
-    [Header("Mouse Settings")]
-    [SerializeField] float xMouseSensitivity;
-    [SerializeField] float yMouseSensitivity;
     /// <summary>
     /// The current rotation of the mouse on the X axis.
     /// this is needed becuause getting the mouse rotation from the camera
@@ -73,13 +33,13 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     Vector2 mouseRotation;
 
-    [Header("Grapple Settings")]
     /// <summary>
     /// The point where the grapple will be spawned from.
     /// </summary>
     [SerializeField] GameObject grappleStart;
     [SerializeField] GameObject grappleHead;
-    [SerializeField] float reelInForce;
+
+    GVar gvar;
 
     /// <summary>
     /// wether or not the grapple can be shot
@@ -96,6 +56,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gvar = GVar.Instance;
 
         movementInputThisFrame = Vector2.zero;
 
@@ -118,11 +79,11 @@ public class PlayerController : MonoBehaviour
         if (movementInputThisFrame != Vector2.zero)
         {
             // If the player is grounded, apply the walk acceleration
-            if (downRaycastHit.collider != null) { MovePlayer(downRaycastHit, walkAcceleration); }
+            if (downRaycastHit.collider != null) { MovePlayer(downRaycastHit, gvar.WalkAcceleration); }
             // If the player is in the air and boosting, apply the boost acceleration
-            else if (isBoosting) { MovePlayer(downRaycastHit, boostAcceleration); }
+            else if (isBoosting) { MovePlayer(downRaycastHit, gvar.BoostAcceleration); }
             // If the player is in the air and not boosting, apply the air acceleration
-            else { MovePlayer(downRaycastHit, airAcceleration); }
+            else { MovePlayer(downRaycastHit, gvar.AirAcceleration); }
         }
 
         //apply boost when boosting
@@ -130,23 +91,23 @@ public class PlayerController : MonoBehaviour
         {
             if (CurrentBoostFuel > 0f)
             {
-                rb.AddForce(boostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
-                CurrentBoostFuel -= boostFuelUse * Time.deltaTime;
+                rb.AddForce(gvar.BoostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
+                CurrentBoostFuel -= gvar.BoostFuelUse * Time.deltaTime;
             }
         }
         //recharge boost when grounded
         else if (downRaycastHit.collider != null && CurrentBoostFuel < 100f)
         {
-            CurrentBoostFuel += boostFuelRegen * Time.deltaTime;
+            CurrentBoostFuel += gvar.BoostFuelRegen * Time.deltaTime;
         }
 
         //speed is hard capped while grounded, prevents sliding at high entry speeds
         if (downRaycastHit.collider != null)
         {
             rb.linearVelocity = new Vector3(
-                Mathf.Clamp(rb.linearVelocity.x, -groundMaxHorizSpeed, groundMaxHorizSpeed),
+                Mathf.Clamp(rb.linearVelocity.x, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed),
                 rb.linearVelocity.y,
-                Mathf.Clamp(rb.linearVelocity.z, -groundMaxHorizSpeed, groundMaxHorizSpeed));
+                Mathf.Clamp(rb.linearVelocity.z, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed));
         }
     }
 
@@ -181,7 +142,7 @@ public class PlayerController : MonoBehaviour
         Vector3 slopeForce = Vector3.ProjectOnPlane(worldForce, slopeNormal);
 
         Vector3 horizVel = new(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        if (horizVel.magnitude >= groundMaxHorizSpeed)
+        if (horizVel.magnitude >= gvar.GroundMaxHorizSpeed)
         {
             // Already at/above max speed = only keep sideways input
             Vector3 velDir = horizVel.normalized;
@@ -212,7 +173,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Debug.Log("Jump");
                 // Apply an impulse force to the Rigidbody2D to make the player jump
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * gvar.JumpForce, ForceMode.Impulse);
             }
             // if the player is not grounded, activate the boost
             else
@@ -238,10 +199,10 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("Look input: " + lookInput);
 
         //rotate the camera horizontally
-        mouseRotation.y += lookInput.x * xMouseSensitivity;
+        mouseRotation.y += lookInput.x * gvar.XMouseSensitivity;
 
         //rotate the camera vertically
-        mouseRotation.x -= lookInput.y * yMouseSensitivity;
+        mouseRotation.x -= lookInput.y * gvar.YMouseSensitivity;
         //clamp the vertical rotation to prevent flipping
         mouseRotation.x = Mathf.Clamp(mouseRotation.x, -89f, 89f);
 
@@ -275,10 +236,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnReel(InputValue inputValue)
     {
+        //get the scroll direction
         float value = inputValue.Get<Vector2>().y;
+        //if the direction is negative, reel the player in
         if (value == -1 && grappleHead.GetComponent<GrappleHead>().IsAttached)
         {
-            rb.AddForce((grappleHead.transform.position - transform.position).normalized * reelInForce);
+            rb.AddForce((grappleHead.transform.position - transform.position).normalized * gvar.ReelInForce);
         }
     }
 }

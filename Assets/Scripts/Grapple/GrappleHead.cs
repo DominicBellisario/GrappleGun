@@ -14,24 +14,8 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject grapplePointPrefab;
     [SerializeField] GameObject grappleStartPos;
 
-    [Header("Grapple Settings")]
-    /// <summary>
-    /// The speed at which the grapple head is launched from the gun
-    /// </summary>
-    [SerializeField] float launchSpeed;
-    /// <summary>
-    /// The speed at which the grapple head returns to the gun.
-    /// </summary>
-    [SerializeField] float returnSpeed;
-    /// <summary>
-    /// the range at which the head snaps to the start pos when returning
-    /// </summary>
-    [SerializeField] float returnRadius;
-    /// <summary>
-    /// the maximum range of the grapple
-    /// </summary>
-    public float maxDistance;
-
+    GVar gvar;
+   
     public bool IsAttached { get { return !detectCollisions; } }
 
     /// <summary>
@@ -41,15 +25,17 @@ public class GrappleHead : MonoBehaviour
 
     void Start()
     {
+        gvar = GVar.Instance;
         rb = GetComponent<Rigidbody>();
         detectCollisions = true;
     }
 
     void Update()
     {
+        //if not attached and at max diatnce, return to gun
         if (!rb.isKinematic)
         {
-            if (CurrentRopeLength > maxDistance)
+            if (CurrentRopeLength > gvar.GrappleMaxDistance)
             {
                 StartCoroutine(ReturnToGun());
             }
@@ -71,11 +57,11 @@ public class GrappleHead : MonoBehaviour
         Vector3 direction;
         // use the raycast point to calcaulte the direction
         if (target != Vector3.zero) { direction = (target - transform.position).normalized; }
-        // use the camera forward
+        // if there is no target in range, use the camera forward
         else { direction = player.GetComponentInChildren<Camera>().gameObject.transform.forward; }
 
         // Set the velocity
-        rb.linearVelocity = direction * launchSpeed;
+        rb.linearVelocity = direction * gvar.GrappleLaunchSpeed;
 
         //ignore collisions if the grapple is launched while already touching something
         Collider headCollider = GetComponent<Collider>();
@@ -107,12 +93,16 @@ public class GrappleHead : MonoBehaviour
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
         float i = 0f;
-        while (CurrentRopeLength > returnRadius)
+        float timer = 0f;
+        // come back to the player until it gets there or until it takes too long
+        while (CurrentRopeLength > gvar.GrappleReturnRadius && timer < gvar.BirdAutoDetatchTime)
         {
             i++;
-            // Move towards the grapple start position
+            timer += Time.deltaTime;
+            // get the direction the grapple should move in
             Vector3 direction = (grappleStartPos.transform.position - transform.position).normalized;
-            rb.MovePosition(transform.position + returnSpeed * Time.deltaTime * direction * (1 + (i * 0.02f))); // gets faster the longer it comes back
+            // move the grapple in that direction.  it gets faster the longer it returns
+            rb.MovePosition(transform.position + gvar.GrappleReturnSpeed * Time.deltaTime * direction * (1 + (i * 0.02f)));
             rb.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(-90, 0, 0);
             yield return null;
         }

@@ -7,25 +7,13 @@ public class GrapplePhysics : MonoBehaviour
     Rigidbody rb;
     [SerializeField] GameObject playerCam;
     [SerializeField] GameObject grappleHead;
-
-    [Header("Bird Settings")]
-    /// <summary>
-    /// the force applied to the player when detatching from a bird
-    /// </summary>
-    [SerializeField] float launchForce;
-    /// <summary>
-    /// the distance from the bird the player must be before launching
-    /// </summary>
-    [SerializeField] float launchRadius;
-    /// <summary>
-    /// if attached to a bird for longer than this, stop grappling to avoid softlock
-    /// </summary>
-    [SerializeField] float autoDetatchTime;
     float timer;
+    GVar gvar;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gvar = GVar.Instance;
         timer = 0;
     }
 
@@ -92,7 +80,7 @@ public class GrapplePhysics : MonoBehaviour
             // if the grapple is elastic wait until the player is close
             if (joint.xDrive.positionSpring == 0) return;
             timer += Time.deltaTime;
-            if (distanceToGrapple <= launchRadius)
+            if (distanceToGrapple <= gvar.BirdLaunchRadius)
             {
                 timer = 0;
                 //detatch the grapple
@@ -100,10 +88,10 @@ public class GrapplePhysics : MonoBehaviour
                 //reset velocity
                 rb.linearVelocity = Vector3.zero;
                 //apply a force to the player in the direction the player is looking
-                rb.AddForce(playerCam.transform.forward * launchForce);
+                rb.AddForce(playerCam.transform.forward * gvar.BirdLaunchForce);
             }
             // if the player is grappling for too long, they are stuck. detatch them
-            else if (timer >= autoDetatchTime)
+            else if (timer >= gvar.BirdAutoDetatchTime)
             {
                 timer = 0;
                 //detatch the grapple
