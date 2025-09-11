@@ -252,12 +252,12 @@ public class PlayerController : MonoBehaviour
     private void OnReel(InputValue inputValue)
     {
         //get the scroll direction
-        float value = inputValue.Get<Vector2>().y;
+        //float value = inputValue.Get<Vector2>().y;
         //if the direction is negative, reel the player in
-        if (value == -1 && grappleHead.GetComponent<GrappleHead>().IsAttached)
-        {
-            rb.AddForce((grappleHead.transform.position - transform.position).normalized * gvar.ReelInForce);
-        }
+        //if (value == -1 && grappleHead.GetComponent<GrappleHead>().IsAttached)
+        //{
+            //rb.AddForce((grappleHead.transform.position - transform.position).normalized * gvar.ReelInForce);
+        //}
     }
 
     private void OnDash(InputValue inputValue)
