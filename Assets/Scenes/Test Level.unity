@@ -8879,7 +8879,7 @@ MonoBehaviour:
   reelInForce: 100
   grappleLaunchSpeed: 100
   grappleReturnSpeed: 100
-  grappleReturnRadius: 1
+  grappleReturnRadius: 2
   grappleMaxDistance: 100
   birdLaunchForce: 20
   birdLaunchRadius: 3

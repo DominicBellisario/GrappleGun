@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     /// keeps track of wether the player dashed already.
     /// </summary>
     bool canDash;
+    bool dashCharged;
+    Coroutine chargeDash;
 
     /// <summary>
     /// The current rotation of the mouse on the X axis.
@@ -73,7 +75,8 @@ public class PlayerController : MonoBehaviour
         isBoosting = false;
         CurrentBoostFuel = 100f;
 
-        canDash = true; 
+        canDash = true;
+        dashCharged = false;
 
         CanUseGrapple = true;
     }
@@ -112,10 +115,12 @@ public class PlayerController : MonoBehaviour
         //speed is hard capped while grounded, prevents sliding at high entry speeds
         if (downRaycastHit.collider != null)
         {
-            rb.linearVelocity = new Vector3(
-                Mathf.Clamp(rb.linearVelocity.x, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed),
-                rb.linearVelocity.y,
-                Mathf.Clamp(rb.linearVelocity.z, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed));
+           // rb.linearVelocity = new Vector3(
+               // Mathf.Clamp(rb.linearVelocity.x, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed),
+               // rb.linearVelocity.y,
+               // Mathf.Clamp(rb.linearVelocity.z, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed));
+            
+            canDash = true;
         }
     }
 
@@ -255,19 +260,34 @@ public class PlayerController : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-        if (inputValue.isPressed)
+        if (inputValue.isPressed && canDash)
         {
-            
+            chargeDash = StartCoroutine(ChargeDash());
+        }
+        else
+        {
+            StopCoroutine(chargeDash);
+            if (dashCharged)
+            {
+                dashCharged = false;
+                canDash = false;
+
+                Vector3 camForward = playerCam.transform.forward;
+                camForward.y = 0f;
+                camForward.Normalize();
+                rb.AddForce(camForward * gvar.DashForce, ForceMode.Impulse);
+            }
         }
     }
 
-    private IEnumerator Dash()
+    private IEnumerator ChargeDash()
     {
         float timer = 0;
-        while (true)
+        while (timer < gvar.DashChargeTime)
         {
             timer += Time.deltaTime;
+            yield return null;
         }
-
+        dashCharged = true;
     }
 }
