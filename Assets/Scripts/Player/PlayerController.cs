@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Raycasts))]
 public class PlayerController : MonoBehaviour
@@ -27,12 +28,9 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     bool isBoosting;
 
-    /// <summary>
-    /// keeps track of wether the player dashed already.
-    /// </summary>
-    bool canDash;
     bool dashCharged;
     Coroutine chargeDash;
+    Coroutine depleteDash;
 
     /// <summary>
     /// The current rotation of the mouse on the X axis.
@@ -60,6 +58,10 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public float CurrentBoostFuel { get; set; }
 
+    public float CurrentDashCharge { get; set; }
+
+    public bool CanDash { get; set; }
+
 
     void Start()
     {
@@ -75,7 +77,7 @@ public class PlayerController : MonoBehaviour
         isBoosting = false;
         CurrentBoostFuel = 100f;
 
-        canDash = true;
+        CanDash = true;
         dashCharged = false;
 
         CanUseGrapple = true;
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour
                // rb.linearVelocity.y,
                // Mathf.Clamp(rb.linearVelocity.z, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed));
             
-            canDash = true;
+            CanDash = true;
         }
     }
 
@@ -260,8 +262,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnDash(InputValue inputValue)
     {
-        if (inputValue.isPressed && canDash)
+        if (inputValue.isPressed && CanDash)
         {
+            if (depleteDash != null)StopCoroutine(depleteDash);
             chargeDash = StartCoroutine(ChargeDash());
         }
         else
@@ -269,25 +272,39 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(chargeDash);
             if (dashCharged)
             {
+                depleteDash = StartCoroutine(DepleteDash(3));
                 dashCharged = false;
-                canDash = false;
+                CanDash = false;
 
                 Vector3 camForward = playerCam.transform.forward;
                 camForward.y = 0f;
                 camForward.Normalize();
                 rb.AddForce(camForward * gvar.DashForce, ForceMode.Impulse);
             }
+            else
+            {
+                depleteDash = StartCoroutine(DepleteDash(1));
+            }
         }
     }
 
     private IEnumerator ChargeDash()
     {
-        float timer = 0;
-        while (timer < gvar.DashChargeTime)
+        while (CurrentDashCharge < gvar.DashChargeTime)
         {
-            timer += Time.deltaTime;
+            CurrentDashCharge += Time.deltaTime;
             yield return null;
         }
         dashCharged = true;
+    }
+
+    private IEnumerator DepleteDash(float depleteSpeed)
+    {
+        while (CurrentDashCharge > 0)
+        {
+            CurrentDashCharge -= Time.deltaTime * depleteSpeed;
+            yield return null;
+        }
+        CurrentDashCharge = 0;
     }
 }
