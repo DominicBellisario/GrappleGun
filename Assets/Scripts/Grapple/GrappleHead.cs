@@ -49,7 +49,6 @@ public class GrappleHead : MonoBehaviour
         // detatch the grapple head from the grapple
         transform.SetParent(null);
 
-        // rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
 
@@ -79,6 +78,7 @@ public class GrappleHead : MonoBehaviour
 
     public IEnumerator ReturnToGun()
     {
+        Debug.Log("return");
         // cannot launch gun while returning
         player.GetComponent<PlayerController>().CanUseGrapple = false;
 
@@ -142,7 +142,7 @@ public class GrappleHead : MonoBehaviour
 
     private void CreateGrapplePoint(Collision collision, float elasticity, float damper)
     {
-
+        Debug.Log("create point");
         rb.linearVelocity = Vector3.zero; // Stop movement
         rb.isKinematic = true; // Disable physics
 

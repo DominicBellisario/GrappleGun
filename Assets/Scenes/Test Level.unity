@@ -5558,6 +5558,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5976852609743098317, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: lagClamp
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976852609743098317, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: lagSmooth
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
       value: Player

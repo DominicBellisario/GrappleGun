@@ -4,23 +4,24 @@ using UnityEngine.InputSystem;
 public class GunLag : MonoBehaviour
 {
      [Header("References")]
-    [SerializeField] private Transform cameraTransform;
-    [SerializeField] private Rigidbody playerRb;
+    [SerializeField] Transform cameraTransform;
+    [SerializeField] Rigidbody playerRb;
 
     [Header("Sway Settings")]
-    [SerializeField] private float swayAmount = 2f;
-    [SerializeField] private float maxSway = 5f;
-    [SerializeField] private float swaySmooth = 6f;
+    [SerializeField] float swayAmount = 2f;
+    [SerializeField] float maxSway = 5f;
+    [SerializeField] float swaySmooth = 6f;
 
     [Header("Lag Settings")]
-    [SerializeField] private float lagAmount = 0.05f;   // how far the gun shifts
-    [SerializeField] private float lagSmooth = 6f;     // how quickly it catches up
+    [SerializeField] float lagAmount = 0.05f;   // how far the gun shifts
+    [SerializeField] float lagSmooth = 6f;     // how quickly it catches up
+    [SerializeField] float lagClamp;
 
     [HideInInspector]
     public Vector2 lookInput;
 
-    private Quaternion originalRotation;
-    private Vector3 originalPosition;
+    Quaternion originalRotation;
+    Vector3 originalPosition;
 
     void Start()
     {
@@ -45,11 +46,13 @@ public class GunLag : MonoBehaviour
         lookInput = Vector2.zero;
 
 
-        // Offset based on player velocity in local space
+        // calculate how far the gun should be from the player
         Vector3 localVel = cameraTransform.InverseTransformDirection(playerRb.linearVelocity);
         Vector3 lagOffset = new Vector3(-localVel.x, -localVel.y, -localVel.z) * lagAmount;
+        // gun cannot go too far away from player
+        lagOffset = Vector3.ClampMagnitude(lagOffset, lagClamp);
 
-        // Smooth movement toward offset position
+        // Smooth movement toward calculated lag position
         transform.localPosition = Vector3.Lerp(
             transform.localPosition,
             originalPosition + lagOffset,
