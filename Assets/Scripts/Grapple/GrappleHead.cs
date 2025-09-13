@@ -99,7 +99,7 @@ public class GrappleHead : MonoBehaviour
             // get the direction the grapple should move in
             Vector3 direction = (grappleStartPos.transform.position - transform.position).normalized;
             // move the grapple in that direction.  it gets faster the longer it returns
-            rb.MovePosition(transform.position + gvar.GrappleReturnSpeed * Time.deltaTime * direction * (1 + (timer * 0.5f)));
+            rb.MovePosition(transform.position + gvar.GrappleReturnSpeed * Time.deltaTime * direction * (1 + (timer * 0.2f)));
             rb.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(-90, 0, 0);
             yield return new WaitForFixedUpdate();
         }

@@ -6402,6 +6402,24 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2122118918}
+    - target: {fileID: 5264233413194234704, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_text
+      value: 'WASD: Move
+
+        Space: Jump
+
+        Space (Hold while airborne):
+        Boost
+
+        Right-Click: Shoot Grapple
+
+        Shift (hold and release):
+        Dash '
+      objectReference: {fileID: 0}
+    - target: {fileID: 5264233413194234704, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5423103780521243698, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6422,6 +6440,14 @@ PrefabInstance:
       propertyPath: grappleHead
       value: 
       objectReference: {fileID: 1438032875}
+    - target: {fileID: 8318033229559859950, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 575.9783
+      objectReference: {fileID: 0}
+    - target: {fileID: 8318033229559859950, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -312.9892
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
