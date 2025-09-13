@@ -48,7 +48,7 @@ public class GunLag : MonoBehaviour
 
         // calculate how far the gun should be from the player
         Vector3 localVel = cameraTransform.InverseTransformDirection(playerRb.linearVelocity);
-        Vector3 lagOffset = new Vector3(-localVel.x, -localVel.y, -localVel.z) * lagAmount;
+        Vector3 lagOffset = new Vector3(localVel.x, -localVel.y * 2, localVel.z) * lagAmount;
         // gun cannot go too far away from player
         lagOffset = Vector3.ClampMagnitude(lagOffset, lagClamp);
 

@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7942548860142215643}
+  - component: {fileID: 1852269641194762091}
   m_Layer: 0
   m_Name: Global Variables
   m_TagString: Untagged
@@ -31,3 +32,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1852269641194762091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3842630096528084278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ba40f93cd3fde749b9a243717f376f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GVar
+  jumpForce: 5
+  walkAcceleration: 40
+  airAcceleration: 8
+  groundMaxHorizSpeed: 6
+  boostForce: 11
+  boostAcceleration: 20
+  boostFuelUse: 50
+  boostFuelRegen: 50
+  dashChargeTime: 0.5
+  dashForce: 10
+  xMouseSensitivity: 0.25
+  yMouseSensitivity: 0.25
+  reelInForce: 100
+  grappleLaunchSpeed: 100
+  grappleReturnSpeed: 100
+  grappleReturnRadius: 1
+  grappleMaxDistance: 100
+  birdLaunchForce: 20
+  birdLaunchRadius: 3
+  birdAutoDetatchTime: 4

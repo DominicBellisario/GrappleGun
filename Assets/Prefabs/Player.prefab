@@ -53,6 +53,7 @@ MonoBehaviour:
   swaySmooth: 6
   lagAmount: 0.01
   lagSmooth: 10
+  lagClamp: 0.15
   lookInput: {x: 0, y: 0}
 --- !u!1 &1328603308791807764
 GameObject:
@@ -512,10 +513,6 @@ MonoBehaviour:
   player: {fileID: 8899434119458475185}
   grapplePointPrefab: {fileID: 6912725287927576319, guid: 21654e6ec6198434eb36abd09e33977e, type: 3}
   grappleStartPos: {fileID: 1328603308791807764}
-  launchSpeed: 100
-  returnSpeed: 200
-  returnRadius: 1
-  maxDistance: 100
 --- !u!135 &175901087420589709
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -640,6 +637,7 @@ GameObject:
   - component: {fileID: 4745060654054115085}
   - component: {fileID: 8222699119728412252}
   - component: {fileID: 4872169258650035967}
+  - component: {fileID: 6914831251893390}
   m_Layer: 3
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -833,6 +831,19 @@ MonoBehaviour:
   bobFrequency: 0.7
   bobHeight: 0.3
   smooth: 8
+--- !u!114 &6914831251893390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5014280314240808219}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93eb6789e69003c4a8261e78ed04003a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GrappleRangeRaycast
+  crosshair: {fileID: 0}
 --- !u!1 &8899434119458475185
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,19 +987,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 5014280314240808219}
   grappleObject: {fileID: 5976852609743098317}
-  jumpForce: 5
-  walkAcceleration: 40
-  airAcceleration: 8
-  groundMaxHorizSpeed: 6
-  boostForce: 11
-  boostAcceleration: 20
-  boostFuelUse: 50
-  boostFuelRegen: 50
-  xMouseSensitivity: 0.25
-  yMouseSensitivity: 0.25
   grappleStart: {fileID: 1328603308791807764}
   grappleHead: {fileID: 2831276443190014990}
-  reelInForce: 100
 --- !u!114 &72448625921142688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1020,9 +1020,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 5014280314240808219}
   grappleHead: {fileID: 2831276443190014990}
-  launchForce: 1000
-  launchRadius: 3
-  autoDetatchTime: 4
 --- !u!114 &57737250660311644
 MonoBehaviour:
   m_ObjectHideFlags: 0

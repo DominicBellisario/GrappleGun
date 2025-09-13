@@ -2,6 +2,7 @@ using System.Collections;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Timeline;
 
 public class GrappleHead : MonoBehaviour
 {
@@ -78,13 +79,11 @@ public class GrappleHead : MonoBehaviour
 
     public IEnumerator ReturnToGun()
     {
-        Debug.Log("return");
         // cannot launch gun while returning
         player.GetComponent<PlayerController>().CanUseGrapple = false;
 
         // Disable physics while returning
         rb.isKinematic = true;
-        detectCollisions = true;
 
         // remove any possible grapple joint
         player.GetComponent<GrapplePhysics>().DestroyGrapple();
@@ -92,22 +91,21 @@ public class GrappleHead : MonoBehaviour
         // destroy the grapple point if it exists
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
-        float i = 0f;
         float timer = 0f;
         // come back to the player until it gets there or until it takes too long
-        while (CurrentRopeLength > gvar.GrappleReturnRadius && timer < gvar.BirdAutoDetatchTime)
+        while (CurrentRopeLength > gvar.GrappleReturnRadius + timer && timer < gvar.BirdAutoDetatchTime)
         {
-            i++;
             timer += Time.deltaTime;
             // get the direction the grapple should move in
             Vector3 direction = (grappleStartPos.transform.position - transform.position).normalized;
             // move the grapple in that direction.  it gets faster the longer it returns
-            rb.MovePosition(transform.position + gvar.GrappleReturnSpeed * Time.deltaTime * direction * (1 + (i * 0.02f)));
+            rb.MovePosition(transform.position + gvar.GrappleReturnSpeed * Time.deltaTime * direction * (1 + (timer * 0.5f)));
             rb.rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(-90, 0, 0);
             yield return new WaitForFixedUpdate();
         }
 
         // Once close enough, snap to the grapple start position
+        detectCollisions = true;
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
         rb.interpolation = RigidbodyInterpolation.None;
@@ -142,7 +140,6 @@ public class GrappleHead : MonoBehaviour
 
     private void CreateGrapplePoint(Collision collision, float elasticity, float damper)
     {
-        Debug.Log("create point");
         rb.linearVelocity = Vector3.zero; // Stop movement
         rb.isKinematic = true; // Disable physics
 
