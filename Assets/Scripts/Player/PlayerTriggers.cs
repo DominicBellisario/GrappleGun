@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerTriggers : MonoBehaviour
 {
+    [SerializeField] Timer timer;
     Rigidbody rb;
 
     void Start()
@@ -25,6 +26,15 @@ public class PlayerTriggers : MonoBehaviour
         {
             rb.linearVelocity = Vector3.zero;
             transform.position = new Vector3(0, 50, -20);
+            timer.TimerSequence(false);
+        }
+
+        else if (trigger.gameObject.CompareTag("Start Level"))
+        {
+            if (timer != null)
+            {
+                timer.TimerSequence(true);
+            }
         }
     } 
 
