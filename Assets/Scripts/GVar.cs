@@ -1,8 +1,10 @@
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class GVar : MonoBehaviour
 {
+    bool isPaused;
+    public bool IsPaused { get { return Instance.isPaused; } set { Instance.isPaused = value; } }
+
     [Header("Player Movement")]
     /// <summary>
     /// The force applied when the player jumps.

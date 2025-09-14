@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GunLag
   cameraTransform: {fileID: 3436901652179999493}
   playerRb: {fileID: 6193393544656630102}
-  swayAmount: 5
+  swayAmount: 200
   maxSway: 10
   swaySmooth: 6
   lagAmount: 0.01
@@ -1032,3 +1032,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4dae2a28cc8f34797369d9b1b90781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timer: {fileID: 0}

@@ -1,0 +1,64 @@
+using UnityEngine.UI;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using System.Collections;
+using System;
+
+[RequireComponent(typeof(CanvasGroup))]
+public class Pause : MonoBehaviour
+{
+    [SerializeField] float fadeLength;
+
+    CanvasGroup pausePanel;
+    GVar gvar;
+
+    void Start()
+    {
+        gvar = GVar.Instance;
+        pausePanel = GetComponent<CanvasGroup>();
+    }
+
+    void OnPause(InputValue inputValue)
+    {
+        if (inputValue.isPressed) { PauseGame(); }
+    }
+
+    public void PauseGame()
+    {
+        StopAllCoroutines();
+        gvar.IsPaused = !gvar.IsPaused;
+
+        // activate pause menu and stop time
+        if (gvar.IsPaused)
+        {
+            pausePanel.interactable = true;
+            Time.timeScale = 0f;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            StartCoroutine(PauseFade(1f, fadeLength));
+
+        }
+        // deactivate menu and start time
+        else
+        {
+            pausePanel.interactable = false;
+            Time.timeScale = 1f;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            StartCoroutine(PauseFade(0f, fadeLength));
+
+        }
+    }
+
+    IEnumerator PauseFade(float endAlpha, float effectTime)
+    {
+        float t = 0f;
+        float startAlpha = pausePanel.alpha;
+        while (t < effectTime)
+        {
+            t += Time.unscaledDeltaTime;
+            pausePanel.alpha = Mathf.Lerp(startAlpha, endAlpha, t / effectTime);
+            yield return null;
+        }
+    }
+}

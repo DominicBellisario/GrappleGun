@@ -32,8 +32,8 @@ public class GunLag : MonoBehaviour
     void Update()
     {
         // Calculate target sway rotation
-        Quaternion xQuat = Quaternion.AngleAxis(-swayAmount * lookInput.x, Vector3.up);
-        Quaternion yQuat = Quaternion.AngleAxis(swayAmount * lookInput.y, Vector3.right);
+        Quaternion xQuat = Quaternion.AngleAxis(-swayAmount * lookInput.x * Time.deltaTime, Vector3.up);
+        Quaternion yQuat = Quaternion.AngleAxis(swayAmount * lookInput.y * Time.deltaTime, Vector3.right);
         Quaternion targetRotation = originalRotation * xQuat * yQuat;
 
         // Clamp sway
@@ -42,8 +42,8 @@ public class GunLag : MonoBehaviour
         // Smoothly interpolate
         transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * swaySmooth);
 
-        //reset look input
-        lookInput = Vector2.zero;
+        //slowly reduce look input
+        lookInput = Vector2.Lerp(lookInput, Vector2.zero, Time.deltaTime * swaySmooth);
 
 
         // calculate how far the gun should be from the player

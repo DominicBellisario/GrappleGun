@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Raycasts))]
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     /// <summary>
@@ -65,8 +66,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         gvar = GVar.Instance;
+        rb = GetComponent<Rigidbody>();
 
         movementInputThisFrame = Vector2.zero;
 
@@ -133,6 +134,11 @@ public class PlayerController : MonoBehaviour
     /// <param name="inputValue"></param>
     private void OnMove(InputValue inputValue)
     {
+        if (gvar.IsPaused)
+        {
+            movementInputThisFrame = Vector2.zero;
+            return;
+        }
         movementInputThisFrame = inputValue.Get<Vector2>();
     }
 
@@ -179,14 +185,14 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void OnJump(InputValue inputValue)
     {
-        //Debug.Log("Jump input received: " + inputValue.isPressed);
+        if (gvar.IsPaused) return;
+
         // if the button was pressed
         if (inputValue.isPressed)
         {
             // if the player is grounded, jump
             if (GetComponent<Raycasts>().DownRaycastHit.collider != null)
             {
-                //Debug.Log("Jump");
                 // Apply an impulse force to the Rigidbody2D to make the player jump
                 rb.AddForce(Vector3.up * gvar.JumpForce, ForceMode.Impulse);
             }
@@ -210,8 +216,9 @@ public class PlayerController : MonoBehaviour
     /// <param name="inputValue"></param>
     private void OnLook(InputValue inputValue)
     {
+        if (gvar.IsPaused) return;
+
         Vector2 lookInput = inputValue.Get<Vector2>();
-        //Debug.Log("Look input: " + lookInput);
 
         //rotate the camera horizontally
         mouseRotation.y += lookInput.x * gvar.XMouseSensitivity;
@@ -235,7 +242,8 @@ public class PlayerController : MonoBehaviour
     /// <param name="inputValue"></param>
     private void OnGrapple(InputValue inputValue)
     {
-        //Debug.Log("Grapple input received: " + inputValue.isPressed);
+        if (gvar.IsPaused) return;
+
         if (!CanUseGrapple) return;
         if (inputValue.isPressed)
         {
@@ -251,20 +259,24 @@ public class PlayerController : MonoBehaviour
 
     private void OnReel(InputValue inputValue)
     {
+        //if (gvar.IsPaused) return;
+
         //get the scroll direction
         //float value = inputValue.Get<Vector2>().y;
         //if the direction is negative, reel the player in
         //if (value == -1 && grappleHead.GetComponent<GrappleHead>().IsAttached)
         //{
-            //rb.AddForce((grappleHead.transform.position - transform.position).normalized * gvar.ReelInForce);
+        //rb.AddForce((grappleHead.transform.position - transform.position).normalized * gvar.ReelInForce);
         //}
     }
 
     private void OnDash(InputValue inputValue)
     {
+        if (gvar.IsPaused) return;
+
         if (inputValue.isPressed && CanDash)
         {
-            if (depleteDash != null)StopCoroutine(depleteDash);
+            if (depleteDash != null) StopCoroutine(depleteDash);
             chargeDash = StartCoroutine(ChargeDash());
         }
         else
