@@ -2,8 +2,21 @@ using UnityEngine;
 
 public class GVar : MonoBehaviour
 {
+    // GAME SETTINGS / STATES
     bool isPaused;
     public bool IsPaused { get { return Instance.isPaused; } set { Instance.isPaused = value; } }
+
+    // PLAYER SETTINGS: ALL TAKEN FROM PLAYERPREFS
+    float mouseSensitivity;
+    public float MouseSensitivity
+    {
+        get { return Instance.mouseSensitivity; }
+        set
+        {
+            mouseSensitivity = value;
+            PlayerPrefs.SetFloat("Mouse Sensitivity", mouseSensitivity);
+        }
+    }
 
     [Header("Player Movement")]
     /// <summary>
@@ -68,20 +81,6 @@ public class GVar : MonoBehaviour
     [SerializeField] float dashForce;
     public float DashForce => dashForce;
 
-
-    [Header("Mouse Settings")]
-    /// <summary>
-    /// The mouse sensitivity in the x axis.
-    /// </summary>
-    [SerializeField] float xMouseSensitivity;
-    public float XMouseSensitivity => xMouseSensitivity;
-
-    /// <summary>
-    /// The mouse sensitivity in the y axis.
-    /// </summary>
-    [SerializeField] float yMouseSensitivity;
-    public float YMouseSensitivity => yMouseSensitivity;
-
     [Header("Grapple Settings")]
     /// <summary>
     /// The force applied to the player every reel-in instance.
@@ -143,5 +142,10 @@ public class GVar : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject); // Keep across scenes
     }
+
+    void Start()
+    {
+        mouseSensitivity = PlayerPrefs.GetFloat("Mouse Sensitivity", 0.25f);
+    } 
 
 }

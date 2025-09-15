@@ -221,10 +221,10 @@ public class PlayerController : MonoBehaviour
         Vector2 lookInput = inputValue.Get<Vector2>();
 
         //rotate the camera horizontally
-        mouseRotation.y += lookInput.x * gvar.XMouseSensitivity;
+        mouseRotation.y += lookInput.x * gvar.MouseSensitivity;
 
         //rotate the camera vertically
-        mouseRotation.x -= lookInput.y * gvar.YMouseSensitivity;
+        mouseRotation.x -= lookInput.y * gvar.MouseSensitivity;
         //clamp the vertical rotation to prevent flipping
         mouseRotation.x = Mathf.Clamp(mouseRotation.x, -89f, 89f);
 
