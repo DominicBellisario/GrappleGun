@@ -1,12 +1,13 @@
-using UnityEngine.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using System;
 
 [RequireComponent(typeof(CanvasGroup))]
 public class Pause : MonoBehaviour
 {
+    [SerializeField] CanvasGroup options;
+    [SerializeField] CanvasGroup control;
+
     [SerializeField] float fadeLength;
 
     CanvasGroup pausePanel;
@@ -28,13 +29,21 @@ public class Pause : MonoBehaviour
         StopAllCoroutines();
         gvar.IsPaused = !gvar.IsPaused;
 
-        // activate pause menu and stop time
+        // activate pause menu, close other menus if active, and stop time
         if (gvar.IsPaused)
         {
             pausePanel.interactable = true;
             Time.timeScale = 0f;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+
+            options.alpha = 0f;
+            options.interactable = false;
+            options.blocksRaycasts = false;
+            control.alpha = 0f;
+            control.interactable = false;
+            control.blocksRaycasts = false;
+
             StartCoroutine(PauseFade(1f, fadeLength));
 
         }
