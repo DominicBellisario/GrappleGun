@@ -6532,6 +6532,50 @@ PrefabInstance:
       propertyPath: smoothSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: boostColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: boostColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: boostColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: boostColor.r
+      value: 0.9078033
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: noBoostColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: noBoostColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: noBoostColor.g
+      value: 0.979579
+      objectReference: {fileID: 0}
+    - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: noBoostColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334141168849004307, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_Value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334141168849004307, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_Transition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5334141168849004307, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5423103780521243698, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6548,10 +6592,26 @@ PrefabInstance:
       propertyPath: smoothSpeed
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6420380739360873490, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_Transition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6420380739360873490, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7567058444969658944, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: grappleHead
       value: 
       objectReference: {fileID: 1438032875}
+    - target: {fileID: 7792789279433884197, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_Transition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7792789279433884197, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_Navigation.m_Mode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

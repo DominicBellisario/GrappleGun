@@ -24,11 +24,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     Vector2 movementInputThisFrame;
 
-    /// <summary>
-    /// keeps track of whether the player is boosting or not.
-    /// </summary>
-    bool isBoosting;
-
     bool dashCharged;
     Coroutine chargeDash;
     Coroutine depleteDash;
@@ -59,6 +54,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public float CurrentBoostFuel { get; set; }
 
+    /// <summary>
+    /// keeps track of whether the player is boosting or not.
+    /// </summary>
+    public bool IsBoosting { get; set; }
+
     public float CurrentDashCharge { get; set; }
 
     public bool CanDash { get; set; }
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = false;
         mouseRotation = Vector2.zero;
 
-        isBoosting = false;
+        IsBoosting = false;
         CurrentBoostFuel = 100f;
 
         CanDash = true;
@@ -95,18 +95,22 @@ public class PlayerController : MonoBehaviour
             // If the player is grounded, apply the walk acceleration
             if (downRaycastHit.collider != null) { MovePlayer(downRaycastHit, gvar.WalkAcceleration); }
             // If the player is in the air and boosting, apply the boost acceleration
-            else if (isBoosting) { MovePlayer(downRaycastHit, gvar.BoostAcceleration); }
+            else if (IsBoosting) { MovePlayer(downRaycastHit, gvar.BoostAcceleration); }
             // If the player is in the air and not boosting, apply the air acceleration
             else { MovePlayer(downRaycastHit, gvar.AirAcceleration); }
         }
 
         //apply boost when boosting
-        if (isBoosting)
+        if (IsBoosting)
         {
             if (CurrentBoostFuel > 0f)
             {
                 rb.AddForce(gvar.BoostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
                 CurrentBoostFuel -= gvar.BoostFuelUse * Time.deltaTime;
+            }
+            else
+            {
+                IsBoosting = false;
             }
         }
         //recharge boost when grounded
@@ -199,13 +203,13 @@ public class PlayerController : MonoBehaviour
             // if the player is not grounded, activate the boost
             else
             {
-                isBoosting = true;
+                IsBoosting = true;
             }
         }
         // if the button was released, stop boosting
         else
         {
-            isBoosting = false;
+            IsBoosting = false;
         }
     }
 
