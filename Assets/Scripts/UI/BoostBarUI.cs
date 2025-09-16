@@ -14,7 +14,7 @@ public class BoostBarUI : MonoBehaviour
 
     void Update()
     {
-        // update the length of the bar to match the current rope length
+        // update the length of the bar to match the current boost fuel
         slider.value = player.CurrentBoostFuel;
     }
 }

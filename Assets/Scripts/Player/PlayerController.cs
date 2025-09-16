@@ -284,7 +284,7 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(chargeDash);
             if (dashCharged)
             {
-                depleteDash = StartCoroutine(DepleteDash(3));
+                CurrentDashCharge = 0f;
                 dashCharged = false;
                 CanDash = false;
 

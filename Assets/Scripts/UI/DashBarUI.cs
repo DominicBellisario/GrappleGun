@@ -17,18 +17,32 @@ public class DashBarUI : MonoBehaviour
     [SerializeField] Color noDashBackgroundColor;
     [SerializeField] Color yesDashBackgroundColor;
 
+    [Header("Visuals")]
+    [SerializeField] float smoothSpeed;
+
+    //the current dash charge for the player
+    float targetValue;
+
     void Start()
     {
         slider = GetComponent<Slider>();
         gvar = GVar.Instance;
+        targetValue = (player.CurrentDashCharge / gvar.DashChargeTime) * 100;
     }
 
     void Update()
     {
-        // update the length of the bar to match the current rope length
-        slider.value = (player.CurrentDashCharge / gvar.DashChargeTime) * 100;
+        // lerp the bar to follow the current dash charge
+        slider.value = Mathf.Lerp(slider.value, targetValue, Time.deltaTime * smoothSpeed);
 
-        if (slider.value >= slider.maxValue)
+        //update dash charge if it is different
+        if (targetValue != (player.CurrentDashCharge / gvar.DashChargeTime) * 100)
+        {
+            targetValue = (player.CurrentDashCharge / gvar.DashChargeTime) * 100;
+        }
+
+        // change the bars color if it reaches the max
+        if (targetValue >= slider.maxValue)
         {
             bar.color = fullColor;
         }
@@ -37,6 +51,7 @@ public class DashBarUI : MonoBehaviour
             bar.color = chargeColor;
         }
 
+        //change the background if dash is depleted
         if (player.CanDash)
         {
             background.color = yesDashBackgroundColor;
