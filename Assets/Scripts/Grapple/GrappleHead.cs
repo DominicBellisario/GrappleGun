@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
 
+[RequireComponent(typeof(Collider))]
 public class GrappleHead : MonoBehaviour
 {
     Rigidbody rb;
@@ -42,7 +43,7 @@ public class GrappleHead : MonoBehaviour
             }
         }
     }
-    public void Launch(Vector3 target)
+    public void Launch(RaycastHit hit)
     {
         // Stop any existing return coroutine
         StopAllCoroutines();
@@ -55,10 +56,17 @@ public class GrappleHead : MonoBehaviour
 
         // Calculate the direction to the target
         Vector3 direction;
+        Vector3 target = hit.point;
         // use the raycast point to calcaulte the direction
-        if (target != Vector3.zero) { direction = (target - transform.position).normalized; }
-        // if there is no target in range, use the camera forward
-        else { direction = player.GetComponentInChildren<Camera>().gameObject.transform.forward; }
+        if (target != Vector3.zero && Vector3.Distance(target, transform.position) > 1.5f)
+        {
+            direction = (hit.point - transform.position).normalized;
+        }
+        // if there is no target in range or the target is too close, use the camera forward
+        else
+        {
+            direction = player.GetComponentInChildren<Camera>().gameObject.transform.forward;
+        }
 
         // Set the velocity
         rb.linearVelocity = direction * gvar.GrappleLaunchSpeed;
@@ -69,8 +77,10 @@ public class GrappleHead : MonoBehaviour
 
         foreach (Collider col in overlaps)
         {
-            if (col != headCollider) // avoid self
+            // do not disable collision for self and the object the player is looking at
+            if (col != headCollider && col != hit.collider)
             {
+                Debug.Log("Ignore: " + col.name);
                 Physics.IgnoreCollision(headCollider, col, true);
                 StartCoroutine(ReenableCollision(headCollider, col));
             }

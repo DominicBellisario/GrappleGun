@@ -252,7 +252,7 @@ public class PlayerController : MonoBehaviour
         if (inputValue.isPressed)
         {
             // launch the grapple head towards the point hit by the forward raycast
-            grappleHead.GetComponent<GrappleHead>().Launch(playerCam.GetComponent<Raycasts>().ForwardRaycastHit.point);
+            grappleHead.GetComponent<GrappleHead>().Launch(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
         }
         else
         {
