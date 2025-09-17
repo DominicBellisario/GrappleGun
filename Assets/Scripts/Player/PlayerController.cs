@@ -41,6 +41,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject grappleStart;
     [SerializeField] GameObject grappleHead;
 
+    [SerializeField] Gun gun;
+    float currentReloadTime;
+
+
     GVar gvar;
 
     /// <summary>
@@ -82,6 +86,8 @@ public class PlayerController : MonoBehaviour
         dashCharged = false;
 
         CanUseGrapple = true;
+
+        currentReloadTime = 0f;
     }
 
     void Update()
@@ -122,11 +128,11 @@ public class PlayerController : MonoBehaviour
         //speed is hard capped while grounded, prevents sliding at high entry speeds
         if (downRaycastHit.collider != null)
         {
-           // rb.linearVelocity = new Vector3(
-               // Mathf.Clamp(rb.linearVelocity.x, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed),
-               // rb.linearVelocity.y,
-               // Mathf.Clamp(rb.linearVelocity.z, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed));
-            
+            // rb.linearVelocity = new Vector3(
+            // Mathf.Clamp(rb.linearVelocity.x, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed),
+            // rb.linearVelocity.y,
+            // Mathf.Clamp(rb.linearVelocity.z, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed));
+
             CanDash = true;
         }
     }
@@ -322,5 +328,15 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
         CurrentDashCharge = 0;
+    }
+
+    private void OnShoot(InputValue inputValue)
+    {
+        if (gvar.IsPaused) return;
+        
+        if (inputValue.isPressed && currentReloadTime == 0f)
+        {
+            gun.FireGun(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
+        }
     }
 }

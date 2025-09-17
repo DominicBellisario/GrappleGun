@@ -127,6 +127,18 @@ public class GVar : MonoBehaviour
     [SerializeField] float birdAutoDetatchTime;
     public float BirdAutoDetatchTime => birdAutoDetatchTime;
 
+    [Header("Gun Settings")]
+    /// <summary>
+    /// The time in seconds it takes for the gun to reload
+    /// </summary>
+    [SerializeField] float gunReloadTime;
+    public float GunReloadTime => gunReloadTime;
+
+    /// <summary>
+    /// The speed of the bullet
+    /// </summary>
+    [SerializeField] float bulletSpeed;
+    public float BulletSpeed => bulletSpeed;
 
     public static GVar Instance { get; private set; }
 

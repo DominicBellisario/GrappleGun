@@ -57,7 +57,7 @@ public class GrappleHead : MonoBehaviour
         // Calculate the direction to the target
         Vector3 direction;
         Vector3 target = hit.point;
-        // use the raycast point to calcaulte the direction
+        // use the raycast point to calcaulte the direction normally
         if (target != Vector3.zero && Vector3.Distance(target, transform.position) > 1.5f)
         {
             direction = (hit.point - transform.position).normalized;
