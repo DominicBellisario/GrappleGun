@@ -8,13 +8,13 @@ public class GunLag : MonoBehaviour
     [SerializeField] Rigidbody playerRb;
 
     [Header("Sway Settings")]
-    [SerializeField] float swayAmount = 2f;
-    [SerializeField] float maxSway = 5f;
-    [SerializeField] float swaySmooth = 6f;
+    [SerializeField] float swayAmount;
+    [SerializeField] float maxSway;
+    [SerializeField] float swaySmooth;
 
     [Header("Lag Settings")]
-    [SerializeField] float lagAmount = 0.05f;   // how far the gun shifts
-    [SerializeField] float lagSmooth = 6f;     // how quickly it catches up
+    [SerializeField] float lagAmount;   // how far the gun shifts
+    [SerializeField] float lagSmooth;     // how quickly it catches up
     [SerializeField] float lagClamp;
 
     [HideInInspector]

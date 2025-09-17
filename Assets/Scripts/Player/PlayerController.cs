@@ -42,7 +42,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject grappleHead;
 
     [SerializeField] Gun gun;
-    float currentReloadTime;
+    [SerializeField] GunLag gunLag;
+    bool isReloaded;
 
 
     GVar gvar;
@@ -87,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
         CanUseGrapple = true;
 
-        currentReloadTime = 0f;
+        isReloaded = true;
     }
 
     void Update()
@@ -243,6 +244,7 @@ public class PlayerController : MonoBehaviour
 
         //rotate the gun to lag slightly behind the movement
         grappleObject.lookInput = lookInput;
+        gunLag.lookInput = lookInput;
     }
 
     /// <summary>
@@ -333,10 +335,18 @@ public class PlayerController : MonoBehaviour
     private void OnShoot(InputValue inputValue)
     {
         if (gvar.IsPaused) return;
-        
-        if (inputValue.isPressed && currentReloadTime == 0f)
+
+        if (inputValue.isPressed && isReloaded)
         {
             gun.FireGun(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
+            StartCoroutine(ReloadGun());
         }
+    }
+
+    private IEnumerator ReloadGun()
+    {
+        isReloaded = false;
+        yield return new WaitForSeconds(gvar.GunReloadTime);
+        isReloaded = true;
     }
 }
