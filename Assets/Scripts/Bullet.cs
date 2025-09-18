@@ -1,18 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
 public class Bullet : MonoBehaviour
 {
     [SerializeField] GameObject bulletExplosion;
-
-    Rigidbody rb;
-
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
 
     /// <summary>
     /// once the bullet is not hitting anything, turn back on its collisions
