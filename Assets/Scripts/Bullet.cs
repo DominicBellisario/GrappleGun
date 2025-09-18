@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public class Bullet : MonoBehaviour
 {
     Rigidbody rb;
@@ -26,5 +27,10 @@ public class Bullet : MonoBehaviour
             yield return null;
         }
         Physics.IgnoreCollision(bulletCol, otherCol, false);
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject);
     }
 }
