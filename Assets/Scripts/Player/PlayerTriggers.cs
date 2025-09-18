@@ -6,10 +6,12 @@ public class PlayerTriggers : MonoBehaviour
 {
     [SerializeField] Timer timer;
     Rigidbody rb;
+    GVar gvar;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gvar = GVar.Instance;
     }
 
     void OnTriggerEnter(Collider trigger)
@@ -39,7 +41,7 @@ public class PlayerTriggers : MonoBehaviour
 
         else if (trigger.gameObject.CompareTag("Bullet Explosion"))
         {
-            rb.AddExplosionForce(200f, trigger.gameObject.transform.position, 3f);
+            rb.AddExplosionForce(gvar.BulletExplosionForce, trigger.gameObject.transform.position, 3f);
         }
     } 
 

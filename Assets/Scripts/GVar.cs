@@ -140,6 +140,12 @@ public class GVar : MonoBehaviour
     [SerializeField] float bulletSpeed;
     public float BulletSpeed => bulletSpeed;
 
+    /// <summary>
+    /// The force of the bullet explosion on the player
+    /// </summary>
+    [SerializeField] float bulletExplosionForce;
+    public float BulletExplosionForce => bulletExplosionForce;
+
     public static GVar Instance { get; private set; }
 
 
