@@ -152,3 +152,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e175dc8f88e8343ba780cd8a3b8358, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  bulletExplosion: {fileID: 8647382072497685457, guid: 28a7d49bdc7529f4bb1ba144411fae44, type: 3}

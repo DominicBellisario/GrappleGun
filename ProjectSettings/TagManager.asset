@@ -12,6 +12,7 @@ TagManager:
   - Target
   - Start Level
   - Bullet
+  - Bullet Explosion
   layers:
   - Default
   - TransparentFX

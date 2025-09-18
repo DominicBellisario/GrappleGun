@@ -73,14 +73,13 @@ public class GrappleHead : MonoBehaviour
 
         //ignore collisions if the grapple is launched while already touching something
         Collider headCollider = GetComponent<Collider>();
-        Collider[] overlaps = Physics.OverlapSphere(headCollider.bounds.center, 0.1f);
+        Collider[] overlaps = Physics.OverlapSphere(headCollider.bounds.center, 0.35f);
 
         foreach (Collider col in overlaps)
         {
             // do not disable collision for self and the object the player is looking at
             if (col != headCollider && col != hit.collider)
             {
-                Debug.Log("Ignore: " + col.name);
                 Physics.IgnoreCollision(headCollider, col, true);
                 StartCoroutine(ReenableCollision(headCollider, col));
             }

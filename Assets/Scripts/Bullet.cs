@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] GameObject bulletExplosion;
+
     Rigidbody rb;
 
     void Start()
@@ -31,6 +33,7 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        Instantiate(bulletExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

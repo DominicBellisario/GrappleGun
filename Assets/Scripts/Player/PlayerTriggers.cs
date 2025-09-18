@@ -36,6 +36,11 @@ public class PlayerTriggers : MonoBehaviour
                 timer.TimerSequence(true);
             }
         }
+
+        else if (trigger.gameObject.CompareTag("Bullet Explosion"))
+        {
+            rb.AddExplosionForce(200f, trigger.gameObject.transform.position, 3f);
+        }
     } 
 
     IEnumerator SwitchInterpolation()
