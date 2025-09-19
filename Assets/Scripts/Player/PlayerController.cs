@@ -339,6 +339,7 @@ public class PlayerController : MonoBehaviour
         if (inputValue.isPressed && isReloaded)
         {
             gun.FireGun(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
+            gunLag.AddRecoil();
             StartCoroutine(ReloadGun());
         }
     }

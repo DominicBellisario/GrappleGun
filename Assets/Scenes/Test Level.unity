@@ -2189,6 +2189,9 @@ MonoBehaviour:
   lagAmount: 0.01
   lagSmooth: 10
   lagClamp: 0.15
+  recoilKickback: 0.5
+  recoilRotation: 50
+  recoilReturnSpeed: 5
   lookInput: {x: 0, y: 0}
 --- !u!1001 &510393153
 PrefabInstance:
@@ -6036,6 +6039,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 652446329622223477, guid: 45f8de44e8048fa4784c78a0e745fced, type: 3}
   m_PrefabInstance: {fileID: 965801305}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1279600998 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5976852609743098317, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+  m_PrefabInstance: {fileID: 1438032873}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43529caa19a5e14ca39c25d33802f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GunLag
 --- !u!4 &1287317274 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 583657415675710911, guid: 368c11e0d1844b94cbf7700575c9d0c5, type: 3}
@@ -6584,6 +6598,10 @@ PrefabInstance:
       propertyPath: m_CullingMask.m_Bits
       value: 1527
       objectReference: {fileID: 0}
+    - target: {fileID: 4075675839506298894, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: grappleLag
+      value: 
+      objectReference: {fileID: 1279600998}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6636,6 +6654,14 @@ PrefabInstance:
       propertyPath: 'm_Cameras.Array.data[0]'
       value: 
       objectReference: {fileID: 545593638}
+    - target: {fileID: 5976852609743098317, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: recoilKickback
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5976852609743098317, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: recoilRotation
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6843973337259231705, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_CollisionDetection
       value: 2

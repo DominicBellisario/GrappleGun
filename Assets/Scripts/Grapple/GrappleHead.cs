@@ -15,6 +15,7 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject grapplePointPrefab;
     [SerializeField] GameObject grappleStartPos;
+    [SerializeField] GunLag grappleLag;
 
     GVar gvar;
    
@@ -47,6 +48,9 @@ public class GrappleHead : MonoBehaviour
     {
         // Stop any existing return coroutine
         StopAllCoroutines();
+
+        //add recoil
+        grappleLag.AddRecoil();
 
         // detatch the grapple head from the grapple
         transform.SetParent(null);
@@ -117,6 +121,7 @@ public class GrappleHead : MonoBehaviour
         detectCollisions = true;
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
+        grappleLag.AddRecoil();
         rb.interpolation = RigidbodyInterpolation.None;
 
         player.GetComponent<PlayerController>().CanUseGrapple = true;

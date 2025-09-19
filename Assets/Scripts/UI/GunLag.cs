@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class GunLag : MonoBehaviour
 {
-     [Header("References")]
+    [Header("References")]
     [SerializeField] Transform cameraTransform;
     [SerializeField] Rigidbody playerRb;
 
@@ -13,51 +13,69 @@ public class GunLag : MonoBehaviour
     [SerializeField] float swaySmooth;
 
     [Header("Lag Settings")]
-    [SerializeField] float lagAmount;   // how far the gun shifts
-    [SerializeField] float lagSmooth;     // how quickly it catches up
+    [SerializeField] float lagAmount;
+    [SerializeField] float lagSmooth;
     [SerializeField] float lagClamp;
 
-    [HideInInspector]
-    public Vector2 lookInput;
+    [Header("Recoil Settings")]
+    [SerializeField] float recoilKickback = 0.1f;   // backward position offset
+    [SerializeField] float recoilRotation = 5f;     // upward rotation angle
+    [SerializeField] float recoilReturnSpeed = 10f; // how fast it returns
+
+    [HideInInspector] public Vector2 lookInput;
 
     Quaternion originalRotation;
     Vector3 originalPosition;
+
+    Vector3 recoilOffset;       // positional recoil offset
+    Quaternion recoilRotationOffset; // rotational recoil offset
 
     void Start()
     {
         originalRotation = transform.localRotation;
         originalPosition = transform.localPosition;
+        recoilRotationOffset = Quaternion.identity;
     }
 
     void Update()
     {
-        // Calculate target sway rotation
+        // --- Sway ---
         Quaternion xQuat = Quaternion.AngleAxis(-swayAmount * lookInput.x * Time.deltaTime, Vector3.up);
         Quaternion yQuat = Quaternion.AngleAxis(swayAmount * lookInput.y * Time.deltaTime, Vector3.right);
         Quaternion targetRotation = originalRotation * xQuat * yQuat;
 
-        // Clamp sway
         targetRotation = ClampRotation(targetRotation, maxSway);
 
-        // Smoothly interpolate
+        // --- Recoil Rotation ---
+        recoilRotationOffset = Quaternion.Slerp(recoilRotationOffset, Quaternion.identity, Time.deltaTime * recoilReturnSpeed);
+        targetRotation *= recoilRotationOffset;
+
         transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * swaySmooth);
 
-        //slowly reduce look input
         lookInput = Vector2.Lerp(lookInput, Vector2.zero, Time.deltaTime * swaySmooth);
 
-
-        // calculate how far the gun should be from the player
+        // --- Lag ---
         Vector3 localVel = cameraTransform.InverseTransformDirection(playerRb.linearVelocity);
         Vector3 lagOffset = new Vector3(localVel.x, -localVel.y * 2, localVel.z) * lagAmount;
-        // gun cannot go too far away from player
         lagOffset = Vector3.ClampMagnitude(lagOffset, lagClamp);
 
-        // Smooth movement toward calculated lag position
+        // --- Recoil Position ---
+        recoilOffset = Vector3.Lerp(recoilOffset, Vector3.zero, Time.deltaTime * recoilReturnSpeed);
+
         transform.localPosition = Vector3.Lerp(
             transform.localPosition,
-            originalPosition + lagOffset,
+            originalPosition + lagOffset + recoilOffset,
             Time.deltaTime * lagSmooth
         );
+    }
+
+    public void AddRecoil()
+    {
+        // Kick gun backwards
+        recoilOffset += Vector3.back * recoilKickback;
+
+        // Rotate gun upwards (slight random side sway can be added)
+        recoilRotationOffset *= Quaternion.Euler(-recoilRotation, Random.Range(-recoilRotation * 0.2f, recoilRotation * 0.2f), 0f);
     }
 
     private Quaternion ClampRotation(Quaternion q, float maxAngle)
