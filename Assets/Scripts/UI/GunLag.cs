@@ -69,10 +69,10 @@ public class GunLag : MonoBehaviour
         );
     }
 
-    public void AddRecoil()
+    public void AddRecoil(float multiplier)
     {
         // Kick gun backwards
-        recoilOffset += Vector3.back * recoilKickback;
+        recoilOffset += multiplier * recoilKickback * Vector3.back;
 
         // Rotate gun upwards (slight random side sway can be added)
         recoilRotationOffset *= Quaternion.Euler(-recoilRotation, Random.Range(-recoilRotation * 0.2f, recoilRotation * 0.2f), 0f);

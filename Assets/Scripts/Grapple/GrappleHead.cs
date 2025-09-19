@@ -50,7 +50,7 @@ public class GrappleHead : MonoBehaviour
         StopAllCoroutines();
 
         //add recoil
-        grappleLag.AddRecoil();
+        grappleLag.AddRecoil(1f);
 
         // detatch the grapple head from the grapple
         transform.SetParent(null);
@@ -119,9 +119,11 @@ public class GrappleHead : MonoBehaviour
 
         // Once close enough, snap to the grapple start position
         detectCollisions = true;
+        // add recoil as long as the grapple head was actually coming back and not already back
+        grappleLag.AddRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
-        grappleLag.AddRecoil();
+        
         rb.interpolation = RigidbodyInterpolation.None;
 
         player.GetComponent<PlayerController>().CanUseGrapple = true;
