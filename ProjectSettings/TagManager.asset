@@ -13,6 +13,8 @@ TagManager:
   - Start Level
   - Bullet
   - Bullet Explosion
+  - Checkpoint
+  - Death Plain
   layers:
   - Default
   - TransparentFX
@@ -23,9 +25,9 @@ TagManager:
   - Standard
   - Grapple Only
   - Player Only
-  - Invisible
+  - Invisible Player Col
   - Bullet
-  - 
+  - Invisible No Player Col
   - 
   - 
   - 

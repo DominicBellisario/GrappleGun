@@ -3,8 +3,16 @@ using UnityEngine;
 public class GVar : MonoBehaviour
 {
     // GAME SETTINGS / STATES
-    bool isPaused;
-    public bool IsPaused { get { return Instance.isPaused; } set { Instance.isPaused = value; } }
+
+    /// <summary>
+    /// wether or not the game is paused
+    /// </summary>
+    public bool IsPaused { get; set; }
+
+    /// <summary>
+    /// the current checkpoint the player will spawn at if they die
+    /// </summary>
+    public Vector3 CurrentCheckpoint { get; set; }
 
     // PLAYER SETTINGS: ALL TAKEN FROM PLAYERPREFS
     float mouseSensitivity;

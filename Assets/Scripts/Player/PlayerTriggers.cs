@@ -2,15 +2,18 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerEvents))]
 public class PlayerTriggers : MonoBehaviour
 {
     [SerializeField] Timer timer;
     Rigidbody rb;
     GVar gvar;
+    PlayerEvents pEvents;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        pEvents = GetComponent<PlayerEvents>();
         gvar = GVar.Instance;
     }
 
@@ -43,7 +46,17 @@ public class PlayerTriggers : MonoBehaviour
         {
             rb.AddExplosionForce(gvar.BulletExplosionForce, trigger.gameObject.transform.position, 3f);
         }
-    } 
+
+        else if (trigger.gameObject.CompareTag("Checkpoint"))
+        {
+            gvar.CurrentCheckpoint = trigger.gameObject.transform.position;
+        }
+
+        else if (trigger.gameObject.CompareTag("Death Plain"))
+        {
+            pEvents.OutOfBounds();
+        }
+    }
 
     IEnumerator SwitchInterpolation()
     {
