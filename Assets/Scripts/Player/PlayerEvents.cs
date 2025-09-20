@@ -28,7 +28,7 @@ public class PlayerEvents : MonoBehaviour
     {
         //fade to black
         fadePanel.Fade(0f, 1f, fadeTime);
-        yield return new WaitForSeconds(fadeTime);
+        yield return new WaitForSeconds(fadeTime + 0.5f);
         //reload the scene
         sceneHelper.ReloadScene();
     }

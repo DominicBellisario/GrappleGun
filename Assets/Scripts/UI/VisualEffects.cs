@@ -9,6 +9,8 @@ public class VisualEffects : MonoBehaviour
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 1f;
+        Fade(1f, 0f, 0.25f);
     }
 
     public void Fade(float startAlpha, float endAlpha, float time)
