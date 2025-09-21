@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public enum EnemyState
@@ -71,7 +69,6 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        Debug.Log(currentState);
         switch (currentState)
         {
             case EnemyState.Idle:
