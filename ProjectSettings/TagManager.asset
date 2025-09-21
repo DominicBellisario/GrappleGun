@@ -15,7 +15,6 @@ TagManager:
   - Bullet Explosion
   - Checkpoint
   - Death Plain
-  - One Way Plat
   layers:
   - Default
   - TransparentFX
