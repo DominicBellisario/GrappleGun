@@ -5,7 +5,18 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] GameObject bulletExplosion;
+    [SerializeField] float lifeSpan;
 
+    [SerializeField] float bulletSpeed;
+    public float BulletSpeed { get { return bulletSpeed; } }
+
+    [SerializeField] float damage;
+    public float Damage { get { return damage; } }
+
+    void Start()
+    {
+        StartCoroutine(Lifespan());
+    }
     /// <summary>
     /// once the bullet is not hitting anything, turn back on its collisions
     /// </summary>
@@ -24,6 +35,17 @@ public class Bullet : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision)
+    {
+        Die();
+    }
+
+    private IEnumerator Lifespan()
+    {
+        yield return new WaitForSeconds(lifeSpan);
+        Die();
+    }
+
+    private void Die()
     {
         Instantiate(bulletExplosion, transform.position, Quaternion.identity);
         Destroy(gameObject);

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -27,6 +28,7 @@ public class PlayerTriggers : MonoBehaviour
             StartCoroutine(SwitchInterpolation());
         }
 
+        // send player back to start and reset timer if they reach the end
         else if (trigger.gameObject.CompareTag("Target"))
         {
             rb.linearVelocity = Vector3.zero;
@@ -34,6 +36,7 @@ public class PlayerTriggers : MonoBehaviour
             timer.TimerSequence(false);
         }
 
+        // start the timer once they start the level
         else if (trigger.gameObject.CompareTag("Start Level"))
         {
             if (timer != null)
@@ -42,16 +45,19 @@ public class PlayerTriggers : MonoBehaviour
             }
         }
 
+        // launch the player away from the explosion
         else if (trigger.gameObject.CompareTag("Bullet Explosion"))
         {
-            rb.AddExplosionForce(gvar.BulletExplosionForce, trigger.gameObject.transform.position, 3f);
+            rb.AddExplosionForce(trigger.gameObject.GetComponent<BulletExplosion>().BulletExplosionForce, trigger.gameObject.transform.position, 3f);
         }
 
+        // set a checkpoint
         else if (trigger.gameObject.CompareTag("Checkpoint"))
         {
             gvar.CurrentCheckpoint = trigger.gameObject.transform.position;
         }
 
+        // reset the scene and tp the player to the last checkpoint if they hit one
         else if (trigger.gameObject.CompareTag("Death Plain"))
         {
             pEvents.OutOfBounds();

@@ -1,6 +1,3 @@
-using System.Collections;
-using NUnit.Framework.Constraints;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -8,13 +5,6 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gunMuzzle;
-
-    GVar gvar;
-
-    void Start()
-    {
-        gvar = GVar.Instance;
-    }
 
     public void FireGun(RaycastHit hit)
     {
@@ -36,7 +26,7 @@ public class Gun : MonoBehaviour
         }
 
         // Set the velocity
-        newBullet.GetComponent<Rigidbody>().linearVelocity = direction * gvar.BulletSpeed;
+        newBullet.GetComponent<Rigidbody>().linearVelocity = direction * newBullet.GetComponent<Bullet>().BulletSpeed;
 
         //ignore collisions if the grapple is launched while already touching something
         Collider bulletCol = newBullet.GetComponent<Collider>();
@@ -47,7 +37,6 @@ public class Gun : MonoBehaviour
             // do not disable collision for self and the object the player is looking at
             if (col != bulletCol && col != hit.collider)
             {
-                Debug.Log("Ignore: " + col.name);
                 Physics.IgnoreCollision(bulletCol, col, true);
                 newBullet.GetComponent<Bullet>().StartCoroutine(newBullet.GetComponent<Bullet>().ReenableCollision(col));
             }

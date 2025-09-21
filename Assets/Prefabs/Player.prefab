@@ -834,7 +834,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1527
+    m_Bits: 5623
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1189,9 +1189,10 @@ GameObject:
   - component: {fileID: 721245642031836973}
   - component: {fileID: 57737250660311644}
   - component: {fileID: 2294464338297261211}
+  - component: {fileID: 5647756632889494307}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1337,7 +1338,7 @@ MonoBehaviour:
   forwardRaycastDistance: 0
   targetableLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 4416
 --- !u!114 &721245642031836973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1378,4 +1379,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEvents
   fadePanel: {fileID: 0}
-  fadeTime: 0.25
+  fadeTime: 0.4
+--- !u!135 &5647756632889494307
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8899434119458475185}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0, z: 0}

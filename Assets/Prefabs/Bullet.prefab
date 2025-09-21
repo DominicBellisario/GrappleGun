@@ -153,3 +153,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
   bulletExplosion: {fileID: 8647382072497685457, guid: 28a7d49bdc7529f4bb1ba144411fae44, type: 3}
+  lifeSpan: 3
+  bulletSpeed: 100
+  damage: 1

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Timeline;
 
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class GrappleHead : MonoBehaviour
 {
     Rigidbody rb;
@@ -147,8 +148,8 @@ public class GrappleHead : MonoBehaviour
             //player cannot use the grapple until they are pulled in fully
             player.GetComponent<PlayerController>().CanUseGrapple = false;
         }
-        // If it collides with a non grappleable surface, send the grapple back
-        else if (collision.gameObject.CompareTag("No Grap Surface"))
+        // If it collides with anything else, send the grapple back
+        else 
         {
             StartCoroutine(ReturnToGun());
         }

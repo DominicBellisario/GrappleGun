@@ -4930,3 +4930,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletExplosion
   hitboxActiveTime: 0.25
+  bulletExplosionForce: 200
