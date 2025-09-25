@@ -22,7 +22,7 @@ public class HealthBarUI : MonoBehaviour
     {
         slider = GetComponent<Slider>();
         gvar = GVar.Instance;
-        slider.maxValue = player.PlayerHealth * 100;
+        slider.maxValue = player.Health * 100;
         targetValue = slider.maxValue;
     }
 
@@ -32,9 +32,9 @@ public class HealthBarUI : MonoBehaviour
         slider.value = Mathf.Lerp(slider.value, targetValue, Time.deltaTime * smoothSpeed);
 
         //update health if it is different
-        if (targetValue != player.PlayerHealth * 100)
+        if (targetValue != player.Health * 100)
         {
-            targetValue = player.PlayerHealth * 100;
+            targetValue = player.Health * 100;
         }
 
         // hide the bar if at full health

@@ -6,22 +6,24 @@ public class PlayerEvents : MonoBehaviour
     [SerializeField] FadeOut fadePanel;
     [SerializeField] DamageBorder damagePanel;
     [SerializeField] float fadeTime;
-    [SerializeField] int playerHealth;
+    [SerializeField] int health;
     int maxHealth;
     [SerializeField] float playerHealthRegenTime;
-    public int PlayerHealth {  get { return playerHealth; } }
+    public int Health {  get { return health; } }
     [SerializeField] int playerInvulnTime;
     bool invulnerable;
 
     GVar gvar;
     SceneHelper sceneHelper;
+    IEnumerator regenHealth;
 
     void Start()
     {
         gvar = GVar.Instance;
         sceneHelper = SceneHelper.Instance;
         invulnerable = false;
-        maxHealth = playerHealth;
+        maxHealth = health;
+        regenHealth = RegenHealth();
 
         //send the player to the current checkpoint
         if (gvar.CurrentCheckpoint != Vector3.zero) { StartCoroutine(Respawn()); }
@@ -36,10 +38,10 @@ public class PlayerEvents : MonoBehaviour
         StartCoroutine(Helper.DoThisAfterDelay(fadeTime, () => sceneHelper.ReloadScene()));
     }
 
-    public void ChangeHealth(int healthChange)
+    public void DecreaseHealth(int healthChange)
     {
-        // dont do anything if the player is harmed while invulnerable
-        if (invulnerable && healthChange <= 0) return;
+        // dont do anything if the player is invulnerable
+        if (invulnerable) return;
 
         // make player invulnerable for a bit
         invulnerable = true;
@@ -49,11 +51,13 @@ public class PlayerEvents : MonoBehaviour
         damagePanel.PlayDamageEffect();
 
         // change player health and check if they die
-        playerHealth += healthChange;
-        if (playerHealth <= 0) OutOfBounds();
+        health -= healthChange;
+        if (health <= 0) OutOfBounds();
 
-        // start regen health
-        if (playerHealth < maxHealth) { StartCoroutine(RegenHealth()); }
+        // start regening health
+        StopCoroutine(regenHealth);
+        regenHealth = RegenHealth();
+        StartCoroutine(regenHealth);
     }
 
     private IEnumerator Respawn()
@@ -64,7 +68,14 @@ public class PlayerEvents : MonoBehaviour
 
     private IEnumerator RegenHealth()
     {
+        // wait for a bit
         yield return new WaitForSeconds(playerHealthRegenTime);
-
+        // stop loop if max health
+        if (health == maxHealth) yield break;
+        // add health
+        health++;
+        // regen more health
+        regenHealth = RegenHealth();
+        StartCoroutine(regenHealth);
     }
 }
