@@ -2680,6 +2680,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2033147376}
     - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: health
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: fadePanel
       value: 
       objectReference: {fileID: 65228772}
@@ -2687,6 +2691,10 @@ PrefabInstance:
       propertyPath: damagePanel
       value: 
       objectReference: {fileID: 882914691}
+    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: playerHealthRegenTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -38.690697

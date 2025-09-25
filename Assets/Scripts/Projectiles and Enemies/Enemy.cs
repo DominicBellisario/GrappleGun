@@ -44,11 +44,13 @@ public class Enemy : MonoBehaviour
     protected float aggroRange;
     [SerializeField] protected SphereCollider attackZone;
     protected float attackRange;
+    [SerializeField] protected Color damagedColor;
 
     protected EnemyState currentState;
     protected Rigidbody rb;
     protected GameObject player;
     protected Vector3 startPos;
+    protected Material bodyMaterial;
 
     protected bool canDamagePlayer;
     protected bool canMove;
@@ -64,6 +66,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         player = GameObject.FindGameObjectWithTag("Player");
         startPos = transform.position;
+        bodyMaterial = GetComponentInChildren<MeshRenderer>().material;
         canDamagePlayer = damage > 0;
         canMove = maxSpeed > 0;
         canBeStunned = stunTime > 0;
@@ -147,19 +150,42 @@ public class Enemy : MonoBehaviour
 
     protected void TakeDamage(int damage)
     {
-         // enemy is immune to damage for a time
-            isVulnerable = false;
-            StartCoroutine(Helper.DoThisAfterDelay(invulnTime, () => isVulnerable = true));
+        // enemy is immune to damage for a time
+        isVulnerable = false;
+        StartCoroutine(Helper.DoThisAfterDelay(invulnTime, () => isVulnerable = true));
 
-            //stun them if possible
-            if (canBeStunned) { currentState = EnemyState.Stunned; }
+        //stun them if possible
+        if (canBeStunned) { currentState = EnemyState.Stunned; }
 
-            // reduce health if they can
-            if (canDie)
+        // reduce health if they can
+        if (canDie)
+        {
+            health -= damage;
+            // if health is 0, they die
+            if (health <= 0) 
             {
-                health -= damage;
-                // if health is 0, they die
-                if (health <= 0) { currentState = EnemyState.Dead; }
+                bodyMaterial.color = damagedColor;
+                bodyMaterial.SetColor("_EmissionColor", damagedColor);
+                currentState = EnemyState.Dead; 
             }
+            else
+            {
+                // make them flash red
+                StartCoroutine(FlashMaterial(damagedColor));
+            }
+        }
+    }
+
+    protected IEnumerator FlashMaterial(Color flashedColor)
+    {
+        Color startColor = bodyMaterial.color;
+        float t = 0f;
+        while (t < stunTime)
+        {
+            t += Time.deltaTime;
+            bodyMaterial.color = Color.Lerp(flashedColor, startColor, t / stunTime);
+            yield return null;
+        }
+        bodyMaterial.color = startColor;
     }
 }
