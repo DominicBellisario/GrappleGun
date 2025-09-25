@@ -1681,6 +1681,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 652446329622223477, guid: 7837f0d5d1c82c9469fbeab3f7f4c116, type: 3}
   m_PrefabInstance: {fileID: 1961137553}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &882914691 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2483548023883077819, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+  m_PrefabInstance: {fileID: 1601435996}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02239a8e45930b24eb7dce540322c161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageBorder
 --- !u!1001 &895994287
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2599,6 +2610,10 @@ PrefabInstance:
       propertyPath: fadePanel
       value: 
       objectReference: {fileID: 65228772}
+    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: damagePanel
+      value: 
+      objectReference: {fileID: 882914691}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -49.5
@@ -2862,10 +2877,6 @@ PrefabInstance:
     - target: {fileID: 4115095722635036894, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 4115095722635036894, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4914926747769294823, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: player

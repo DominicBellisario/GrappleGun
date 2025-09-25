@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class PlayerEvents : MonoBehaviour
 {
-    [SerializeField] VisualEffects fadePanel;
+    [SerializeField] FadeOut fadePanel;
+    [SerializeField] DamageBorder damagePanel;
     [SerializeField] float fadeTime;
     [SerializeField] int playerHealth;
     [SerializeField] int playerInvulnTime;
@@ -39,9 +40,11 @@ public class PlayerEvents : MonoBehaviour
 
     public void ChangeHealth(int healthChange)
     {
-        if (invulnerable) return;
+        if (invulnerable && healthChange <= 0) return;
         invulnerable = true;
         StartCoroutine(Helper.DoThisAfterDelay(playerInvulnTime, () => invulnerable = false));
+
+        damagePanel.PlayDamageEffect();
 
         playerHealth += healthChange;
         if (playerHealth <= 0) StartCoroutine(_OutOfBounds());

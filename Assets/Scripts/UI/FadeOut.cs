@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CanvasGroup))]
-public class VisualEffects : MonoBehaviour
+public class FadeOut : MonoBehaviour
 {
     CanvasGroup canvasGroup;
 
