@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float maxSpeed;
     [SerializeField] protected float acceleration;
     [SerializeField] protected int damage;
+    [SerializeField] protected float knockbackForce;
     [SerializeField] protected float stunTime;
     [SerializeField] protected float deathTime;
     [SerializeField] protected SphereCollider awareZone;

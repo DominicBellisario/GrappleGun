@@ -77,6 +77,7 @@ public class EnemyBasic : Enemy
         else if (collision.gameObject.CompareTag("Player"))
         {
             player.GetComponent<PlayerEvents>().ChangeHealth(-damage);
+            player.GetComponent<Rigidbody>().AddExplosionForce(knockbackForce, transform.position, 1f, 1f, ForceMode.Impulse);
         }
     }
 
