@@ -71,21 +71,8 @@ public class EnemyBasic : Enemy
     {
         if (collision.gameObject.CompareTag("Bullet") && isVulnerable)
         {
-            Debug.Log(gameObject.name + " hit by bullet");
-            // enemy is immune to damage for a time
-            isVulnerable = false;
-            StartCoroutine(Helper.DoThisAfterDelay(invulnTime, () => isVulnerable = true));
-
-            //stun them if possible
-            if (canBeStunned) { currentState = EnemyState.Stunned; }
-
-            // reduce health if they can
-            if (canDie)
-            {
-                health -= collision.gameObject.GetComponent<Bullet>().Damage;
-                // if health is 0, they die
-                if (health == 0) { currentState = EnemyState.Dead; }
-            }
+            //enemy takes damage
+            TakeDamage(collision.gameObject.GetComponent<Bullet>().Damage);
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
@@ -97,25 +84,11 @@ public class EnemyBasic : Enemy
     {
         if (collider.gameObject.CompareTag("Bullet Explosion") && isVulnerable)
         {
-            Debug.Log(gameObject.name + " hit by explosion");
-            // enemy is immune to damage for a time
-            isVulnerable = false;
-            StartCoroutine(Helper.DoThisAfterDelay(invulnTime, () => isVulnerable = true));
-
             BulletExplosion explosion = collider.gameObject.GetComponent<BulletExplosion>();
-            //stun them if possible
-            if (canBeStunned) { currentState = EnemyState.Stunned; }
-
+            // enemy takes damage
+            TakeDamage(explosion.Damage);
             // launch them away from the explosion
             rb.AddExplosionForce(explosion.BulletExplosionForce, collider.gameObject.transform.position, 3f);
-
-            // reduce health if they can
-            if (canDie)
-            {
-                health -= explosion.Damage;
-                // if health is 0, they die
-                if (health <= 0) { currentState = EnemyState.Dead; }
-            }
         }
     }
 }

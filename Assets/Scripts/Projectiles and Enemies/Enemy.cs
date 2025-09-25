@@ -143,4 +143,22 @@ public class Enemy : MonoBehaviour
         else if (distance > attackRange) { currentState = EnemyState.Aware; }
         else { currentState = EnemyState.Attacking; }
     }
+
+    protected void TakeDamage(int damage)
+    {
+         // enemy is immune to damage for a time
+            isVulnerable = false;
+            StartCoroutine(Helper.DoThisAfterDelay(invulnTime, () => isVulnerable = true));
+
+            //stun them if possible
+            if (canBeStunned) { currentState = EnemyState.Stunned; }
+
+            // reduce health if they can
+            if (canDie)
+            {
+                health -= damage;
+                // if health is 0, they die
+                if (health <= 0) { currentState = EnemyState.Dead; }
+            }
+    }
 }

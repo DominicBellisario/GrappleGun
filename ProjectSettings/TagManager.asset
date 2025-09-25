@@ -15,6 +15,7 @@ TagManager:
   - Bullet Explosion
   - Checkpoint
   - Death Plain
+  - Enemy
   layers:
   - Default
   - TransparentFX
