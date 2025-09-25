@@ -11,7 +11,7 @@ public class EnemyBasic : Enemy
         base.Idle();
         if (!canMove) return;
         rb.AddForce(CalculateForce(startPos), ForceMode.Acceleration);
-        rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
+        //rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
         RotateEnemy();
     }
 
@@ -20,7 +20,7 @@ public class EnemyBasic : Enemy
         base.Aware();
         if (!canMove) return;
         rb.AddForce(CalculateForce(player.transform.position), ForceMode.Acceleration);
-        rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
+        //rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
         RotateEnemy();
     }
 
@@ -29,7 +29,7 @@ public class EnemyBasic : Enemy
         base.Attacking();
         if (!canMove) return;
         rb.AddForce(CalculateForce(player.transform.position), ForceMode.Acceleration);
-        rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
+        //rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
         RotateEnemy();
     }
 
