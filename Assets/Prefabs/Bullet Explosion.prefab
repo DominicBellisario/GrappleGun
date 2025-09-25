@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6458620494143794390}
   - component: {fileID: 117850812887039632}
   - component: {fileID: 6749217096300209870}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bullet Explosion
   m_TagString: Bullet Explosion
   m_Icon: {fileID: 0}
@@ -4931,3 +4931,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BulletExplosion
   hitboxActiveTime: 0.25
   bulletExplosionForce: 200
+  damage: 1

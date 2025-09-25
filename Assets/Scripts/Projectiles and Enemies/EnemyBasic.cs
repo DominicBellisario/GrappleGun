@@ -39,15 +39,7 @@ public class EnemyBasic : Enemy
         // let the enemy ragdoll
         rb.constraints = RigidbodyConstraints.None;
         // destroy the enemy after a time
-        StartCoroutine(WaitForDeath());
-    }
-
-    protected override IEnumerator WaitForDeath()
-    {
-        yield return base.WaitForDeath();
-        //despawn after a time
-        yield return new WaitForSeconds(deathTime);
-        Destroy(gameObject);
+        StartCoroutine(Helper.DoThisAfterDelay(deathTime, () => Destroy(gameObject)));
     }
 
     private Vector3 CalculateForce(Vector3 target)
@@ -77,8 +69,13 @@ public class EnemyBasic : Enemy
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        if (collision.gameObject.CompareTag("Bullet") && isVulnerable)
         {
+            Debug.Log(gameObject.name + " hit by bullet");
+            // enemy is immune to damage for a time
+            isVulnerable = false;
+            StartCoroutine(Helper.DoThisAfterDelay(invulnTime, () => isVulnerable = true));
+
             //stun them if possible
             if (canBeStunned) { currentState = EnemyState.Stunned; }
 
@@ -88,6 +85,36 @@ public class EnemyBasic : Enemy
                 health -= collision.gameObject.GetComponent<Bullet>().Damage;
                 // if health is 0, they die
                 if (health == 0) { currentState = EnemyState.Dead; }
+            }
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            player.GetComponent<PlayerEvents>().ChangeHealth(-damage);
+        }
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.gameObject.CompareTag("Bullet Explosion") && isVulnerable)
+        {
+            Debug.Log(gameObject.name + " hit by explosion");
+            // enemy is immune to damage for a time
+            isVulnerable = false;
+            StartCoroutine(Helper.DoThisAfterDelay(invulnTime, () => isVulnerable = true));
+
+            BulletExplosion explosion = collider.gameObject.GetComponent<BulletExplosion>();
+            //stun them if possible
+            if (canBeStunned) { currentState = EnemyState.Stunned; }
+
+            // launch them away from the explosion
+            rb.AddExplosionForce(explosion.BulletExplosionForce, collider.gameObject.transform.position, 3f);
+
+            // reduce health if they can
+            if (canDie)
+            {
+                health -= explosion.Damage;
+                // if health is 0, they die
+                if (health <= 0) { currentState = EnemyState.Dead; }
             }
         }
     }

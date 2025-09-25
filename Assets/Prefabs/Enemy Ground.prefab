@@ -46,7 +46,7 @@ SphereCollider:
     m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -93,7 +93,7 @@ Transform:
   m_GameObject: {fileID: 3065248415315964017}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.386, z: 0.453}
+  m_LocalPosition: {x: 0, y: 0.19753739, z: 0.37306195}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 3985307057809979944}
   - component: {fileID: 7690459358885650379}
   - component: {fileID: 5171508193541557799}
-  - component: {fileID: 7463009799839920033}
+  - component: {fileID: 1168116917457198263}
   m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
@@ -197,7 +197,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3190093099887329972}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &5171508193541557799
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -246,8 +246,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7463009799839920033
-CapsuleCollider:
+--- !u!135 &1168116917457198263
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -264,10 +264,8 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6996234331316873104
 GameObject:
@@ -315,7 +313,7 @@ SphereCollider:
     m_Bits: 8
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -410,7 +408,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76a6844f9da22e64d8ed7957286b5dba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyBasic
-  health: 1
+  health: 4
+  invulnTime: 0.5
   maxSpeed: 3
   acceleration: 5
   damage: 1

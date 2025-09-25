@@ -32,10 +32,11 @@ public enum EnemyState
 [RequireComponent(typeof(Rigidbody))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] protected float health;
+    [SerializeField] protected int health;
+    [SerializeField] protected float invulnTime;
     [SerializeField] protected float maxSpeed;
     [SerializeField] protected float acceleration;
-    [SerializeField] protected float damage;
+    [SerializeField] protected int damage;
     [SerializeField] protected float stunTime;
     [SerializeField] protected float deathTime;
     [SerializeField] protected SphereCollider awareZone;
@@ -52,6 +53,7 @@ public class Enemy : MonoBehaviour
     protected bool canMove;
     protected bool canBeStunned;
     protected bool canDie;
+    protected bool isVulnerable;
 
     protected virtual void Start()
     {
@@ -65,6 +67,7 @@ public class Enemy : MonoBehaviour
         canMove = maxSpeed > 0;
         canBeStunned = stunTime > 0;
         canDie = health > 0;
+        isVulnerable = true;
     }
 
     protected virtual void Update()
@@ -95,7 +98,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Stunned()
     {
         currentState = EnemyState.Waiting;
-        StartCoroutine(WaitForStun());
+        StartCoroutine(Helper.DoThisAfterDelay(stunTime, () => ResetCurrentState()));
     }
     protected virtual void Dead()
     {
@@ -132,17 +135,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    protected IEnumerator WaitForStun()
+    protected void ResetCurrentState()
     {
-        // wait until stun wears off
-        yield return new WaitForSeconds(stunTime);
-
         float distance = Vector3.Distance(player.transform.position, transform.position);
         // determine what state the enemy should be in
         if (distance > aggroRange) { currentState = EnemyState.Idle; }
         else if (distance > attackRange) { currentState = EnemyState.Aware; }
         else { currentState = EnemyState.Attacking; }
     }
-
-    protected virtual IEnumerator WaitForDeath(){yield return null;}
 }

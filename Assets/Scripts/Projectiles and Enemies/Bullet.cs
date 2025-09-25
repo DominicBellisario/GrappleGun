@@ -10,12 +10,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] float bulletSpeed;
     public float BulletSpeed { get { return bulletSpeed; } }
 
-    [SerializeField] float damage;
-    public float Damage { get { return damage; } }
+    [SerializeField] int damage;
+    public int Damage { get { return damage; } }
 
     void Start()
     {
-        StartCoroutine(Lifespan());
+        StartCoroutine(Helper.DoThisAfterDelay(lifeSpan, () => Die()));
     }
     /// <summary>
     /// once the bullet is not hitting anything, turn back on its collisions
@@ -36,12 +36,6 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Die();
-    }
-
-    private IEnumerator Lifespan()
-    {
-        yield return new WaitForSeconds(lifeSpan);
         Die();
     }
 
