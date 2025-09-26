@@ -47,13 +47,13 @@ public class EnemyBasic : Enemy
         //remove y axis from calculation if the enemy is grounded
         if (!isGrounded)
         {
-            return Vector3.Normalize(target - transform.position) * acceleration;
+            return acceleration * Time.deltaTime * Vector3.Normalize(target - transform.position);
         }
         else
         {
             Vector3 horizontalDistance = target - transform.position;
             horizontalDistance.y = 0f;
-            return Vector3.Normalize(horizontalDistance) * acceleration;
+            return acceleration * Time.deltaTime * Vector3.Normalize(horizontalDistance);
         }
     }
 
@@ -81,8 +81,10 @@ public class EnemyBasic : Enemy
         }
     }
 
-    private void OnTriggerEnter(Collider collider)
+    protected override void OnTriggerEnter(Collider collider)
     {
+        base.OnTriggerEnter(collider);
+        
         if (collider.gameObject.CompareTag("Bullet Explosion") && isVulnerable)
         {
             BulletExplosion explosion = collider.gameObject.GetComponent<BulletExplosion>();

@@ -139,6 +139,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    protected virtual void OnTriggerEnter(Collider collider)
+    {
+        if (collider.CompareTag("Death Plain"))
+        {
+            currentState = EnemyState.Dead;
+        }
+    }
+
     protected void ResetCurrentState()
     {
         float distance = Vector3.Distance(player.transform.position, transform.position);

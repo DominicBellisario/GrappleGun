@@ -196,7 +196,7 @@ public class GrappleHead : MonoBehaviour
     IEnumerator ReenableCollision(Collider hookCol, Collider col)
     {
         // Wait until hook is no longer inside
-        while (hookCol.bounds.Intersects(col.bounds))
+        while (col.bounds != null && hookCol.bounds.Intersects(col.bounds))
         {
             yield return null;
         }
