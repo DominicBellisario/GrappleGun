@@ -34,8 +34,6 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] protected int health;
     [SerializeField] protected float invulnTime;
-    [SerializeField] protected float maxSpeed;
-    [SerializeField] protected float acceleration;
     [SerializeField] protected int damage;
     [SerializeField] protected float knockbackForce;
     [SerializeField] protected float stunTime;
@@ -53,7 +51,6 @@ public class Enemy : MonoBehaviour
     protected Material bodyMaterial;
 
     protected bool canDamagePlayer;
-    protected bool canMove;
     protected bool canBeStunned;
     protected bool canDie;
     protected bool isVulnerable;
@@ -68,7 +65,6 @@ public class Enemy : MonoBehaviour
         startPos = transform.position;
         bodyMaterial = GetComponentInChildren<MeshRenderer>().material;
         canDamagePlayer = damage > 0;
-        canMove = maxSpeed > 0;
         canBeStunned = stunTime > 0;
         canDie = health > 0;
         isVulnerable = true;
@@ -137,6 +133,21 @@ public class Enemy : MonoBehaviour
                 currentState = EnemyState.Aware;
                 break;
         }
+    }
+
+    protected virtual void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bullet") && isVulnerable)
+        {
+            //enemy takes damage
+            TakeDamage(collision.gameObject.GetComponent<Bullet>().Damage);
+        }
+        else if (collision.gameObject.CompareTag("Grapple Head") && canBeStunned)
+        {
+            //enemy is stunned
+            currentState = EnemyState.Stunned;
+        }
+
     }
 
     protected virtual void OnTriggerEnter(Collider collider)

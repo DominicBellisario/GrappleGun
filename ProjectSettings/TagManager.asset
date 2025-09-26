@@ -16,6 +16,7 @@ TagManager:
   - Checkpoint
   - Death Plain
   - Enemy
+  - Grapple Head
   layers:
   - Default
   - TransparentFX

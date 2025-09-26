@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 175901087420589709}
   m_Layer: 3
   m_Name: Grapple Head
-  m_TagString: Untagged
+  m_TagString: Grapple Head
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -473,7 +473,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2831276443190014990}
   serializedVersion: 4
-  m_Mass: 0.2
+  m_Mass: 0.05
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -484,7 +484,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 776
+    m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -521,7 +521,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 776
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1366,7 +1366,8 @@ MonoBehaviour:
   fadePanel: {fileID: 0}
   damagePanel: {fileID: 0}
   fadeTime: 0.4
-  playerHealth: 5
+  health: 5
+  playerHealthRegenTime: 3
   playerInvulnTime: 1
 --- !u!135 &5647756632889494307
 SphereCollider:

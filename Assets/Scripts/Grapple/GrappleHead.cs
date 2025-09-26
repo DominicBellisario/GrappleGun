@@ -98,6 +98,8 @@ public class GrappleHead : MonoBehaviour
 
         // Disable physics while returning
         rb.isKinematic = true;
+        // disable enemy collision
+        rb.excludeLayers = LayerMask.GetMask("Enemy");
 
         // remove any possible grapple joint
         player.GetComponent<GrapplePhysics>().DestroyGrapple();
@@ -118,11 +120,15 @@ public class GrappleHead : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        // Once close enough, snap to the grapple start position
+        // Once close enough
+        // reenable collisions
         detectCollisions = true;
+        // disable enemy collision
+        rb.excludeLayers = 0;
         // add recoil as long as the grapple head was actually coming back and not already back
         grappleLag.AddRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
+        // snap to the grapple start position
         transform.SetParent(grappleStartPos.transform);
         
         rb.interpolation = RigidbodyInterpolation.None;
@@ -196,10 +202,10 @@ public class GrappleHead : MonoBehaviour
     IEnumerator ReenableCollision(Collider hookCol, Collider col)
     {
         // Wait until hook is no longer inside
-        while (col.bounds != null && hookCol.bounds.Intersects(col.bounds))
+        while (col != null && hookCol.bounds.Intersects(col.bounds))
         {
             yield return null;
         }
-        Physics.IgnoreCollision(hookCol, col, false);
+        if (col != null) Physics.IgnoreCollision(hookCol, col, false);
     }
 }
