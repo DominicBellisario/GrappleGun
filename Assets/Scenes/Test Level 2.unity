@@ -2565,10 +2565,6 @@ PrefabInstance:
       propertyPath: timer
       value: 
       objectReference: {fileID: 2033147376}
-    - target: {fileID: 72448625921142688, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: targetableLayers.m_Bits
-      value: 320
-      objectReference: {fileID: 0}
     - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: fadePanel
       value: 
@@ -2616,10 +2612,6 @@ PrefabInstance:
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8222699119728412252, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: targetableLayers.m_Bits
-      value: 4288
       objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name

@@ -4929,3 +4929,4 @@ MonoBehaviour:
   hitboxActiveTime: 0.25
   bulletExplosionForce: 1000
   damage: 2
+  canDamageEnemies: 1

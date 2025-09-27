@@ -52,10 +52,10 @@ public class EnemyBasic : Enemy
     {
         base.OnCollisionEnter(collision);
 
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && canDamagePlayer)
         {
             player.GetComponent<PlayerEvents>().DecreaseHealth(damage);
-            player.GetComponent<Rigidbody>().AddExplosionForce(knockbackForce, transform.position, 1f, 1f, ForceMode.Impulse);
+            player.GetComponent<Rigidbody>().AddExplosionForce(knockbackForce, transform.position, 10f, 1f, ForceMode.Impulse);
         }
     }
 

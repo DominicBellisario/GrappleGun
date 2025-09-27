@@ -55,7 +55,7 @@ public class PlayerTriggers : MonoBehaviour
         else if (trigger.gameObject.CompareTag("Enemy Explosion"))
         {
             rb.linearVelocity = Vector3.zero;
-            rb.AddExplosionForce(trigger.gameObject.GetComponent<BulletExplosion>().BulletExplosionForce, trigger.gameObject.transform.position, 3f, 1f);
+            rb.AddExplosionForce(trigger.gameObject.GetComponent<BulletExplosion>().BulletExplosionForce, trigger.gameObject.transform.position, 10f, 1f);
             pEvents.DecreaseHealth(trigger.gameObject.GetComponent<BulletExplosion>().Damage);
         }
 
