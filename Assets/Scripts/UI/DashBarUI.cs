@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class DashBarUI : MonoBehaviour
 {
     Slider slider;
@@ -8,7 +9,7 @@ public class DashBarUI : MonoBehaviour
 
     [Header("References")]
     [SerializeField] Image bar;
-    [SerializeField] Image background;
+    //[SerializeField] Image background;
     [SerializeField] PlayerController player;
 
     [Header ("Colors")]
@@ -42,23 +43,27 @@ public class DashBarUI : MonoBehaviour
         }
 
         // change the bars color if it reaches the max
-        if (targetValue >= slider.maxValue)
+        if (targetValue >= slider.maxValue && player.CanDash)
         {
             bar.color = fullColor;
         }
-        else
+        else if (player.CanDash)
         {
             bar.color = chargeColor;
         }
-
-        //change the background if dash is depleted
-        if (player.CanDash)
-        {
-            background.color = yesDashBackgroundColor;
-        }
         else
         {
-            background.color = noDashBackgroundColor;
+            bar.color = noDashBackgroundColor;
         }
+
+        // //change the background if dash is depleted
+        // if (player.CanDash)
+        // {
+        //     background.color = yesDashBackgroundColor;
+        // }
+        // else
+        // {
+        //     background.color = noDashBackgroundColor;
+        // }
     }
 }

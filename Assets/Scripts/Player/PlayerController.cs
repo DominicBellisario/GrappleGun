@@ -24,10 +24,6 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     Vector2 movementInputThisFrame;
 
-    bool dashCharged;
-    Coroutine chargeDash;
-    Coroutine depleteDash;
-
     /// <summary>
     /// The current rotation of the mouse on the X axis.
     /// this is needed becuause getting the mouse rotation from the camera
@@ -84,7 +80,7 @@ public class PlayerController : MonoBehaviour
         CurrentBoostFuel = 100f;
 
         CanDash = true;
-        dashCharged = false;
+        CurrentDashCharge = gvar.DashChargeTime;
 
         CanUseGrapple = true;
 
@@ -134,6 +130,7 @@ public class PlayerController : MonoBehaviour
             // rb.linearVelocity.y,
             // Mathf.Clamp(rb.linearVelocity.z, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed));
 
+            // dash is reset when grounded
             CanDash = true;
         }
     }
@@ -286,28 +283,17 @@ public class PlayerController : MonoBehaviour
     {
         if (gvar.IsPaused) return;
 
-        if (inputValue.isPressed && CanDash)
+        if (inputValue.isPressed)
         {
-            if (depleteDash != null) StopCoroutine(depleteDash);
-            chargeDash = StartCoroutine(ChargeDash());
-        }
-        else
-        {
-            StopCoroutine(chargeDash);
-            if (dashCharged)
+            if (CurrentDashCharge == gvar.DashChargeTime && CanDash)
             {
-                CurrentDashCharge = 0f;
-                dashCharged = false;
-                CanDash = false;
-
                 Vector3 camForward = playerCam.transform.forward;
                 camForward.y = 0f;
                 camForward.Normalize();
                 rb.AddForce(camForward * gvar.DashForce, ForceMode.Impulse);
-            }
-            else
-            {
-                depleteDash = StartCoroutine(DepleteDash(1));
+                CurrentDashCharge = 0f;
+                CanDash = false;
+                StartCoroutine(ChargeDash());
             }
         }
     }
@@ -319,17 +305,7 @@ public class PlayerController : MonoBehaviour
             CurrentDashCharge += Time.deltaTime;
             yield return null;
         }
-        dashCharged = true;
-    }
-
-    private IEnumerator DepleteDash(float depleteSpeed)
-    {
-        while (CurrentDashCharge > 0)
-        {
-            CurrentDashCharge -= Time.deltaTime * depleteSpeed;
-            yield return null;
-        }
-        CurrentDashCharge = 0;
+        CurrentDashCharge = gvar.DashChargeTime;
     }
 
     private void OnShoot(InputValue inputValue)
