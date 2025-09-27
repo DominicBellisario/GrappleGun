@@ -51,6 +51,14 @@ public class PlayerTriggers : MonoBehaviour
             rb.AddExplosionForce(trigger.gameObject.GetComponent<BulletExplosion>().BulletExplosionForce, trigger.gameObject.transform.position, 3f);
         }
 
+        // launch the player away from the explosion and damage them
+        else if (trigger.gameObject.CompareTag("Enemy Explosion"))
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.AddExplosionForce(trigger.gameObject.GetComponent<BulletExplosion>().BulletExplosionForce, trigger.gameObject.transform.position, 3f, 1f);
+            pEvents.DecreaseHealth(trigger.gameObject.GetComponent<BulletExplosion>().Damage);
+        }
+
         // set a checkpoint
         else if (trigger.gameObject.CompareTag("Checkpoint"))
         {

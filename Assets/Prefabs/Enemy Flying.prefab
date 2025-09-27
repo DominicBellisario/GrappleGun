@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3807603576323072124}
   - component: {fileID: 3791873493532453044}
   - component: {fileID: 3025163853550920380}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Aware Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 8526771964640404824}
   - component: {fileID: 872773212296733928}
   - component: {fileID: 1659869226780946840}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Attack Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +400,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.5
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1659869226780946840
 MonoBehaviour:
@@ -491,12 +491,128 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 2
   invulnTime: 0.5
-  maxSpeed: 3
-  acceleration: 500
-  damage: 1
+  damage: 0
   knockbackForce: 10
   stunTime: 1
-  deathTime: 2
+  deathTime: 1.5
   awareZone: {fileID: 3791873493532453044}
   attackZone: {fileID: 872773212296733928}
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  currentState: 0
+  acceleration: 500
+  explosion: {fileID: 8647382072497685457, guid: 47fda771cb340c543a1af58f8a44c07c, type: 3}
+  explosionPulseCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.19952393
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.40024325
+      value: -0.0023809522
+      inSlope: 0.025417443
+      outSlope: 0.025417443
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.9166673
+    - serializedVersion: 3
+      time: 0.52794564
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.6496098
+      value: -0.002410829
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.7273854
+      value: 1.0000343
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.82714343
+      value: 0.0024451613
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.87950605
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.9281573
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.9744198
+      value: 0.9976022
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.97931
+      value: 0.0024543405
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.9987803
+      value: 1.0000002
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  maxSpeed: 3

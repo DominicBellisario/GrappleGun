@@ -44,7 +44,7 @@ public class Enemy : MonoBehaviour
     protected float attackRange;
     [SerializeField] protected Color damagedColor;
 
-    protected EnemyState currentState;
+    [SerializeField] protected EnemyState currentState;
     protected Rigidbody rb;
     protected GameObject player;
     protected Vector3 startPos;
@@ -160,6 +160,9 @@ public class Enemy : MonoBehaviour
 
     protected void ResetCurrentState()
     {
+        // if the enemy is dead, let it die
+        if (health <= 0) return;
+
         float distance = Vector3.Distance(player.transform.position, transform.position);
         // determine what state the enemy should be in
         if (distance > aggroRange) { currentState = EnemyState.Idle; }
@@ -173,25 +176,30 @@ public class Enemy : MonoBehaviour
         isVulnerable = false;
         StartCoroutine(Helper.DoThisAfterDelay(invulnTime, () => isVulnerable = true));
 
-        //stun them if possible
-        if (canBeStunned) { currentState = EnemyState.Stunned; }
-
         // reduce health if they can
         if (canDie)
         {
             health -= damage;
             // if health is 0, they die
-            if (health <= 0) 
+            if (health <= 0)
             {
                 bodyMaterial.color = damagedColor;
                 bodyMaterial.SetColor("_EmissionColor", damagedColor);
-                currentState = EnemyState.Dead; 
+                currentState = EnemyState.Dead;
+                return;
             }
             else
             {
                 // make them flash red
                 StartCoroutine(FlashMaterial(damagedColor));
             }
+        }
+
+        //stun them if possible
+        if (canBeStunned)
+        {
+            Debug.Log("Enemy Stunned");
+            currentState = EnemyState.Stunned;
         }
     }
 

@@ -903,7 +903,7 @@ MonoBehaviour:
   forwardRaycastDistance: 250
   targetableLayers:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 4288
 --- !u!114 &4872169258650035967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   forwardRaycastDistance: 0
   targetableLayers:
     serializedVersion: 2
-    m_Bits: 4416
+    m_Bits: 320
 --- !u!114 &721245642031836973
 MonoBehaviour:
   m_ObjectHideFlags: 0

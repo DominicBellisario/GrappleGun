@@ -26,10 +26,14 @@ public class EnemyGroundJump : EnemyBasic
         StartCoroutine(Helper.DoThisAfterDelay(attackTime, () => ResetCurrentState()));
     }
 
-    // no changes in dead
+    // enemy ragdolls, then dies
     protected override void Dead()
     {
         base.Dead();
+        // let the enemy ragdoll
+        rb.constraints = RigidbodyConstraints.None;
+        // destroy the enemy after a time
+        StartCoroutine(Helper.DoThisAfterDelay(deathTime, () => Destroy(gameObject)));
     }
 
     // enemy only moves horizontaly

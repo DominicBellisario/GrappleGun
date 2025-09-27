@@ -26,13 +26,10 @@ public class EnemyBasic : Enemy
         base.Attacking();
     }
 
+    // no changes in dead
     protected override void Dead()
     {
         base.Dead();
-        // let the enemy ragdoll
-        rb.constraints = RigidbodyConstraints.None;
-        // destroy the enemy after a time
-        StartCoroutine(Helper.DoThisAfterDelay(deathTime, () => Destroy(gameObject)));
     }
 
     // calculated differently for different enemies

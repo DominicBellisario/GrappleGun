@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3807603576323072124}
   - component: {fileID: 3791873493532453044}
   - component: {fileID: 3025163853550920380}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Aware Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -272,7 +272,7 @@ GameObject:
   - component: {fileID: 8526771964640404824}
   - component: {fileID: 872773212296733928}
   - component: {fileID: 1659869226780946840}
-  m_Layer: 12
+  m_Layer: 13
   m_Name: Attack Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -411,6 +411,7 @@ MonoBehaviour:
   awareZone: {fileID: 3791873493532453044}
   attackZone: {fileID: 872773212296733928}
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  currentState: 0
   acceleration: 500
   jumpForce: {x: 5, y: 10}
   attackTime: 1

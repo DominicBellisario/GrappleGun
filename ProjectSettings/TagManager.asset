@@ -17,6 +17,7 @@ TagManager:
   - Death Plain
   - Enemy
   - Grapple Head
+  - Enemy Explosion
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - Bullet
   - Invisible No Player Col
   - Enemy
-  - 
+  - Enemy Triggers
   - 
   - 
   - 
