@@ -31,10 +31,8 @@ public class PlayerTriggers : MonoBehaviour
         // send player back to start and reset timer if they reach the end
         else if (trigger.gameObject.CompareTag("Target"))
         {
-            //display final time
-            timer.TimerEnd();
-            // wait, then reset the scene
-            Helper.DoThisAfterDelay(2f, () => pEvents.OutOfBounds());
+            // reset the scene
+            pEvents.OutOfBounds();
             gvar.CurrentCheckpoint = Vector3.zero;
         }
 
