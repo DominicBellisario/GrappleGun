@@ -28,13 +28,14 @@ public class PlayerEvents : MonoBehaviour
 
         //send the player to the current checkpoint
         if (gvar.CurrentCheckpoint != Vector3.zero) { StartCoroutine(Respawn()); }
+        else { timer.TimerEnd(); }
     }
 
     // player hits a death plain, reset them
     public void OutOfBounds()
     {
         //record the time they died
-        gvar.LastRecordedTime = timer.GetTime();
+        gvar.LastRecordedTime = timer.RecordCurrentTime();
         //fade to black
         fadePanel.Fade(0f, 1f, fadeTime);
         //wait, then reload the scene
@@ -68,11 +69,8 @@ public class PlayerEvents : MonoBehaviour
         // tp the player to last checkpoint
         yield return new WaitForEndOfFrame();
         transform.position = gvar.CurrentCheckpoint;
-        // if they got a checkpoint, start the timer with their last recorded time
-        if (gvar.CurrentCheckpoint != Vector3.zero)
-        {
-            timer.TimerSequence(true, gvar.LastRecordedTime);
-        }
+        // start the timer with their last recorded time
+        timer.TimerStart(gvar.LastRecordedTime);
     }
 
     private IEnumerator RegenHealth()

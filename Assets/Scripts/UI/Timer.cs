@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
@@ -10,29 +11,29 @@ public class Timer : MonoBehaviour
     [SerializeField] float resultTextFadeOutTime;
     TextMeshProUGUI timerText;
     float timer;
+    GVar gvar;
     Coroutine timerCoroutine;
 
     void Start()
     {
+        gvar = GVar.Instance;
         timerText = GetComponent<TextMeshProUGUI>();
         timer = 0f;
     }
 
-    public float GetTime() { return timer; }
+    public float RecordCurrentTime() { return timer; }
 
-    public void TimerSequence(bool startTimer, float startTime = 0f)
+    public void TimerStart(float startTime = 0f)
     {
-        if (startTimer && timer == 0f)
-        {
-            timer = startTime;
-            timerCoroutine = StartCoroutine(UpdateTimer());
-        }
-        else if (!startTimer)
-        {
-            StopCoroutine(timerCoroutine);
-            StartCoroutine(DisplayResults());
-            timer = 0f;
-        }
+        if (timerCoroutine != null) StopCoroutine(timerCoroutine);
+        timer = startTime;
+        timerCoroutine = StartCoroutine(UpdateTimer());
+    }
+
+    public void TimerEnd()
+    {
+        StartCoroutine(DisplayResults());
+        timer = 0f;
     }
 
     private IEnumerator UpdateTimer()
@@ -49,7 +50,7 @@ public class Timer : MonoBehaviour
     {
         // set the text and make it visible
         resultText.enabled = true;
-        resultText.text = "Your time: " + string.Format("{0:F2}", timer);
+        resultText.text = "Your time: " + string.Format("{0:F2}", gvar.LastRecordedTime);
 
         // wait for a bit
         yield return new WaitForSeconds(resultTextActiveTime);

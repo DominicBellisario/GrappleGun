@@ -31,18 +31,17 @@ public class PlayerTriggers : MonoBehaviour
         // send player back to start and reset timer if they reach the end
         else if (trigger.gameObject.CompareTag("Target"))
         {
-            pEvents.OutOfBounds();
-            gvar.LastRecordedTime = 0f;
+            //display final time
+            timer.TimerEnd();
+            // wait, then reset the scene
+            Helper.DoThisAfterDelay(2f, () => pEvents.OutOfBounds());
             gvar.CurrentCheckpoint = Vector3.zero;
         }
 
         // start the timer once they start the level
         else if (trigger.gameObject.CompareTag("Start Level"))
         {
-            if (timer != null)
-            {
-                timer.TimerSequence(true);
-            }
+            if (timer != null) { timer.TimerStart(); }
         }
 
         // launch the player away from the explosion

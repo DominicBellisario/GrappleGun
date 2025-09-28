@@ -17,7 +17,16 @@ public class GVar : MonoBehaviour
     /// <summary>
     /// the time recorded when the scene was last reset
     /// </summary>
-    public float LastRecordedTime { get; set; }
+    float lastRecordedTime;
+    public float LastRecordedTime
+    {
+        get { return Instance.lastRecordedTime; }
+        set
+        {
+            lastRecordedTime = value;
+            PlayerPrefs.SetFloat("Last Recorded Time", lastRecordedTime);
+        }
+    }
 
     // PLAYER SETTINGS: ALL TAKEN FROM PLAYERPREFS
     float mouseSensitivity;
