@@ -14,6 +14,11 @@ public class GVar : MonoBehaviour
     /// </summary>
     public Vector3 CurrentCheckpoint { get; set; }
 
+    /// <summary>
+    /// the time recorded when the scene was last reset
+    /// </summary>
+    public float LastRecordedTime { get; set; }
+
     // PLAYER SETTINGS: ALL TAKEN FROM PLAYERPREFS
     float mouseSensitivity;
     public float MouseSensitivity

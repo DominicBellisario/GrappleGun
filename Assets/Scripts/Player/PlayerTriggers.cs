@@ -31,9 +31,9 @@ public class PlayerTriggers : MonoBehaviour
         // send player back to start and reset timer if they reach the end
         else if (trigger.gameObject.CompareTag("Target"))
         {
-            rb.linearVelocity = Vector3.zero;
-            transform.position = new Vector3(0, 50, -20);
-            timer.TimerSequence(false);
+            pEvents.OutOfBounds();
+            gvar.LastRecordedTime = 0f;
+            gvar.CurrentCheckpoint = Vector3.zero;
         }
 
         // start the timer once they start the level

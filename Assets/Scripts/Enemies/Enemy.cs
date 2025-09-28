@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public enum EnemyState
 {
@@ -34,6 +35,8 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] protected int health;
     [SerializeField] protected float invulnTime;
+    [SerializeField] protected float hurtAlertTime;
+    [SerializeField] protected float hurtAlertRadiusMultiplier;
     [SerializeField] protected int damage;
     [SerializeField] protected float knockbackForce;
     [SerializeField] protected float stunTime;
@@ -165,8 +168,8 @@ public class Enemy : MonoBehaviour
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
         // determine what state the enemy should be in
-        if (distance > aggroRange) { currentState = EnemyState.Idle; }
-        else if (distance > attackRange) { currentState = EnemyState.Aware; }
+        if (distance > awareZone.radius) { currentState = EnemyState.Idle; }
+        else if (distance > attackZone.radius) { currentState = EnemyState.Aware; }
         else { currentState = EnemyState.Attacking; }
     }
 
@@ -192,13 +195,15 @@ public class Enemy : MonoBehaviour
             {
                 // make them flash red
                 StartCoroutine(FlashMaterial(damagedColor));
+                // make their alert radius larger for a time
+                awareZone.radius = hurtAlertRadiusMultiplier * aggroRange;
+                StartCoroutine(Helper.DoThisAfterDelay(hurtAlertTime, () => awareZone.radius = aggroRange));
             }
         }
 
         //stun them if possible
         if (canBeStunned)
         {
-            Debug.Log("Enemy Stunned");
             currentState = EnemyState.Stunned;
         }
     }

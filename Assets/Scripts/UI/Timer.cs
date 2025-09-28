@@ -18,10 +18,13 @@ public class Timer : MonoBehaviour
         timer = 0f;
     }
 
-    public void TimerSequence(bool startTimer)
+    public float GetTime() { return timer; }
+
+    public void TimerSequence(bool startTimer, float startTime = 0f)
     {
         if (startTimer && timer == 0f)
         {
+            timer = startTime;
             timerCoroutine = StartCoroutine(UpdateTimer());
         }
         else if (!startTimer)

@@ -5,6 +5,7 @@ public class PlayerEvents : MonoBehaviour
 {
     [SerializeField] FadeOut fadePanel;
     [SerializeField] DamageBorder damagePanel;
+    [SerializeField] Timer timer;
     [SerializeField] float fadeTime;
     [SerializeField] int health;
     int maxHealth;
@@ -32,6 +33,8 @@ public class PlayerEvents : MonoBehaviour
     // player hits a death plain, reset them
     public void OutOfBounds()
     {
+        //record the time they died
+        gvar.LastRecordedTime = timer.GetTime();
         //fade to black
         fadePanel.Fade(0f, 1f, fadeTime);
         //wait, then reload the scene
@@ -62,8 +65,14 @@ public class PlayerEvents : MonoBehaviour
 
     private IEnumerator Respawn()
     {
+        // tp the player to last checkpoint
         yield return new WaitForEndOfFrame();
         transform.position = gvar.CurrentCheckpoint;
+        // if they got a checkpoint, start the timer with their last recorded time
+        if (gvar.CurrentCheckpoint != Vector3.zero)
+        {
+            timer.TimerSequence(true, gvar.LastRecordedTime);
+        }
     }
 
     private IEnumerator RegenHealth()
