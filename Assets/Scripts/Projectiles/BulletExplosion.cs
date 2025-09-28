@@ -5,6 +5,7 @@ using UnityEngine;
 public class BulletExplosion : MonoBehaviour
 {
     [SerializeField] float hitboxActiveTime;
+    [SerializeField] float hitboxStartSize;
     [SerializeField] float bulletExplosionForce;
     public float BulletExplosionForce { get { return bulletExplosionForce; } }
     [SerializeField] int damage;
@@ -16,7 +17,7 @@ public class BulletExplosion : MonoBehaviour
     {
         sphereCollider = GetComponent<SphereCollider>();
         startRadius = sphereCollider.radius;
-        sphereCollider.radius = 0.01f;
+        sphereCollider.radius = hitboxStartSize;
         StartCoroutine(ExpandRadius());
     }
 
@@ -26,7 +27,7 @@ public class BulletExplosion : MonoBehaviour
         while (t < hitboxActiveTime)
         {
             t += Time.deltaTime;
-            sphereCollider.radius = Mathf.Lerp(0f, startRadius, t / hitboxActiveTime);
+            sphereCollider.radius = Mathf.Lerp(hitboxStartSize, startRadius, t / hitboxActiveTime);
             yield return null;
         }
         sphereCollider.enabled = false;

@@ -1,5 +1,7 @@
 using System.Collections;
+using UnityEditor.Callbacks;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
 public class Bullet : MonoBehaviour
@@ -13,8 +15,11 @@ public class Bullet : MonoBehaviour
     [SerializeField] int damage;
     public int Damage { get { return damage; } }
 
+    bool hasCollided;
+
     void Start()
     {
+        hasCollided = false;
         StartCoroutine(Helper.DoThisAfterDelay(lifeSpan, () => Die()));
     }
     /// <summary>
@@ -36,6 +41,8 @@ public class Bullet : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (hasCollided) return;
+        hasCollided = true;
         Die();
     }
 

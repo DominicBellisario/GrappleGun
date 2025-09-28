@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Gun : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    [SerializeField] GameObject playerCam;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gunMuzzle;
 
     public void FireGun(RaycastHit hit)
     {
         //spawn a new bullet
-        GameObject newBullet = Instantiate(bullet, gunMuzzle.position, player.transform.rotation);
+        GameObject newBullet = Instantiate(bullet, gunMuzzle.position, playerCam.transform.rotation);
 
         // Calculate the direction to the target
         Vector3 direction;
@@ -22,7 +22,7 @@ public class Gun : MonoBehaviour
         // if there is no target in range or the target is too close, use the camera forward
         else
         {
-            direction = player.GetComponentInChildren<Camera>().gameObject.transform.forward;
+            direction = playerCam.transform.forward;
         }
 
         // Set the velocity

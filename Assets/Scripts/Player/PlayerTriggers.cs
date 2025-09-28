@@ -45,7 +45,7 @@ public class PlayerTriggers : MonoBehaviour
         // launch the player away from the explosion
         else if (trigger.gameObject.CompareTag("Bullet Explosion"))
         {
-            rb.AddExplosionForce(trigger.gameObject.GetComponent<BulletExplosion>().BulletExplosionForce, trigger.gameObject.transform.position, 3f);
+            rb.AddExplosionForce(trigger.gameObject.GetComponent<BulletExplosion>().BulletExplosionForce, trigger.gameObject.transform.position, 10f);
         }
 
         // launch the player away from the explosion and damage them
