@@ -52,8 +52,8 @@ MonoBehaviour:
   boostAcceleration: 20
   boostFuelUse: 50
   boostFuelRegen: 50
-  dashChargeTime: 0.5
-  dashForce: 10
+  dashChargeTime: 1
+  dashForce: 8
   reelInForce: 100
   grappleLaunchSpeed: 100
   grappleReturnSpeed: 100
@@ -63,5 +63,3 @@ MonoBehaviour:
   birdLaunchRadius: 3
   birdAutoDetatchTime: 4
   gunReloadTime: 1
-  bulletSpeed: 100
-  bulletExplosionForce: 200

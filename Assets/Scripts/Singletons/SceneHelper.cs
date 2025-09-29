@@ -19,12 +19,15 @@ public class SceneHelper : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
+        Time.timeScale = 1f;
+        GVar.Instance.IsPaused = false;
         SceneManager.LoadScene(sceneName);
     }
 
     public void ReloadScene()
     {
         Time.timeScale = 1f;
+        GVar.Instance.IsPaused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

@@ -1318,8 +1318,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
   resultText: {fileID: 3325140162955425595}
-  resultTextActiveTime: 3
-  resultTextFadeOutTime: 0.5
+  resultTextActiveTime: 0
+  resultTextFadeOutTime: 0
 --- !u!1 &2032788456818839334
 GameObject:
   m_ObjectHideFlags: 0
@@ -3309,7 +3309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2834627285011059751
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3414,14 +3414,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1654889209450672583, guid: bad947ea37bad53479faa45da412e9bc, type: 3}
         m_TargetAssemblyTypeName: SceneHelper, Assembly-CSharp
-        m_MethodName: QuitGame
-        m_Mode: 1
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Main Menu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &4860885192177764550
@@ -4199,7 +4199,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DashBarUI
   bar: {fileID: 8569153602806360204}
-  background: {fileID: 2717243919129874114}
   player: {fileID: 0}
   chargeColor: {r: 1, g: 0.95441294, b: 0, a: 1}
   fullColor: {r: 1, g: 0.7533744, b: 0, a: 1}

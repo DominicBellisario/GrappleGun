@@ -6221,6 +6221,18 @@ PrefabInstance:
       propertyPath: timer
       value: 
       objectReference: {fileID: 2033147376}
+    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: timer
+      value: 
+      objectReference: {fileID: 2033147376}
+    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: fadePanel
+      value: 
+      objectReference: {fileID: 1601435999}
+    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: damagePanel
+      value: 
+      objectReference: {fileID: 1601435997}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7001,6 +7013,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+--- !u!114 &1601435997 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2483548023883077819, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+  m_PrefabInstance: {fileID: 1601435996}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02239a8e45930b24eb7dce540322c161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageBorder
 --- !u!114 &1601435998 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
@@ -7012,6 +7035,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9498d51518bb4a247919b9a9efad9754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Crosshair
+--- !u!114 &1601435999 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1306889831374300074, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+  m_PrefabInstance: {fileID: 1601435996}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8a0e81b5c1dffe4aa1484f86e5a597e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisualEffects
 --- !u!1001 &1620665247
 PrefabInstance:
   m_ObjectHideFlags: 0

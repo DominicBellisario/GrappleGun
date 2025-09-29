@@ -214,7 +214,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 640
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -1038,7 +1038,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9377cf8dbc0cbd749a2c82e16e2afacd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gun
-  player: {fileID: 8899434119458475185}
+  playerCam: {fileID: 5014280314240808219}
   bullet: {fileID: 8840251070170238508, guid: ec4e5c7b647a66b48aaca1da4d018ef3, type: 3}
   gunMuzzle: {fileID: 8482391032893893100}
 --- !u!1 &6229923618714838206
@@ -1365,6 +1365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEvents
   fadePanel: {fileID: 0}
   damagePanel: {fileID: 0}
+  timer: {fileID: 0}
   fadeTime: 0.4
   health: 5
   playerHealthRegenTime: 3
@@ -1382,7 +1383,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

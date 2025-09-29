@@ -5553,11 +5553,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2386910101967979464, guid: 3bb1312a27f58b845bfb0cd6e189dd68, type: 3}
   m_PrefabInstance: {fileID: 829945712}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1134035695 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5014280314240808219, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-  m_PrefabInstance: {fileID: 1438032873}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1150501904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7036,10 +7031,6 @@ PrefabInstance:
       propertyPath: damagePanel
       value: 
       objectReference: {fileID: 882914691}
-    - target: {fileID: 4157385451746505943, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 640
-      objectReference: {fileID: 0}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7080,18 +7071,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5647756632889494307, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 512
-      objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 9159966593861744583, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: playerCam
-      value: 
-      objectReference: {fileID: 1134035695}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11362,18 +11345,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1852269641194762091, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
-      propertyPath: dashForce
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 1852269641194762091, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
-      propertyPath: fadeOutTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 1852269641194762091, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
-      propertyPath: dashChargeTime
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3842630096528084278, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
       propertyPath: m_Name
       value: Global Variables
