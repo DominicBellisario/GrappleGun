@@ -41,6 +41,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GunLag gunLag;
     bool isReloaded;
 
+    [SerializeField] ParticleSystem boostParticles;
+
 
     GVar gvar;
 
@@ -114,6 +116,7 @@ public class PlayerController : MonoBehaviour
             else
             {
                 IsBoosting = false;
+                boostParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
             }
         }
         //recharge boost when grounded
@@ -208,12 +211,14 @@ public class PlayerController : MonoBehaviour
             else
             {
                 IsBoosting = true;
+                boostParticles.Play();
             }
         }
         // if the button was released, stop boosting
         else
         {
             IsBoosting = false;
+            boostParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
         }
     }
 
