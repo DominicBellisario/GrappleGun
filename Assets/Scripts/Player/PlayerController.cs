@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
         //apply boost when boosting
         if (IsBoosting)
         {
-            if (CurrentBoostFuel > 0f)
+            if (CurrentBoostFuel > 0f && downRaycastHit.collider == null)
             {
                 rb.AddForce(gvar.BoostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
                 CurrentBoostFuel -= gvar.BoostFuelUse * Time.deltaTime;

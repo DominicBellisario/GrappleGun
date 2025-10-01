@@ -408,12 +408,12 @@ MonoBehaviour:
   hurtAlertRadiusMultiplier: 3
   damage: 1
   knockbackForce: 10
-  stunTime: 1
+  stunTime: 1.5
   deathTime: 2
   awareZone: {fileID: 3791873493532453044}
   attackZone: {fileID: 872773212296733928}
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
   currentState: 0
   acceleration: 500
-  jumpForce: {x: 5, y: 10}
+  jumpForce: {x: 5, y: 7}
   attackTime: 1
