@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -31,8 +30,13 @@ public class PlayerTriggers : MonoBehaviour
         // send player back to start and reset timer if they reach the end
         else if (trigger.gameObject.CompareTag("Target"))
         {
-            // reset the scene
-            pEvents.OutOfBounds();
+            //record the time they finished
+            gvar.LastRecordedTime = timer.RecordCurrentTime();
+
+            //display time
+            if (timer != null) timer.TimerEnd();
+            // reset the scene after a bit
+            StartCoroutine(Helper.DoThisAfterDelay(3.0f, () => pEvents.OutOfBounds()));
             gvar.CurrentCheckpoint = Vector3.zero;
         }
 

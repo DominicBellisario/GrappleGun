@@ -1,7 +1,5 @@
 using System.Collections;
-using UnityEditor.Callbacks;
 using UnityEngine;
-using UnityEngine.AI;
 
 [RequireComponent(typeof(Collider))]
 public class Bullet : MonoBehaviour

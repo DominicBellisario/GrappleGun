@@ -1318,8 +1318,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Timer
   resultText: {fileID: 3325140162955425595}
-  resultTextActiveTime: 0
-  resultTextFadeOutTime: 0
+  resultTextActiveTime: 2
+  resultTextFadeOutTime: 0.5
 --- !u!1 &2032788456818839334
 GameObject:
   m_ObjectHideFlags: 0

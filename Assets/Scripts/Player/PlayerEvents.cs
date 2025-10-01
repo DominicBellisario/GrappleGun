@@ -28,8 +28,6 @@ public class PlayerEvents : MonoBehaviour
 
         //send the player to the current checkpoint
         if (gvar.CurrentCheckpoint != Vector3.zero) { StartCoroutine(Respawn()); }
-        // if the scene reset, display the time
-        else { timer.TimerEnd(); }
     }
 
     // player hits a death plain, reset them
