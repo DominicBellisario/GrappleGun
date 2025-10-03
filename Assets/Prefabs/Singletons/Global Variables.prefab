@@ -55,9 +55,9 @@ MonoBehaviour:
   dashChargeTime: 1
   dashForce: 8
   reelInForce: 100
-  grappleLaunchSpeed: 100
-  grappleReturnSpeed: 100
-  grappleReturnRadius: 1
+  grappleLaunchSpeed: 150
+  grappleReturnSpeed: 150
+  grappleReturnRadius: 2
   grappleMaxDistance: 100
   birdLaunchForce: 20
   birdLaunchRadius: 3
