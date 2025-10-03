@@ -1,8 +1,5 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Timeline;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
@@ -10,6 +7,7 @@ public class GrappleHead : MonoBehaviour
 {
     Rigidbody rb;
     GameObject grapplePoint;
+    Collider col;
     bool detectCollisions;
 
     [Header("Game Objects")]
@@ -31,7 +29,10 @@ public class GrappleHead : MonoBehaviour
     {
         gvar = GVar.Instance;
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
+        col.enabled = false;
         detectCollisions = true;
+        
     }
 
     void Update()
@@ -56,6 +57,7 @@ public class GrappleHead : MonoBehaviour
         // detatch the grapple head from the grapple
         transform.SetParent(null);
 
+        col.enabled = true;
         rb.isKinematic = false;
         rb.interpolation = RigidbodyInterpolation.Interpolate;
 
@@ -122,6 +124,7 @@ public class GrappleHead : MonoBehaviour
 
         // Once close enough
         // reenable collisions
+        col.enabled = false;
         detectCollisions = true;
         // disable enemy collision
         rb.excludeLayers = 0;

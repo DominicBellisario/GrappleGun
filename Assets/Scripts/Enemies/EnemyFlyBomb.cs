@@ -24,6 +24,8 @@ public class EnemyFlyBomb : EnemyBasic
     protected override void Attacking()
     {
         base.Attacking();
+        // increase drag to slow down enemy
+        rb.linearDamping = 1f;
         // enemy primes explosive
         StartCoroutine(PrimeExplosion());
         currentState = EnemyState.Waiting;
@@ -41,7 +43,7 @@ public class EnemyFlyBomb : EnemyBasic
     {
         return multiplier * Vector3.Normalize(target - transform.position);
     }
-    
+
     // flash faster and faster before exploding
     private IEnumerator PrimeExplosion()
     {
@@ -63,5 +65,12 @@ public class EnemyFlyBomb : EnemyBasic
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
         Destroy(gameObject);
+    }
+
+    // blow up if the enemy hits the player
+    protected override void OnCollisionEnter(Collision collision)
+    {
+        base.OnCollisionEnter(collision);
+        if (collision.gameObject.CompareTag("Player")) { Explode(); }
     }
 }
