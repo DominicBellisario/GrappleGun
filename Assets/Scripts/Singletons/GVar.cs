@@ -14,6 +14,8 @@ public class GVar : MonoBehaviour
     /// </summary>
     public Vector3 CurrentCheckpoint { get; set; }
 
+    public void ResetCheckpoint() { Instance.CurrentCheckpoint = Vector3.zero; }
+
     /// <summary>
     /// the time recorded when the scene was last reset
     /// </summary>
@@ -174,6 +176,6 @@ public class GVar : MonoBehaviour
     void Start()
     {
         mouseSensitivity = PlayerPrefs.GetFloat("Mouse Sensitivity", 0.25f);
-    } 
+    }
 
 }

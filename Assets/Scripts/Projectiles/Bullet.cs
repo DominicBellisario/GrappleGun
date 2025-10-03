@@ -30,11 +30,11 @@ public class Bullet : MonoBehaviour
     {
         Collider bulletCol = GetComponent<Collider>();
         // Wait until hook is no longer inside
-        while (bulletCol.bounds.Intersects(otherCol.bounds))
+        while (otherCol != null && bulletCol.bounds.Intersects(otherCol.bounds))
         {
             yield return null;
         }
-        Physics.IgnoreCollision(bulletCol, otherCol, false);
+        if (otherCol != null) Physics.IgnoreCollision(bulletCol, otherCol, false);
     }
 
     void OnCollisionEnter(Collision collision)
