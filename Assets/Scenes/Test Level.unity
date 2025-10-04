@@ -6255,6 +6255,26 @@ PrefabInstance:
       propertyPath: timer
       value: 
       objectReference: {fileID: 2033147376}
+    - target: {fileID: 848818635214343056, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_UseWorldSpace
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 848818635214343056, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_Parameters.textureMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 848818635214343056, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 601f5a66c06f66e4bb064de0f8804b3e, type: 2}
+    - target: {fileID: 848818635214343056, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_Parameters.textureScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 848818635214343056, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: timer
       value: 
@@ -6306,6 +6326,18 @@ PrefabInstance:
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7468389709411882216, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: textureTilingFactor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125758925082755258, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8125758925082755258, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.014
       objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
