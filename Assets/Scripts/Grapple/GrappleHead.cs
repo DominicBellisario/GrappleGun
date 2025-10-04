@@ -23,7 +23,7 @@ public class GrappleHead : MonoBehaviour
     /// <summary>
     /// the current distance between the grapple head and the launcher
     /// </summary>
-    public float CurrentRopeLength { get { return Vector3.Distance(transform.position, grappleStartPos.transform.position); } }
+    public float CurrentRopeLength { get { return Vector3.Distance(transform.position, player.transform.position); } }
 
     void Start()
     {
