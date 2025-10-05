@@ -152,7 +152,7 @@ public class GrappleHead : MonoBehaviour
         if (timer != 0)
         {
             GameObject sparks = Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
-            sparks.transform.SetParent(transform);
+            sparks.transform.SetParent(grappleStartPos.transform);
         }
     }
 
