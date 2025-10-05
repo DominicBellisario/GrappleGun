@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     /// can cause the camera to flip when looking up and down.
     /// </summary>
     Vector2 mouseRotation;
+    Vector2 lookInput;
 
     /// <summary>
     /// The point where the grapple will be spawned from.
@@ -73,6 +74,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         movementInputThisFrame = Vector2.zero;
+        lookInput = Vector2.zero;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -136,6 +138,25 @@ public class PlayerController : MonoBehaviour
             // dash is reset when grounded
             CanDash = true;
         }
+    }
+
+    void LateUpdate()
+    {
+        if (gvar.IsPaused) return;
+        //apply mouse look
+        // Adjust by deltaTime for consistent rotation speed
+        float deltaX = lookInput.x * gvar.MouseSensitivity * Time.deltaTime * 100f;
+        float deltaY = lookInput.y * gvar.MouseSensitivity * Time.deltaTime * 100f;
+
+        mouseRotation.y += deltaX;
+        mouseRotation.x -= deltaY;
+        mouseRotation.x = Mathf.Clamp(mouseRotation.x, -89f, 89f);
+
+        playerCam.transform.localRotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0f);
+
+        // update gun lag, etc.
+        grappleObject.lookInput = lookInput;
+        gunLag.lookInput = lookInput;
     }
 
     /// <summary>
@@ -230,23 +251,7 @@ public class PlayerController : MonoBehaviour
     private void OnLook(InputValue inputValue)
     {
         if (gvar.IsPaused) return;
-
-        Vector2 lookInput = inputValue.Get<Vector2>();
-
-        //rotate the camera horizontally
-        mouseRotation.y += lookInput.x * gvar.MouseSensitivity;
-
-        //rotate the camera vertically
-        mouseRotation.x -= lookInput.y * gvar.MouseSensitivity;
-        //clamp the vertical rotation to prevent flipping
-        mouseRotation.x = Mathf.Clamp(mouseRotation.x, -89f, 89f);
-
-        // Apply the clamped rotation to the camera
-        playerCam.transform.localRotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0f);
-
-        //rotate the gun to lag slightly behind the movement
-        grappleObject.lookInput = lookInput;
-        gunLag.lookInput = lookInput;
+        lookInput = inputValue.Get<Vector2>();
     }
 
     /// <summary>
