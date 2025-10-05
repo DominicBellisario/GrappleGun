@@ -16,16 +16,17 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject grapplePointPrefab;
     [SerializeField] GameObject grappleStartPos;
     [SerializeField] GunLag grappleLag;
+    [SerializeField] GameObject sparksBurstPrefab;
 
     GVar gvar;
     float startColRadius;
-   
+
     public bool IsAttached { get { return !detectCollisions; } }
 
     /// <summary>
     /// the current distance between the grapple head and the launcher
     /// </summary>
-    public float CurrentRopeLength { get { return Vector3.Distance(transform.position, player.transform.position); } }
+    public float CurrentRopeLength { get; set; }
 
     void Start()
     {
@@ -39,6 +40,9 @@ public class GrappleHead : MonoBehaviour
 
     void Update()
     {
+        // get the distance between the grapple head and the player ONCE so everything else can use it without recalculating
+        CurrentRopeLength = Vector3.Distance(transform.position, player.transform.position);
+
         //if not attached and at max diatnce, return to gun
         if (!rb.isKinematic)
         {
@@ -139,10 +143,17 @@ public class GrappleHead : MonoBehaviour
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         // snap to the grapple start position
         transform.SetParent(grappleStartPos.transform);
-        
+
         rb.interpolation = RigidbodyInterpolation.None;
 
         player.GetComponent<PlayerController>().CanUseGrapple = true;
+
+        // spawn a burst of sparks
+        if (timer != 0)
+        {
+            GameObject sparks = Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
+            sparks.transform.SetParent(transform);
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -171,7 +182,8 @@ public class GrappleHead : MonoBehaviour
             rb.useGravity = true;
             rb.linearVelocity = Vector3.zero;
             rb.AddForce((-transform.up * 4f) + (-transform.forward * 3f), ForceMode.VelocityChange);
-            //StartCoroutine(ReturnToGun());
+            // spawn a burst of sparks
+            Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
         }
     }
 

@@ -489,7 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efafb1140fa37a941b6d663198ccff33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 2
+  health: 1
   invulnTime: 0.5
   hurtAlertTime: 5
   hurtAlertRadiusMultiplier: 3
