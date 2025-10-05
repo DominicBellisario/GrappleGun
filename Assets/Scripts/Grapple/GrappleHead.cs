@@ -1,13 +1,14 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(Rigidbody))]
 public class GrappleHead : MonoBehaviour
 {
     Rigidbody rb;
     GameObject grapplePoint;
-    Collider col;
+    SphereCollider col;
     bool detectCollisions;
 
     [Header("Game Objects")]
@@ -17,6 +18,7 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GunLag grappleLag;
 
     GVar gvar;
+    float startColRadius;
    
     public bool IsAttached { get { return !detectCollisions; } }
 
@@ -29,10 +31,10 @@ public class GrappleHead : MonoBehaviour
     {
         gvar = GVar.Instance;
         rb = GetComponent<Rigidbody>();
-        col = GetComponent<Collider>();
+        col = GetComponent<SphereCollider>();
         col.enabled = false;
         detectCollisions = true;
-        
+        startColRadius = col.radius;
     }
 
     void Update()
@@ -102,6 +104,10 @@ public class GrappleHead : MonoBehaviour
         rb.isKinematic = true;
         // disable enemy collision
         rb.excludeLayers = LayerMask.GetMask("Enemy");
+        // re-disable gravity
+        rb.useGravity = false;
+        col.radius = startColRadius;
+        rb.freezeRotation = false;
 
         // remove any possible grapple joint
         player.GetComponent<GrapplePhysics>().DestroyGrapple();
@@ -158,9 +164,14 @@ public class GrappleHead : MonoBehaviour
             player.GetComponent<PlayerController>().CanUseGrapple = false;
         }
         // If it collides with anything else, send the grapple back
-        else 
+        else
         {
-            StartCoroutine(ReturnToGun());
+            col.radius = 0.1f;
+            rb.freezeRotation = true;
+            rb.useGravity = true;
+            rb.linearVelocity = Vector3.zero;
+            rb.AddForce((-transform.up * 4f) + (-transform.forward * 3f), ForceMode.VelocityChange);
+            //StartCoroutine(ReturnToGun());
         }
     }
 
