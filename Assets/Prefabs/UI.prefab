@@ -3424,6 +3424,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1852269641194762091, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
+        m_TargetAssemblyTypeName: GVar, Assembly-CSharp
+        m_MethodName: ResetCheckpoint
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1654889209450672583, guid: bad947ea37bad53479faa45da412e9bc, type: 3}
         m_TargetAssemblyTypeName: SceneHelper, Assembly-CSharp
         m_MethodName: LoadScene
@@ -5724,6 +5736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aecdaab85c54ba6418c1545253a59aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pause
+  grappleHead: {fileID: 0}
   options: {fileID: 6914100749929631508}
   control: {fileID: 299129428931485811}
   fadeLength: 0.25
