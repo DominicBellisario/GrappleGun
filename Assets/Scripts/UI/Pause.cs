@@ -5,6 +5,7 @@ using System.Collections;
 [RequireComponent(typeof(CanvasGroup))]
 public class Pause : MonoBehaviour
 {
+    [SerializeField] GrappleHead grappleHead;
     [SerializeField] CanvasGroup options;
     [SerializeField] CanvasGroup control;
 
@@ -55,7 +56,8 @@ public class Pause : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             StartCoroutine(PauseFade(0f, fadeLength));
-
+            // prevents grapple from staying mid-air if paused while traveling
+            grappleHead.StartCoroutine(grappleHead.ReturnToGun());
         }
     }
 

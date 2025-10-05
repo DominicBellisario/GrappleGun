@@ -7378,6 +7378,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2207945450847079208, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: grappleHead
+      value: 
+      objectReference: {fileID: 1438032875}
     - target: {fileID: 3036037890272863608, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
