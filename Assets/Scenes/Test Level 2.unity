@@ -7471,6 +7471,10 @@ PrefabInstance:
       propertyPath: damagePanel
       value: 
       objectReference: {fileID: 882914691}
+    - target: {fileID: 4075675839506298894, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: muzzleFlashPrefab
+      value: 
+      objectReference: {fileID: 829424257202542423, guid: 0f5f6913a0bc91849b9e2f92af316a94, type: 3}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

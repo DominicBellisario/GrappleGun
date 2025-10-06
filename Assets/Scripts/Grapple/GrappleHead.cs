@@ -17,6 +17,7 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject grappleStartPos;
     [SerializeField] GunLag grappleLag;
     [SerializeField] GameObject sparksBurstPrefab;
+    [SerializeField] GameObject muzzleFlashPrefab;
 
     GVar gvar;
     float startColRadius;
@@ -59,6 +60,10 @@ public class GrappleHead : MonoBehaviour
 
         //add recoil
         grappleLag.AddRecoil(1f);
+
+        // spawn a burst of sparks
+        GameObject flash = Instantiate(muzzleFlashPrefab, grappleStartPos.transform.position, Quaternion.identity);
+        flash.transform.SetParent(grappleStartPos.transform);
 
         // detatch the grapple head from the grapple
         transform.SetParent(null);
