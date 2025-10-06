@@ -170,14 +170,14 @@ public class GrappleHead : MonoBehaviour
         // If the grapple head collides with a standard surface, create a non elastic grapple
         if (collision.gameObject.CompareTag("Normal Grap Surface"))
         {
-            CreateGrapplePoint(collision, 0f, 0f);
+            CreateGrapplePoint(collision, 0);
             // spawn a burst of sparks
             Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
         }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Bird"))
         {
-            CreateGrapplePoint(collision, 20f, 10f);
+            CreateGrapplePoint(collision, 1);
             //player cannot use the grapple until they are pulled in fully
             player.GetComponent<PlayerController>().CanUseGrapple = false;
         }
@@ -194,7 +194,7 @@ public class GrappleHead : MonoBehaviour
         }
     }
 
-    private void CreateGrapplePoint(Collision collision, float elasticity, float damper)
+    private void CreateGrapplePoint(Collision collision, int grappleType)
     {
         rb.linearVelocity = Vector3.zero; // Stop movement
         rb.isKinematic = true; // Disable physics
@@ -207,7 +207,7 @@ public class GrappleHead : MonoBehaviour
         StartCoroutine(FollowTarget());
 
         //create a configurable joint
-        player.GetComponent<GrapplePhysics>().CreateGrapple(elasticity, damper);
+        player.GetComponent<GrapplePhysics>().CreateGrapple(grappleType);
     }
 
     /// <summary>
