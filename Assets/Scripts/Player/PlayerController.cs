@@ -304,6 +304,8 @@ public class PlayerController : MonoBehaviour
                 CurrentDashCharge = 0f;
                 CanDash = false;
                 StartCoroutine(ChargeDash());
+                CameraEffects camEffects = playerCam.GetComponent<CameraEffects>();
+                camEffects.StartCoroutine(camEffects.WarpFOV());
             }
         }
     }

@@ -166,6 +166,8 @@ public class GrappleHead : MonoBehaviour
         if (collision.gameObject.CompareTag("Normal Grap Surface"))
         {
             CreateGrapplePoint(collision, 0f, 0f);
+            // spawn a burst of sparks
+            Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
         }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Bird"))

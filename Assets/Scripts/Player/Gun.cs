@@ -3,13 +3,14 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     [SerializeField] GameObject playerCam;
-    [SerializeField] GameObject bullet;
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] GameObject muzzleFlashPrefab;
     [SerializeField] Transform gunMuzzle;
 
     public void FireGun(RaycastHit hit)
     {
         //spawn a new bullet
-        GameObject newBullet = Instantiate(bullet, gunMuzzle.position, playerCam.transform.rotation);
+        GameObject newBullet = Instantiate(bulletPrefab, gunMuzzle.position, playerCam.transform.rotation);
 
         // Calculate the direction to the target
         Vector3 direction;
@@ -41,5 +42,9 @@ public class Gun : MonoBehaviour
                 newBullet.GetComponent<Bullet>().StartCoroutine(newBullet.GetComponent<Bullet>().ReenableCollision(col));
             }
         }
+
+        // spawn a burst of sparks
+        GameObject flash = Instantiate(muzzleFlashPrefab, gunMuzzle.position, Quaternion.identity);
+        flash.transform.parent = transform;
     }
 }
