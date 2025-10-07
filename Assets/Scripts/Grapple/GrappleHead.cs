@@ -177,9 +177,17 @@ public class GrappleHead : MonoBehaviour
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Bird"))
         {
+            if (Vector3.Distance(collision.transform.position, player.transform.position) < 2f)
+            {
+                // if the player is too close to the bird, return the grapple
+                StartCoroutine(ReturnToGun());
+                return;
+            }
             CreateGrapplePoint(collision, 1);
             //player cannot use the grapple until they are pulled in fully
             player.GetComponent<PlayerController>().CanUseGrapple = false;
+            player.GetComponent<PlayerController>().IsStuck = false;
+            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
         }
         // If it collides with anything else, send the grapple back
         else

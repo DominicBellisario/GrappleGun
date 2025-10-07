@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] ParticleSystem boostParticles;
 
+    /// <summary>
+    /// wether or not the player is stuck to a reel surface
+    /// </summary>
+    public bool IsStuck { get; set; }
 
     GVar gvar;
 
@@ -89,6 +93,8 @@ public class PlayerController : MonoBehaviour
         CanUseGrapple = true;
 
         isReloaded = true;
+
+        IsStuck = false;
     }
 
     void Update()
@@ -222,8 +228,16 @@ public class PlayerController : MonoBehaviour
         // if the button was pressed
         if (inputValue.isPressed)
         {
+            if (IsStuck)
+            {
+                IsStuck = false;
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
+                //apply a force to the player in the direction the player is looking
+                rb.AddForce(playerCam.transform.forward * gvar.BirdLaunchForce, ForceMode.Impulse);
+                return;
+            }
             // if the player is grounded, jump
-            if (GetComponent<Raycasts>().DownRaycastHit.collider != null)
+            else if (GetComponent<Raycasts>().DownRaycastHit.collider != null)
             {
                 // Apply an impulse force to the Rigidbody2D to make the player jump
                 rb.AddForce(Vector3.up * gvar.JumpForce, ForceMode.Impulse);

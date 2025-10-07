@@ -130,6 +130,14 @@ public class GrapplePhysics : MonoBehaviour
                 joint.yDrive = drive;
                 joint.zDrive = drive;
             }
+            else
+            {
+                // stick the player to the wall
+                playerCam.GetComponentInParent<PlayerController>().IsStuck = true;
+                rb.constraints = RigidbodyConstraints.FreezeAll;
+                // detatch the grapple
+                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+            }
 
             // if the player is grappling for too long, they are stuck. detatch them
             if (timer >= gvar.BirdAutoDetatchTime)
