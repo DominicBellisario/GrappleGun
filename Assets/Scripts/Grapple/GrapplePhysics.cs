@@ -128,7 +128,7 @@ public class GrapplePhysics : MonoBehaviour
             // increase the elasticicty over time to bring the player in faster
             if (currentRopeLength > gvar.ReelLaunchRadius)
             {
-                float newElasticity = joint.xDrive.positionSpring + Time.deltaTime * gvar.BirdElasticityIncreaseSpeed;
+                float newElasticity = joint.xDrive.positionSpring + Time.deltaTime * gvar.BirdElasticityIncreaseSpeed * timer;
                 JointDrive drive = joint.xDrive;
                 drive.positionSpring = newElasticity;
                 joint.xDrive = drive;
