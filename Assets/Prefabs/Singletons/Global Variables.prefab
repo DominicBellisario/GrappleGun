@@ -59,7 +59,7 @@ MonoBehaviour:
   grappleReturnSpeed: 150
   grappleReturnRadius: 2
   grappleMaxDistance: 100
-  birdLaunchForce: 20
-  birdLaunchRadius: 1
-  birdAutoDetatchTime: 4
+  reelLaunchForce: 20
+  reelLaunchRadius: 2
+  reelAutoDetatchTime: 4
   gunReloadTime: 1

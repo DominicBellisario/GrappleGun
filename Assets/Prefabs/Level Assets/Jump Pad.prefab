@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Jump Pad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8404304372801484291
 Transform:
@@ -70,7 +70,7 @@ MonoBehaviour:
   launchForce: 20
   coolDownTime: 0.5
   jumpPadCollider: {fileID: 3903892178539281746}
-  resolution: 30
+  segments: 30
   timeStep: 0.1
   gizmoMask:
     serializedVersion: 2
@@ -91,7 +91,7 @@ GameObject:
   m_TagString: Jump Pad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5314554953744615559
 Transform:
@@ -136,8 +136,6 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -159,7 +157,6 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0

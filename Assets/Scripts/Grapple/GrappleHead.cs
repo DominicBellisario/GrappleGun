@@ -126,7 +126,7 @@ public class GrappleHead : MonoBehaviour
 
         float timer = 0f;
         // come back to the player until it gets there or until it takes too long
-        while (CurrentRopeLength > gvar.GrappleReturnRadius + timer && timer < gvar.BirdAutoDetatchTime)
+        while (CurrentRopeLength > gvar.GrappleReturnRadius + timer && timer < gvar.ReelAutoDetatchTime)
         {
             timer += Time.deltaTime;
             // get the direction the grapple should move in
@@ -174,8 +174,8 @@ public class GrappleHead : MonoBehaviour
             // spawn a burst of sparks
             Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
         }
-        // If it collides with a bird, create an elastic grapple that pulls the player toward it
-        else if (collision.gameObject.CompareTag("Bird"))
+        // If it collides with a reel, create an elastic grapple that pulls the player toward it
+        else if (collision.gameObject.CompareTag("Reel"))
         {
             if (Vector3.Distance(collision.transform.position, player.transform.position) < 2f)
             {
@@ -184,6 +184,15 @@ public class GrappleHead : MonoBehaviour
                 return;
             }
             CreateGrapplePoint(collision, 1);
+            //player cannot use the grapple until they are pulled in fully
+            player.GetComponent<PlayerController>().CanUseGrapple = false;
+            player.GetComponent<PlayerController>().IsStuck = false;
+            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+        }
+        // If it collides with a bird, create an elastic grapple that pulls the player toward it
+        else if (collision.gameObject.CompareTag("Bird"))
+        {
+            CreateGrapplePoint(collision, 2);
             //player cannot use the grapple until they are pulled in fully
             player.GetComponent<PlayerController>().CanUseGrapple = false;
             player.GetComponent<PlayerController>().IsStuck = false;

@@ -132,24 +132,36 @@ public class GVar : MonoBehaviour
     [SerializeField] float grappleMaxDistance;
     public float GrappleMaxDistance => grappleMaxDistance;
 
-    [Header("Bird Settings")]
+    [Header("Reel Settings")]
     /// <summary>
     /// The force applied to the player when detaching from a bird.
     /// </summary>
-    [SerializeField] float birdLaunchForce;
-    public float BirdLaunchForce => birdLaunchForce;
+    [SerializeField] float reelLaunchForce;
+    public float ReelLaunchForce => reelLaunchForce;
 
     /// <summary>
     /// The distance from the bird the player must be before launching.
     /// </summary>
-    [SerializeField] float birdLaunchRadius;
-    public float BirdLaunchRadius => birdLaunchRadius;
+    [SerializeField] float reelLaunchRadius;
+    public float ReelLaunchRadius => reelLaunchRadius;
 
     /// <summary>
     /// If attached to a bird for longer than this, stop grappling to avoid softlock.
     /// </summary>
-    [SerializeField] float birdAutoDetatchTime;
-    public float BirdAutoDetatchTime => birdAutoDetatchTime;
+    [SerializeField] float reelAutoDetatchTime;
+    public float ReelAutoDetatchTime => reelAutoDetatchTime;
+
+    [Header("Bird Settings")]
+    /// <summary>
+    /// the speed at which the elasticity of the grapple increases when attached to a bird
+    /// </summary>
+    [SerializeField] float birdElasticityIncreaseSpeed;
+    public float BirdElasticityIncreaseSpeed => birdElasticityIncreaseSpeed;
+    /// <summary>
+    /// the max speed the player can leave the bird with
+    /// </summary>
+    [SerializeField] float birdMaxVelocity;
+    public float BirdMaxVelocity => birdMaxVelocity;
 
     [Header("Gun Settings")]
     /// <summary>

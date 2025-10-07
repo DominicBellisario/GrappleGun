@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour
                 IsStuck = false;
                 rb.constraints = RigidbodyConstraints.FreezeRotation;
                 //apply a force to the player in the direction the player is looking
-                rb.AddForce(playerCam.transform.forward * gvar.BirdLaunchForce, ForceMode.Impulse);
+                rb.AddForce(playerCam.transform.forward * gvar.ReelLaunchForce, ForceMode.Impulse);
                 return;
             }
             // if the player is grounded, jump

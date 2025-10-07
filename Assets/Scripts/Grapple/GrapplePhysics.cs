@@ -12,8 +12,8 @@ public class GrapplePhysics : MonoBehaviour
     [Header("Grapple Settings")]
     [SerializeField] float normalElasticity = 0;
     [SerializeField] float normalDamper = 0;
-    [SerializeField] float birdElasticity = 20f;
-    [SerializeField] float birdDamper = 10f;
+    [SerializeField] float reelElasticity = 20f;
+    [SerializeField] float reelDamper = 10f;
     GVar gvar;
 
     void Start()
@@ -38,8 +38,8 @@ public class GrapplePhysics : MonoBehaviour
         }
         else
         {
-            elasticity = birdElasticity;
-            damper = birdDamper;
+            elasticity = reelElasticity;
+            damper = reelDamper;
         }
 
         //get the current distance between the player and the grapple head
@@ -84,6 +84,11 @@ public class GrapplePhysics : MonoBehaviour
         {
             StartCoroutine(ClampDistance());
         }
+        else if (grappleType == 1)
+        {
+            StartCoroutine(ClampDistance());
+            StartCoroutine(ReelLogic());
+        }
         else
         {
             StartCoroutine(ClampDistance());
@@ -114,16 +119,16 @@ public class GrapplePhysics : MonoBehaviour
         }
     }
 
-    private IEnumerator BirdLogic()
+    private IEnumerator ReelLogic()
     {
         float timer = 0;
         while (joint != null)
         {
             timer += Time.deltaTime;
             // increase the elasticicty over time to bring the player in faster
-            if (currentRopeLength > gvar.BirdLaunchRadius)
+            if (currentRopeLength > gvar.ReelLaunchRadius)
             {
-                float newElasticity = joint.xDrive.positionSpring + Time.deltaTime * 100f;
+                float newElasticity = joint.xDrive.positionSpring + Time.deltaTime * gvar.BirdElasticityIncreaseSpeed;
                 JointDrive drive = joint.xDrive;
                 drive.positionSpring = newElasticity;
                 joint.xDrive = drive;
@@ -140,7 +145,39 @@ public class GrapplePhysics : MonoBehaviour
             }
 
             // if the player is grappling for too long, they are stuck. detatch them
-            if (timer >= gvar.BirdAutoDetatchTime)
+            if (timer >= gvar.ReelAutoDetatchTime)
+            {
+                //detatch the grapple
+                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+            }
+            yield return null;
+        }
+    }
+
+    private IEnumerator BirdLogic()
+    {
+        float timer = 0;
+        while (joint != null)
+        {
+            timer += Time.deltaTime;
+            // increase the elasticicty over time to bring the player in faster
+            if (currentRopeLength > gvar.ReelLaunchRadius)
+            {
+                float newElasticity = joint.xDrive.positionSpring + Time.deltaTime * gvar.BirdElasticityIncreaseSpeed;
+                JointDrive drive = joint.xDrive;
+                drive.positionSpring = newElasticity;
+                joint.xDrive = drive;
+                joint.yDrive = drive;
+                joint.zDrive = drive;
+            }
+            else
+            {
+                rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, gvar.BirdMaxVelocity);
+                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+            }
+
+            // if the player is grappling for too long, they are stuck. detatch them
+            if (timer >= gvar.ReelAutoDetatchTime)
             {
                 //detatch the grapple
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());

@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 6599878665620928855}
   m_Layer: 6
   m_Name: Reel
-  m_TagString: Bird
+  m_TagString: Reel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &583657415675710911
 Transform:
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 169d7cb0d9e01ea4c944c36a0d572fae, type: 2}
+  - {fileID: 2100000, guid: 7dfb186206c6e404faaa580e0becbc26, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

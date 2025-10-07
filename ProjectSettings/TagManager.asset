@@ -18,6 +18,7 @@ TagManager:
   - Enemy
   - Grapple Head
   - Enemy Explosion
+  - Reel
   layers:
   - Default
   - TransparentFX
