@@ -264,7 +264,11 @@ public class PlayerController : MonoBehaviour
     /// <param name="inputValue"></param>
     private void OnLook(InputValue inputValue)
     {
-        if (gvar.IsPaused) return;
+        if (gvar.IsPaused)
+        {
+            lookInput = Vector2.zero;
+            return;
+        }
         lookInput = inputValue.Get<Vector2>();
     }
 
