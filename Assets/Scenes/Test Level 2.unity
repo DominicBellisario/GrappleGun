@@ -7781,10 +7781,6 @@ PrefabInstance:
       propertyPath: damagePanel
       value: 
       objectReference: {fileID: 882914691}
-    - target: {fileID: 4075675839506298894, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: muzzleFlashPrefab
-      value: 
-      objectReference: {fileID: 829424257202542423, guid: 0f5f6913a0bc91849b9e2f92af316a94, type: 3}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -12153,14 +12149,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1852269641194762091, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
-      propertyPath: birdMaxVelocity
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1852269641194762091, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
-      propertyPath: birdElasticityIncreaseSpeed
-      value: 200
-      objectReference: {fileID: 0}
     - target: {fileID: 3842630096528084278, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
       propertyPath: m_Name
       value: Global Variables

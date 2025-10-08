@@ -315,10 +315,16 @@ public class PlayerController : MonoBehaviour
         {
             if (CurrentDashCharge == gvar.DashChargeTime && CanDash)
             {
+                // unstick the player if they are stuck
+                if (IsStuck)
+                {
+                    IsStuck = false;
+                    rb.constraints = RigidbodyConstraints.FreezeRotation;
+                }
                 Vector3 camForward = playerCam.transform.forward;
                 camForward.y = 0f;
                 camForward.Normalize();
-                rb.AddForce(camForward * gvar.DashForce, ForceMode.Impulse);
+                rb.AddForce(camForward * gvar.DashForce, ForceMode.VelocityChange);
                 CurrentDashCharge = 0f;
                 CanDash = false;
                 StartCoroutine(ChargeDash());

@@ -62,4 +62,6 @@ MonoBehaviour:
   reelLaunchForce: 20
   reelLaunchRadius: 2
   reelAutoDetatchTime: 4
+  birdElasticityIncreaseSpeed: 200
+  birdMaxVelocity: 30
   gunReloadTime: 1

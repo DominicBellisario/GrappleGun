@@ -510,6 +510,7 @@ MonoBehaviour:
   grappleStartPos: {fileID: 1328603308791807764}
   grappleLag: {fileID: 5976852609743098317}
   sparksBurstPrefab: {fileID: 266388715285006980, guid: 596a30dc601f1374e94775c282766c4e, type: 3}
+  muzzleFlashPrefab: {fileID: 829424257202542423, guid: 0f5f6913a0bc91849b9e2f92af316a94, type: 3}
 --- !u!135 &175901087420589709
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11042,6 +11043,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 5014280314240808219}
   grappleHead: {fileID: 2831276443190014990}
+  normalElasticity: 0
+  normalDamper: 0
+  reelElasticity: 20
+  reelDamper: 10
 --- !u!114 &57737250660311644
 MonoBehaviour:
   m_ObjectHideFlags: 0
