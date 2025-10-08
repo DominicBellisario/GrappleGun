@@ -26,7 +26,7 @@ public class GrapplePhysics : MonoBehaviour
     /// creates and sets up a configurable joint
     /// Called when the grapple head hits an object
     /// </summary>
-    public void CreateGrapple(int grappleType)
+    public void CreateGrapple(GameObject hitObject, int grappleType)
     {
         float elasticity;
         float damper;
@@ -92,7 +92,7 @@ public class GrapplePhysics : MonoBehaviour
         else
         {
             StartCoroutine(ClampDistance());
-            StartCoroutine(BirdLogic());
+            StartCoroutine(BirdLogic(hitObject));
         }
     }
 
@@ -154,7 +154,7 @@ public class GrapplePhysics : MonoBehaviour
         }
     }
 
-    private IEnumerator BirdLogic()
+    private IEnumerator BirdLogic(GameObject bird)
     {
         float timer = 0;
         while (joint != null)
@@ -170,9 +170,11 @@ public class GrapplePhysics : MonoBehaviour
                 joint.yDrive = drive;
                 joint.zDrive = drive;
             }
+            // launch the player in the direction they are facing and kill the bird
             else
             {
-                rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, gvar.BirdMaxVelocity);
+                rb.linearVelocity = playerCam.transform.forward * gvar.BirdLaunchSpeed;
+                bird.GetComponent<BirdEffects>().Hit(playerCam.transform);
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
             }
 

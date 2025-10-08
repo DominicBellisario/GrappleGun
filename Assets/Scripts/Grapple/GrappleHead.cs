@@ -224,7 +224,7 @@ public class GrappleHead : MonoBehaviour
         StartCoroutine(FollowTarget());
 
         //create a configurable joint
-        player.GetComponent<GrapplePhysics>().CreateGrapple(grappleType);
+        player.GetComponent<GrapplePhysics>().CreateGrapple(collision.gameObject, grappleType);
     }
 
     /// <summary>

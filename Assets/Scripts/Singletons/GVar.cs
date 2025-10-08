@@ -161,7 +161,7 @@ public class GVar : MonoBehaviour
     /// the max speed the player can leave the bird with
     /// </summary>
     [SerializeField] float birdMaxVelocity;
-    public float BirdMaxVelocity => birdMaxVelocity;
+    public float BirdLaunchSpeed => birdMaxVelocity;
 
     [Header("Gun Settings")]
     /// <summary>
