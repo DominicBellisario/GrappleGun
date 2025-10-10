@@ -92,9 +92,11 @@ public class PlayerController : MonoBehaviour
         CanDash = true;
         CurrentDashCharge = gvar.DashChargeTime;
 
-        CanUseGrapple = true;
-
-        isReloaded = true;
+        // wait a bit before allowing the grapple or gun to be used so they dont shoot before teleporting
+        CanUseGrapple = false;
+        StartCoroutine(Helper.DoThisAfterDelay(0.25f, () => CanUseGrapple = true));
+        isReloaded = false;
+        StartCoroutine(Helper.DoThisAfterDelay(0.25f, () => isReloaded = true));
 
         IsStuck = false;
     }
