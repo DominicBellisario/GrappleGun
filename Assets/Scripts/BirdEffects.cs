@@ -28,9 +28,10 @@ public class BirdEffects : MonoBehaviour
         // rotate the particle system to face away from the object that hit it
         Quaternion guh = Quaternion.LookRotation(transform.position - objectThatHitIt.position);
         birdDeathParticles.transform.rotation = guh;
-        Debug.Log(guh.eulerAngles);
+
         // play the hit effect
         birdDeathParticles.Play();
+        
         // disable the bird
         SetBirdState(false);
 

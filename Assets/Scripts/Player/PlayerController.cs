@@ -82,7 +82,9 @@ public class PlayerController : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        mouseRotation = Vector2.zero;
+
+        //set the player rotation to the last recorded checkpoint
+        mouseRotation = gvar.CurrentCheckpointRotation;
 
         IsBoosting = false;
         CurrentBoostFuel = 100f;
@@ -280,7 +282,6 @@ public class PlayerController : MonoBehaviour
     private void OnGrapple(InputValue inputValue)
     {
         if (gvar.IsPaused) return;
-
         if (!CanUseGrapple) return;
         if (inputValue.isPressed)
         {

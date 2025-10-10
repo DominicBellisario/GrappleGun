@@ -37,7 +37,7 @@ public class PlayerTriggers : MonoBehaviour
             if (timer != null) timer.TimerEnd();
             // reset the scene after a bit
             StartCoroutine(Helper.DoThisAfterDelay(3.0f, () => pEvents.OutOfBounds()));
-            gvar.CurrentCheckpoint = Vector3.zero;
+            gvar.ResetCheckpoint();
         }
 
         // start the timer once they start the level
@@ -63,7 +63,8 @@ public class PlayerTriggers : MonoBehaviour
         // set a checkpoint
         else if (trigger.gameObject.CompareTag("Checkpoint"))
         {
-            gvar.CurrentCheckpoint = trigger.gameObject.transform.position;
+            gvar.CurrentCheckpointPos = trigger.gameObject.transform.position;
+            gvar.CurrentCheckpointRotation = trigger.gameObject.transform.GetChild(0).eulerAngles;
         }
 
         // reset the scene and tp the player to the last checkpoint if they hit one

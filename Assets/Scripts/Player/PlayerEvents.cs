@@ -27,7 +27,7 @@ public class PlayerEvents : MonoBehaviour
         regenHealth = RegenHealth();
 
         //send the player to the current checkpoint
-        if (gvar.CurrentCheckpoint != Vector3.zero) { StartCoroutine(Respawn()); }
+        if (gvar.CurrentCheckpointPos != Vector3.zero) { StartCoroutine(Respawn()); }
     }
 
     // player hits a death plain, reset them
@@ -67,7 +67,8 @@ public class PlayerEvents : MonoBehaviour
     {
         // tp the player to last checkpoint
         yield return new WaitForEndOfFrame();
-        transform.position = gvar.CurrentCheckpoint;
+        transform.position = gvar.CurrentCheckpointPos;
+        
         // start the timer with their last recorded time
         timer.TimerStart(gvar.LastRecordedTime);
     }

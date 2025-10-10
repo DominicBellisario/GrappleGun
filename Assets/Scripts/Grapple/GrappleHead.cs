@@ -106,6 +106,7 @@ public class GrappleHead : MonoBehaviour
 
     public IEnumerator ReturnToGun()
     {
+        //Debug.Log("Returning to gun");
         // cannot launch gun while returning
         player.GetComponent<PlayerController>().CanUseGrapple = false;
 
@@ -177,7 +178,7 @@ public class GrappleHead : MonoBehaviour
         // If it collides with a reel, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Reel"))
         {
-            if (Vector3.Distance(collision.transform.position, player.transform.position) < 2f)
+            if (Vector3.Distance(collision.GetContact(0).point, player.transform.position) < 2f)
             {
                 // if the player is too close to the bird, return the grapple
                 StartCoroutine(ReturnToGun());

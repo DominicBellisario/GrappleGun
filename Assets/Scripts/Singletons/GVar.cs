@@ -12,9 +12,17 @@ public class GVar : MonoBehaviour
     /// <summary>
     /// the current checkpoint the player will spawn at if they die
     /// </summary>
-    public Vector3 CurrentCheckpoint { get; set; }
+    public Vector3 CurrentCheckpointPos { get; set; }
+    /// <summary>
+    /// the current rotation the player will spawn at if they die
+    /// </summary>
+    public Vector3 CurrentCheckpointRotation { get; set; }
 
-    public void ResetCheckpoint() { Instance.CurrentCheckpoint = Vector3.zero; }
+    public void ResetCheckpoint()
+    {
+        Instance.CurrentCheckpointPos = Vector3.zero;
+        Instance.CurrentCheckpointRotation = Vector3.zero;
+    }
 
     /// <summary>
     /// the time recorded when the scene was last reset
