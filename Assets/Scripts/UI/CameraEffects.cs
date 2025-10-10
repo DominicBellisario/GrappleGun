@@ -3,14 +3,15 @@ using UnityEngine;
 
 public class CameraEffects : MonoBehaviour
 {
-    
+    [SerializeField] Camera weaponCam;
+
+    [Header("FOV Warp Settings for Dash")]
     [SerializeField] float fovMaxWarp;
     [SerializeField] float fovWarpInTime;
     [SerializeField] float fovWaitTime;
     [SerializeField] float fovWarpOutTime;
 
     Camera cam;
-    [SerializeField] Camera weaponCam;
     float startFOV;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -19,7 +20,7 @@ public class CameraEffects : MonoBehaviour
         startFOV = cam.fieldOfView;
     }
 
-    public IEnumerator WarpFOV()
+    public IEnumerator WarpFOVForDash()
     {
         float t = 0;
         while (t < fovWarpInTime)
@@ -41,5 +42,20 @@ public class CameraEffects : MonoBehaviour
             yield return null;
         }
         cam.fieldOfView = startFOV;
+    }
+    
+    public IEnumerator WarpFOV(float time, float targetFOV, bool resetToStartFOVWhenDone)
+    {
+        float t = 0;
+        float fovBefore = cam.fieldOfView;
+        if (resetToStartFOVWhenDone) targetFOV = startFOV;
+        while (t < time)
+        {
+            cam.fieldOfView = Mathf.Lerp(fovBefore, targetFOV, t / time);
+            weaponCam.fieldOfView = Mathf.Lerp(fovBefore, fovMaxWarp, t / time);
+            t += Time.deltaTime;
+            yield return null;
+        }
+        if (resetToStartFOVWhenDone) cam.fieldOfView = startFOV;
     }
 }

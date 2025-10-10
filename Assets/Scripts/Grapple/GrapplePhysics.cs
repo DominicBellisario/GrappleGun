@@ -15,11 +15,13 @@ public class GrapplePhysics : MonoBehaviour
     [SerializeField] float reelElasticity = 20f;
     [SerializeField] float reelDamper = 10f;
     GVar gvar;
+    CameraEffects camEffects;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         gvar = GVar.Instance;
+        camEffects = playerCam.GetComponent<CameraEffects>();
     }
 
     /// <summary>
@@ -88,11 +90,13 @@ public class GrapplePhysics : MonoBehaviour
         {
             StartCoroutine(ClampDistance());
             StartCoroutine(ReelLogic());
+            camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 90, false));
         }
         else
         {
             StartCoroutine(ClampDistance());
             StartCoroutine(BirdLogic(hitObject));
+            camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 90, false));
         }
     }
 
@@ -142,6 +146,7 @@ public class GrapplePhysics : MonoBehaviour
                 rb.constraints = RigidbodyConstraints.FreezeAll;
                 // detatch the grapple
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                camEffects.StartCoroutine(camEffects.WarpFOV(0.1f, 0, true));
             }
 
             // if the player is grappling for too long, they are stuck. detatch them
@@ -149,6 +154,7 @@ public class GrapplePhysics : MonoBehaviour
             {
                 //detatch the grapple
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                camEffects.StartCoroutine(camEffects.WarpFOV(0.1f, 0, true));
             }
             yield return null;
         }
@@ -176,6 +182,7 @@ public class GrapplePhysics : MonoBehaviour
                 rb.linearVelocity = playerCam.transform.forward * gvar.BirdLaunchSpeed;
                 bird.GetComponent<BirdEffects>().Hit(playerCam.transform);
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 0, true));
             }
 
             // if the player is grappling for too long, they are stuck. detatch them
@@ -183,6 +190,7 @@ public class GrapplePhysics : MonoBehaviour
             {
                 //detatch the grapple
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 0, true));
             }
             yield return null;
         }

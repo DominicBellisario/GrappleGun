@@ -130,13 +130,13 @@ public class PlayerController : MonoBehaviour
             }
         }
         //recharge boost when grounded
-        else if (downRaycastHit.collider != null && CurrentBoostFuel < 100f)
+        else if ((downRaycastHit.collider != null || IsStuck) && CurrentBoostFuel < 100f)
         {
             CurrentBoostFuel += gvar.BoostFuelRegen * Time.deltaTime;
         }
 
         //speed is hard capped while grounded, prevents sliding at high entry speeds
-        if (downRaycastHit.collider != null)
+        if (downRaycastHit.collider != null || IsStuck)
         {
             // rb.linearVelocity = new Vector3(
             // Mathf.Clamp(rb.linearVelocity.x, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed),
@@ -330,7 +330,7 @@ public class PlayerController : MonoBehaviour
                 CanDash = false;
                 StartCoroutine(ChargeDash());
                 CameraEffects camEffects = playerCam.GetComponent<CameraEffects>();
-                camEffects.StartCoroutine(camEffects.WarpFOV());
+                camEffects.StartCoroutine(camEffects.WarpFOVForDash());
             }
         }
     }
