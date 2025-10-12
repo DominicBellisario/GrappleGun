@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7409436450376730385}
   - component: {fileID: 5976852609743098317}
+  - component: {fileID: 8241567000571053157}
   m_Layer: 3
   m_Name: Grapple Object
   m_TagString: Untagged
@@ -59,6 +60,103 @@ MonoBehaviour:
   recoilRotation: 0
   recoilReturnSpeed: 10
   lookInput: {x: 0, y: 0}
+--- !u!82 &8241567000571053157
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242668004994451122}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: dd760af0581cced4f9e0e091c467cb53, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1328603308791807764
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,6 +609,7 @@ MonoBehaviour:
   grappleLag: {fileID: 5976852609743098317}
   sparksBurstPrefab: {fileID: 266388715285006980, guid: 596a30dc601f1374e94775c282766c4e, type: 3}
   muzzleFlashPrefab: {fileID: 829424257202542423, guid: 0f5f6913a0bc91849b9e2f92af316a94, type: 3}
+  grappleReelSound: {fileID: 8241567000571053157}
 --- !u!135 &175901087420589709
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -10664,11 +10763,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c58918fa07f41844bcc3aae253faafa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponCam: {fileID: 3047158697476794252}
   fovMaxWarp: 90
   fovWarpInTime: 0.1
   fovWaitTime: 0.1
   fovWarpOutTime: 0.8
-  weaponCam: {fileID: 3047158697476794252}
 --- !u!1 &5195612471131520075
 GameObject:
   m_ObjectHideFlags: 0

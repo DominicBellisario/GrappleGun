@@ -18,6 +18,7 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GunLag grappleLag;
     [SerializeField] GameObject sparksBurstPrefab;
     [SerializeField] GameObject muzzleFlashPrefab;
+    [SerializeField] AudioSource grappleReelSound;
 
     GVar gvar;
     float startColRadius;
@@ -89,6 +90,9 @@ public class GrappleHead : MonoBehaviour
         // Set the velocity
         rb.linearVelocity = direction * gvar.GrappleLaunchSpeed;
 
+        // play the reel sound
+        grappleReelSound.Play();
+
         //ignore collisions if the grapple is launched while already touching something
         Collider headCollider = GetComponent<Collider>();
         Collider[] overlaps = Physics.OverlapSphere(headCollider.bounds.center, 0.35f);
@@ -125,6 +129,9 @@ public class GrappleHead : MonoBehaviour
         // destroy the grapple point if it exists
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
 
+        // play the reel sound
+        grappleReelSound.Play();
+
         float timer = 0f;
         // come back to the player until it gets there or until it takes too long
         while (CurrentRopeLength > gvar.GrappleReturnRadius + timer && timer < gvar.ReelAutoDetatchTime)
@@ -144,9 +151,11 @@ public class GrappleHead : MonoBehaviour
         detectCollisions = true;
         // disable enemy collision
         rb.excludeLayers = 0;
+
         // add recoil as long as the grapple head was actually coming back and not already back
         grappleLag.AddRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
+        
         // snap to the grapple start position
         transform.SetParent(grappleStartPos.transform);
 
@@ -160,6 +169,9 @@ public class GrappleHead : MonoBehaviour
             GameObject sparks = Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
             sparks.transform.SetParent(grappleStartPos.transform);
         }
+
+        // stop the reel sound
+        grappleReelSound.Stop();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -167,6 +179,9 @@ public class GrappleHead : MonoBehaviour
         // can only act on one collision event
         if (!detectCollisions) return;
         detectCollisions = false;
+
+        // stop the reel sound
+        grappleReelSound.Stop();
 
         // If the grapple head collides with a standard surface, create a non elastic grapple
         if (collision.gameObject.CompareTag("Normal Grap Surface"))
