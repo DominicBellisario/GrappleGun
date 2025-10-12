@@ -1305,6 +1305,31 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7837f0d5d1c82c9469fbeab3f7f4c116, type: 3}
+--- !u!1 &208300752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1242668004994451122, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+  m_PrefabInstance: {fileID: 1438032873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &208300753 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8241567000571053157, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+  m_PrefabInstance: {fileID: 1438032873}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &208300756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208300752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35519e0ebadc2964eb7d0c0307f8f97d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grappleHead: {fileID: 1438032875}
+  audioSource: {fileID: 208300753}
+  pitchRange: {x: 1.2, y: 0.8}
 --- !u!1001 &220616207
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7888,6 +7913,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8241567000571053157, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_Pitch
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7895,7 +7924,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1242668004994451122, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 208300756}
   m_SourcePrefab: {fileID: 100100000, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
 --- !u!54 &1438032874 stripped
 Rigidbody:
