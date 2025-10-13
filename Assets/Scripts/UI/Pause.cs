@@ -35,6 +35,7 @@ public class Pause : MonoBehaviour
         {
             pausePanel.interactable = true;
             Time.timeScale = 0f;
+            AudioListener.pause = true;
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
@@ -53,6 +54,7 @@ public class Pause : MonoBehaviour
         {
             pausePanel.interactable = false;
             Time.timeScale = 1f;
+            AudioListener.pause = false;
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             StartCoroutine(PauseFade(0f, fadeLength));

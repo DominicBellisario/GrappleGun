@@ -23,7 +23,11 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject audioSourcePrefab;
     [SerializeField] AudioSource grappleReelSource;
     [SerializeField] AudioSource grappleShootSource;
+    [SerializeField] AudioSource grappleReturnSource;
     [SerializeField] AudioClip hitNoGrappleClip;
+    [SerializeField] AudioClip hitGrappleClip;
+    [SerializeField] AudioClip hitReelClip;
+    [SerializeField] AudioClip hitBirdClip;
 
     GVar gvar;
     float startColRadius;
@@ -161,7 +165,7 @@ public class GrappleHead : MonoBehaviour
         // add recoil as long as the grapple head was actually coming back and not already back
         grappleLag.AddRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
-        
+
         // snap to the grapple start position
         transform.SetParent(grappleStartPos.transform);
 
@@ -174,8 +178,9 @@ public class GrappleHead : MonoBehaviour
         {
             GameObject sparks = Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
             sparks.transform.SetParent(grappleStartPos.transform);
+            // play the return sound
+            grappleReturnSource.Play();
         }
-
         // stop the reel sound
         grappleReelSource.Stop();
     }
@@ -199,7 +204,7 @@ public class GrappleHead : MonoBehaviour
             // play the grappleable hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip);
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitGrappleClip);
         }
         // If it collides with a reel, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Reel"))
@@ -215,8 +220,13 @@ public class GrappleHead : MonoBehaviour
             player.GetComponent<PlayerController>().CanUseGrapple = false;
             player.GetComponent<PlayerController>().IsStuck = false;
             player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+
             // start the reel sound
             grappleReelSource.Play();
+            // play the grappleable reel sound at a random pitch
+            GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
+            newSource.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitReelClip);
         }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Bird"))
@@ -226,8 +236,13 @@ public class GrappleHead : MonoBehaviour
             player.GetComponent<PlayerController>().CanUseGrapple = false;
             player.GetComponent<PlayerController>().IsStuck = false;
             player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+
             // start the reel sound
             grappleReelSource.Play();
+            // play the bird hit sound at a random pitch
+            GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
+            newSource.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitBirdClip);
         }
         // If it collides with anything else, send the grapple back
         else
@@ -243,6 +258,7 @@ public class GrappleHead : MonoBehaviour
             // play the non-grappleable hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
+            newSource.GetComponent<AudioSource>().volume = 0.5f;
             newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip);
         }
     }
