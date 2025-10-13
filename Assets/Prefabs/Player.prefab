@@ -529,8 +529,10 @@ MonoBehaviour:
   grappleLag: {fileID: 5976852609743098317}
   sparksBurstPrefab: {fileID: 266388715285006980, guid: 596a30dc601f1374e94775c282766c4e, type: 3}
   muzzleFlashPrefab: {fileID: 829424257202542423, guid: 0f5f6913a0bc91849b9e2f92af316a94, type: 3}
-  grappleReelSound: {fileID: 5639246872178126121}
-  grappleShootSound: {fileID: 5434892697611356405}
+  audioSourcePrefab: {fileID: 5763895986522015768, guid: dc57880049f9fde47829970fc6f50178, type: 3}
+  grappleReelSource: {fileID: 5639246872178126121}
+  grappleShootSource: {fileID: 5434892697611356405}
+  hitNoGrappleClip: {fileID: 8300000, guid: 3b9bee4cf0575bd4b8990563b1a2b9a6, type: 3}
 --- !u!135 &175901087420589709
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11148,6 +11150,10 @@ PrefabInstance:
       propertyPath: m_PlayOnAwake
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1870347133345166560, guid: dc57880049f9fde47829970fc6f50178, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5763895986522015768, guid: dc57880049f9fde47829970fc6f50178, type: 3}
       propertyPath: m_Name
       value: Shoot/Return Sounds
@@ -11233,6 +11239,10 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: dd760af0581cced4f9e0e091c467cb53, type: 3}
     - target: {fileID: 1870347133345166560, guid: dc57880049f9fde47829970fc6f50178, type: 3}
       propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1870347133345166560, guid: dc57880049f9fde47829970fc6f50178, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5763895986522015768, guid: dc57880049f9fde47829970fc6f50178, type: 3}

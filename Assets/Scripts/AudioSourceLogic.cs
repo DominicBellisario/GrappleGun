@@ -3,12 +3,14 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioSourceLogic : MonoBehaviour
 {
+    [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] audioClips;
-    AudioSource audioSource;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public void Constructor(AudioClip clip, bool destroyAfterPlay = true)
     {
-        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = clip;
+        audioSource.Play();
+        if (destroyAfterPlay) Destroy(gameObject, clip.length);
     }
 
     public void SwitchClip(int index)
