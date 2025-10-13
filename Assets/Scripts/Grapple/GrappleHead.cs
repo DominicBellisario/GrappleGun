@@ -19,6 +19,7 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject sparksBurstPrefab;
     [SerializeField] GameObject muzzleFlashPrefab;
     [SerializeField] AudioSource grappleReelSound;
+    [SerializeField] AudioSource grappleShootSound;
 
     GVar gvar;
     float startColRadius;
@@ -90,8 +91,9 @@ public class GrappleHead : MonoBehaviour
         // Set the velocity
         rb.linearVelocity = direction * gvar.GrappleLaunchSpeed;
 
-        // play the reel sound
+        // play the reel and shoot sound
         grappleReelSound.Play();
+        grappleShootSound.Play();
 
         //ignore collisions if the grapple is launched while already touching something
         Collider headCollider = GetComponent<Collider>();
@@ -204,6 +206,8 @@ public class GrappleHead : MonoBehaviour
             player.GetComponent<PlayerController>().CanUseGrapple = false;
             player.GetComponent<PlayerController>().IsStuck = false;
             player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            // start the reel sound
+            grappleReelSound.Play();
         }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Bird"))
@@ -213,6 +217,8 @@ public class GrappleHead : MonoBehaviour
             player.GetComponent<PlayerController>().CanUseGrapple = false;
             player.GetComponent<PlayerController>().IsStuck = false;
             player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            // start the reel sound
+            grappleReelSound.Play();
         }
         // If it collides with anything else, send the grapple back
         else
