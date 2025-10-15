@@ -2697,18 +2697,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1852269641194762091, guid: 1d60fb08de62a3b408fc5884414c049c, type: 3}
-        m_TargetAssemblyTypeName: GVar, Assembly-CSharp
-        m_MethodName: set_IsPaused
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 1654889209450672583, guid: bad947ea37bad53479faa45da412e9bc, type: 3}
         m_TargetAssemblyTypeName: SceneHelper, Assembly-CSharp
         m_MethodName: ReloadScene
@@ -3653,7 +3641,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6210784257783796198}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

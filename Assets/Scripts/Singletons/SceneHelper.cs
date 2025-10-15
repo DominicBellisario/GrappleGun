@@ -21,14 +21,13 @@ public class SceneHelper : MonoBehaviour
     {
         Time.timeScale = 1f;
         GVar.Instance.IsPaused = false;
+        AudioListener.pause = false;
         SceneManager.LoadScene(sceneName);
     }
 
     public void ReloadScene()
     {
-        Time.timeScale = 1f;
-        GVar.Instance.IsPaused = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void QuitGame()

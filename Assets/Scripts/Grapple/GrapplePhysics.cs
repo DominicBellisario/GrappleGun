@@ -14,6 +14,11 @@ public class GrapplePhysics : MonoBehaviour
     [SerializeField] float normalDamper = 0;
     [SerializeField] float reelElasticity = 20f;
     [SerializeField] float reelDamper = 10f;
+
+    [Header("Sounds")]
+    [SerializeField] GameObject audioSourcePrefab;
+    [SerializeField] AudioClip birdLaunchClip;
+
     GVar gvar;
     CameraEffects camEffects;
 
@@ -183,6 +188,10 @@ public class GrapplePhysics : MonoBehaviour
                 bird.GetComponent<BirdEffects>().Hit(playerCam.transform);
                 grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
                 camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 0, true));
+
+                // play the bird launch sound at a random pitch
+                GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
+                newSource.GetComponent<AudioSourceLogic>().Constructor(birdLaunchClip, Random.Range(0.9f, 1.1f));
             }
 
             // if the player is grappling for too long, they are stuck. detatch them

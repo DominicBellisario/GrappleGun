@@ -6,6 +6,9 @@ using UnityEngine;
 public class PlayerTriggers : MonoBehaviour
 {
     [SerializeField] Timer timer;
+
+    [Header("Sounds")]
+    [SerializeField] AudioSource deathSource;
     Rigidbody rb;
     GVar gvar;
     PlayerEvents pEvents;
@@ -70,6 +73,8 @@ public class PlayerTriggers : MonoBehaviour
         // reset the scene and tp the player to the last checkpoint if they hit one
         else if (trigger.gameObject.CompareTag("Death Plain"))
         {
+            // play death sound
+            deathSource.Play();
             pEvents.OutOfBounds();
         }
     }

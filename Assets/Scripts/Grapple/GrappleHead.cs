@@ -203,8 +203,7 @@ public class GrappleHead : MonoBehaviour
 
             // play the grappleable hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitGrappleClip);
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitGrappleClip, Random.Range(0.9f, 1.1f));
         }
         // If it collides with a reel, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Reel"))
@@ -225,8 +224,7 @@ public class GrappleHead : MonoBehaviour
             grappleReelSource.Play();
             // play the grappleable reel sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitReelClip);
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitReelClip, Random.Range(0.9f, 1.1f));
         }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Bird"))
@@ -241,8 +239,7 @@ public class GrappleHead : MonoBehaviour
             grappleReelSource.Play();
             // play the bird hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitBirdClip);
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitBirdClip, Random.Range(0.9f, 1.1f));
         }
         // If it collides with anything else, send the grapple back
         else
@@ -255,11 +252,9 @@ public class GrappleHead : MonoBehaviour
             // spawn a burst of sparks
             Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
 
-            // play the non-grappleable hit sound at a random pitch
+            // play the non-grappleable hit sound at a random pitch amd half volume
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSource>().pitch = Random.Range(0.9f, 1.1f);
-            newSource.GetComponent<AudioSource>().volume = 0.5f;
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip);
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip, Random.Range(0.9f, 1.1f), 0.5f);
         }
     }
 
