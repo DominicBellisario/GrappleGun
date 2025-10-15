@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] ParticleSystem boostParticles;
 
+    [Header("Sounds")]
+    [SerializeField] BoostSoundLogic boostSource;
+
     /// <summary>
     /// wether or not the player is stuck to a reel surface
     /// </summary>
@@ -120,6 +123,7 @@ public class PlayerController : MonoBehaviour
         //apply boost when boosting
         if (IsBoosting)
         {
+            // keep boosting if there is fuel and the player is not grounded
             if (CurrentBoostFuel > 0f && downRaycastHit.collider == null)
             {
                 rb.AddForce(gvar.BoostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
@@ -129,6 +133,7 @@ public class PlayerController : MonoBehaviour
             {
                 IsBoosting = false;
                 boostParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+                boostSource.PlayBoostStopSound();
             }
         }
         //recharge boost when grounded
@@ -246,18 +251,20 @@ public class PlayerController : MonoBehaviour
                 // Apply an impulse force to the Rigidbody2D to make the player jump
                 rb.AddForce(Vector3.up * gvar.JumpForce, ForceMode.Impulse);
             }
-            // if the player is not grounded, activate the boost
+            // if the player is not grounded, activate the boost, particles, and sound
             else
             {
                 IsBoosting = true;
                 boostParticles.Play();
+                boostSource.PlayBoostStartSound();
             }
         }
         // if the button was released, stop boosting
-        else
+        else if (IsBoosting)
         {
             IsBoosting = false;
             boostParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
+            boostSource.PlayBoostStopSound();
         }
     }
 

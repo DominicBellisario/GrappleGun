@@ -21,7 +21,6 @@ public class GrappleHead : MonoBehaviour
 
     [Header("Audio Sources / Clips")]
     [SerializeField] GameObject audioSourcePrefab;
-    [SerializeField] AudioSource grappleReelSource;
     [SerializeField] AudioSource grappleShootSource;
     [SerializeField] AudioSource grappleReturnSource;
     [SerializeField] AudioClip hitNoGrappleClip;
@@ -99,8 +98,7 @@ public class GrappleHead : MonoBehaviour
         // Set the velocity
         rb.linearVelocity = direction * gvar.GrappleLaunchSpeed;
 
-        // play the reel and shoot sound
-        grappleReelSource.Play();
+        // play the shoot sound
         grappleShootSource.Play();
 
         //ignore collisions if the grapple is launched while already touching something
@@ -138,9 +136,6 @@ public class GrappleHead : MonoBehaviour
 
         // destroy the grapple point if it exists
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
-
-        // play the reel sound
-        grappleReelSource.Play();
 
         float timer = 0f;
         // come back to the player until it gets there or until it takes too long
@@ -181,8 +176,6 @@ public class GrappleHead : MonoBehaviour
             // play the return sound
             grappleReturnSource.Play();
         }
-        // stop the reel sound
-        grappleReelSource.Stop();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -190,9 +183,6 @@ public class GrappleHead : MonoBehaviour
         // can only act on one collision event
         if (!detectCollisions) return;
         detectCollisions = false;
-
-        // stop the reel sound
-        grappleReelSource.Stop();
 
         // If the grapple head collides with a standard surface, create a non elastic grapple
         if (collision.gameObject.CompareTag("Normal Grap Surface"))
@@ -220,8 +210,6 @@ public class GrappleHead : MonoBehaviour
             player.GetComponent<PlayerController>().IsStuck = false;
             player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
-            // start the reel sound
-            grappleReelSource.Play();
             // play the grappleable reel sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSourceLogic>().Constructor(hitReelClip, Random.Range(0.9f, 1.1f));
@@ -235,8 +223,6 @@ public class GrappleHead : MonoBehaviour
             player.GetComponent<PlayerController>().IsStuck = false;
             player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
-            // start the reel sound
-            grappleReelSource.Play();
             // play the bird hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSourceLogic>().Constructor(hitBirdClip, Random.Range(0.9f, 1.1f));
