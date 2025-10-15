@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     /// the player's first person camera
     /// </summary>
     [SerializeField] GameObject playerCam;
-    [SerializeField] GunLag grappleObject;
+    [SerializeField] GunLag grappleLag;
     /// <summary>
     /// The Rigidbody component attached to the player.
     /// </summary>
@@ -134,6 +134,8 @@ public class PlayerController : MonoBehaviour
                 IsBoosting = false;
                 boostParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
                 boostSource.PlayBoostStopSound();
+                gunLag.ToggleVibration(false);
+                grappleLag.ToggleVibration(false);
             }
         }
         //recharge boost when grounded
@@ -170,7 +172,7 @@ public class PlayerController : MonoBehaviour
         playerCam.transform.localRotation = Quaternion.Euler(mouseRotation.x, mouseRotation.y, 0f);
 
         // update gun lag, etc.
-        grappleObject.lookInput = lookInput;
+        grappleLag.lookInput = lookInput;
         gunLag.lookInput = lookInput;
     }
 
@@ -257,6 +259,8 @@ public class PlayerController : MonoBehaviour
                 IsBoosting = true;
                 boostParticles.Play();
                 boostSource.PlayBoostStartSound();
+                gunLag.ToggleVibration(true);
+                grappleLag.ToggleVibration(true);
             }
         }
         // if the button was released, stop boosting
@@ -265,6 +269,8 @@ public class PlayerController : MonoBehaviour
             IsBoosting = false;
             boostParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
             boostSource.PlayBoostStopSound();
+            gunLag.ToggleVibration(false);
+            grappleLag.ToggleVibration(false);
         }
     }
 

@@ -232,6 +232,7 @@ MonoBehaviour:
   recoilKickback: 0.5
   recoilRotation: 0
   recoilReturnSpeed: 10
+  vibrationMagnitude: 0.01
   lookInput: {x: 0, y: 0}
 --- !u!1 &1328603308791807764
 GameObject:
@@ -11204,6 +11205,7 @@ MonoBehaviour:
   recoilKickback: 0.5
   recoilRotation: 50
   recoilReturnSpeed: 5
+  vibrationMagnitude: 0.01
   lookInput: {x: 0, y: 0}
 --- !u!114 &9159966593861744583
 MonoBehaviour:
@@ -11627,9 +11629,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 901c94fccd383ac4982b4ee69105dacc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostSource: {fileID: 0}
-  boostStartClip: {fileID: 0}
-  boostStopClip: {fileID: 0}
+  boostSource: {fileID: 8555758289215243128}
+  boostStartClip: {fileID: 8300000, guid: be701df411aa008459ef5ae63c0aff50, type: 3}
+  boostStopClip: {fileID: 8300000, guid: 8e5be46aa325cec4f849eed2bb36bf7d, type: 3}
 --- !u!1 &8899434119458475185
 GameObject:
   m_ObjectHideFlags: 0
@@ -11782,7 +11784,7 @@ MonoBehaviour:
   gun: {fileID: 9159966593861744583}
   gunLag: {fileID: 5494371129423954118}
   boostParticles: {fileID: 1583547697946788831}
-  boostSource: {fileID: 8555758289215243128}
+  boostSource: {fileID: 4167566882626256927}
 --- !u!114 &72448625921142688
 MonoBehaviour:
   m_ObjectHideFlags: 0

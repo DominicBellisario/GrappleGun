@@ -1006,22 +1006,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf7457fe4355ce842b17c337bf40eefb, type: 3}
---- !u!82 &148708981 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 8555758289215243128, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-  m_PrefabInstance: {fileID: 1438032873}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &148708982 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4167566882626256927, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-  m_PrefabInstance: {fileID: 1438032873}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 901c94fccd383ac4982b4ee69105dacc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &180892758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4302,6 +4286,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17ce4498584cdfe4fac07f17f79fa997, type: 3}
+--- !u!114 &925087917 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5976852609743098317, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+  m_PrefabInstance: {fileID: 1438032873}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a43529caa19a5e14ca39c25d33802f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GunLag
 --- !u!4 &927659657 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9073588934815379119, guid: 17ce4498584cdfe4fac07f17f79fa997, type: 3}
@@ -6146,9 +6141,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2033147376}
     - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: boostSource
+      propertyPath: grappleLag
       value: 
-      objectReference: {fileID: 148708982}
+      objectReference: {fileID: 925087917}
     - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: timer
       value: 
@@ -6161,18 +6156,6 @@ PrefabInstance:
       propertyPath: damagePanel
       value: 
       objectReference: {fileID: 1601435997}
-    - target: {fileID: 4167566882626256927, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: boostSource
-      value: 
-      objectReference: {fileID: 148708981}
-    - target: {fileID: 4167566882626256927, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: boostStopClip
-      value: 
-      objectReference: {fileID: 8300000, guid: 8e5be46aa325cec4f849eed2bb36bf7d, type: 3}
-    - target: {fileID: 4167566882626256927, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: boostStartClip
-      value: 
-      objectReference: {fileID: 8300000, guid: be701df411aa008459ef5ae63c0aff50, type: 3}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

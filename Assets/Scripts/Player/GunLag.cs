@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +23,10 @@ public class GunLag : MonoBehaviour
     [SerializeField] float recoilRotation = 5f;     // upward rotation angle
     [SerializeField] float recoilReturnSpeed = 10f; // how fast it returns
 
+    [Header("Vibration Settings")]
+    [SerializeField] float vibrationMagnitude;
+    Coroutine vibrationCoroutine;
+
     [HideInInspector] public Vector2 lookInput;
 
     Quaternion originalRotation;
@@ -35,6 +40,7 @@ public class GunLag : MonoBehaviour
         originalRotation = transform.localRotation;
         originalPosition = transform.localPosition;
         recoilRotationOffset = Quaternion.identity;
+        vibrationCoroutine = null;
     }
 
     void Update()
@@ -84,5 +90,25 @@ public class GunLag : MonoBehaviour
         if (angle > 180) angle -= 360;
         angle = Mathf.Clamp(angle, -maxAngle, maxAngle);
         return Quaternion.AngleAxis(angle, axis);
+    }
+
+    public void ToggleVibration(bool on)
+    {
+        if (vibrationCoroutine != null) StopCoroutine(vibrationCoroutine);
+        if (on) vibrationCoroutine = StartCoroutine(VibrateGun());
+    }
+
+    private IEnumerator VibrateGun()
+    {
+        Vector3 originalPos = transform.localPosition;
+
+        while (true)
+        {
+            float x = Random.Range(-1f, 1f) * vibrationMagnitude;
+            float y = Random.Range(-1f, 1f) * vibrationMagnitude;
+
+            transform.localPosition = new Vector3(originalPos.x + x, originalPos.y + y, originalPos.z);
+            yield return null;
+        }
     }
 }
