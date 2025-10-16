@@ -864,11 +864,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f8de44e8048fa4784c78a0e745fced, type: 3}
---- !u!82 &135565295 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 3145357539178027020, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-  m_PrefabInstance: {fileID: 1438032873}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &144013023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6134,14 +6129,6 @@ PrefabInstance:
       propertyPath: timer
       value: 
       objectReference: {fileID: 2033147376}
-    - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: dashSource
-      value: 
-      objectReference: {fileID: 135565295}
-    - target: {fileID: 1740512880364592555, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: m_Resource
-      value: 
-      objectReference: {fileID: 8300000, guid: 67188ccc83eec4c4a9dbf929e94f6b8e, type: 3}
     - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: timer
       value: 
@@ -6194,10 +6181,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5434892697611356405, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: m_Resource
-      value: 
-      objectReference: {fileID: 8300000, guid: 7537565c6abdae043bbcb45e1c58dc14, type: 3}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
       value: Player
