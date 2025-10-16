@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using UnityEngine.UI;
 
 public class Options : MonoBehaviour
@@ -18,7 +17,6 @@ public class Options : MonoBehaviour
     public void AssignValues()
     {
         senseSlider.value = gvar.MouseSensitivity;
-        Debug.Log(gvar.MasterVolume);
         volumeSlider.value = gvar.MasterVolume;
     }
 
