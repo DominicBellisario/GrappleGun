@@ -68,7 +68,7 @@ public class GrappleHead : MonoBehaviour
         StopAllCoroutines();
 
         //add recoil
-        grappleLag.AddRecoil(1f);
+        grappleLag.AddShootRecoil(1f);
 
         // spawn a burst of sparks
         GameObject flash = Instantiate(muzzleFlashPrefab, grappleStartPos.transform.position, Quaternion.identity);
@@ -158,7 +158,7 @@ public class GrappleHead : MonoBehaviour
         rb.excludeLayers = 0;
 
         // add recoil as long as the grapple head was actually coming back and not already back
-        grappleLag.AddRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
+        grappleLag.AddShootRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
 
         // snap to the grapple start position

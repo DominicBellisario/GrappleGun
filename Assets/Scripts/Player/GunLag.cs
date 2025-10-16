@@ -19,9 +19,10 @@ public class GunLag : MonoBehaviour
     [SerializeField] float lagClamp;
 
     [Header("Recoil Settings")]
-    [SerializeField] float recoilKickback = 0.1f;   // backward position offset
-    [SerializeField] float recoilRotation = 5f;     // upward rotation angle
-    [SerializeField] float recoilReturnSpeed = 10f; // how fast it returns
+    [SerializeField] float recoilShootKickback;   // backward position offset
+    [SerializeField] float recoilShootRotation;     // upward rotation angle
+    [SerializeField] float recoilDashKickback;
+    [SerializeField] float recoilReturnSpeed; // how fast it returns
 
     [Header("Vibration Settings")]
     [SerializeField] float vibrationMagnitude;
@@ -75,13 +76,19 @@ public class GunLag : MonoBehaviour
         );
     }
 
-    public void AddRecoil(float multiplier)
+    public void AddShootRecoil(float multiplier)
     {
         // Kick gun backwards
-        recoilOffset += multiplier * recoilKickback * Vector3.back;
+        recoilOffset += multiplier * recoilShootKickback * Vector3.back;
 
         // Rotate gun upwards (slight random side sway can be added)
-        recoilRotationOffset *= Quaternion.Euler(-recoilRotation, Random.Range(-recoilRotation * 0.2f, recoilRotation * 0.2f), 0f);
+        recoilRotationOffset *= Quaternion.Euler(-recoilShootRotation, 0f, 0f);
+    }
+
+    public void AddDashRecoil()
+    {
+        // Kick gun backwards
+        recoilOffset += recoilDashKickback * Vector3.back;
     }
 
     private Quaternion ClampRotation(Quaternion q, float maxAngle)

@@ -162,8 +162,8 @@ public class PlayerController : MonoBehaviour
         if (gvar.IsPaused) return;
         //apply mouse look
         // Adjust by deltaTime for consistent rotation speed
-        float deltaX = lookInput.x * gvar.MouseSensitivity * Time.deltaTime * 100f;
-        float deltaY = lookInput.y * gvar.MouseSensitivity * Time.deltaTime * 100f;
+        float deltaX = lookInput.x * gvar.MouseSensitivity * Time.deltaTime * 50f;
+        float deltaY = lookInput.y * gvar.MouseSensitivity * Time.deltaTime * 50f;
 
         mouseRotation.y += deltaX;
         mouseRotation.x -= deltaY;
@@ -337,6 +337,7 @@ public class PlayerController : MonoBehaviour
                     IsStuck = false;
                     rb.constraints = RigidbodyConstraints.FreezeRotation;
                 }
+                // add a force in the direction the player is facing
                 Vector3 camForward = playerCam.transform.forward;
                 camForward.y = 0f;
                 camForward.Normalize();
@@ -344,8 +345,13 @@ public class PlayerController : MonoBehaviour
                 CurrentDashCharge = 0f;
                 CanDash = false;
                 StartCoroutine(ChargeDash());
+                // warp the camera
                 CameraEffects camEffects = playerCam.GetComponent<CameraEffects>();
                 camEffects.StartCoroutine(camEffects.WarpFOVForDash());
+                // add kickback to the guns
+                gunLag.AddDashRecoil();
+                grappleLag.AddDashRecoil();
+
             }
         }
     }
@@ -367,7 +373,7 @@ public class PlayerController : MonoBehaviour
         if (inputValue.isPressed && isReloaded)
         {
             gun.FireGun(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
-            gunLag.AddRecoil(1f);
+            gunLag.AddShootRecoil(1f);
             StartCoroutine(ReloadGun());
         }
     }
