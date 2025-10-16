@@ -864,6 +864,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45f8de44e8048fa4784c78a0e745fced, type: 3}
+--- !u!82 &135565295 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3145357539178027020, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+  m_PrefabInstance: {fileID: 1438032873}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &144013023
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4286,17 +4291,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 17ce4498584cdfe4fac07f17f79fa997, type: 3}
---- !u!114 &925087917 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5976852609743098317, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-  m_PrefabInstance: {fileID: 1438032873}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a43529caa19a5e14ca39c25d33802f97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GunLag
 --- !u!4 &927659657 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9073588934815379119, guid: 17ce4498584cdfe4fac07f17f79fa997, type: 3}
@@ -6141,9 +6135,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2033147376}
     - target: {fileID: 474877638669497655, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: grappleLag
+      propertyPath: dashSource
       value: 
-      objectReference: {fileID: 925087917}
+      objectReference: {fileID: 135565295}
+    - target: {fileID: 1740512880364592555, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 67188ccc83eec4c4a9dbf929e94f6b8e, type: 3}
     - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: timer
       value: 
@@ -6196,6 +6194,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5434892697611356405, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 7537565c6abdae043bbcb45e1c58dc14, type: 3}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7286,8 +7288,20 @@ PrefabInstance:
       propertyPath: grappleHead
       value: 
       objectReference: {fileID: 1438032875}
+    - target: {fileID: 3007937011579583112, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3007937011579583112, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3036037890272863608, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3338879100167986229, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_MaxValue
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3499961159931284858, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
@@ -7318,6 +7332,18 @@ PrefabInstance:
       propertyPath: grappleHead
       value: 
       objectReference: {fileID: 1438032875}
+    - target: {fileID: 9148809888024355099, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9148809888024355099, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9148809888024355099, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

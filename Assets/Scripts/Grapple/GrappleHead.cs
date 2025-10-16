@@ -239,7 +239,7 @@ public class GrappleHead : MonoBehaviour
 
             // play the non-grappleable hit sound at a random pitch amd half volume
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip, Random.Range(0.9f, 1.1f), 0.5f);
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip, Random.Range(0.9f, 1.1f));
         }
     }
 

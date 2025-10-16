@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Sounds")]
     [SerializeField] BoostSoundLogic boostSource;
+    [SerializeField] AudioSource dashSource;
 
     /// <summary>
     /// wether or not the player is stuck to a reel surface
@@ -253,14 +254,20 @@ public class PlayerController : MonoBehaviour
                 // Apply an impulse force to the Rigidbody2D to make the player jump
                 rb.AddForce(Vector3.up * gvar.JumpForce, ForceMode.Impulse);
             }
-            // if the player is not grounded, activate the boost, particles, and sound
-            else
+            // if the player is not grounded and has fuel, activate the boost, particles, and sound
+            else if (CurrentBoostFuel > 0f)
             {
                 IsBoosting = true;
                 boostParticles.Play();
                 boostSource.PlayBoostStartSound();
                 gunLag.ToggleVibration(true);
                 grappleLag.ToggleVibration(true);
+            }
+            // they have no fuel, play empty boost sound
+            else
+            {
+                //play empty boost sound
+                boostSource.PlayBoostEmptySound();
             }
         }
         // if the button was released, stop boosting
@@ -337,6 +344,7 @@ public class PlayerController : MonoBehaviour
                     IsStuck = false;
                     rb.constraints = RigidbodyConstraints.FreezeRotation;
                 }
+                
                 // add a force in the direction the player is facing
                 Vector3 camForward = playerCam.transform.forward;
                 camForward.y = 0f;
@@ -345,13 +353,17 @@ public class PlayerController : MonoBehaviour
                 CurrentDashCharge = 0f;
                 CanDash = false;
                 StartCoroutine(ChargeDash());
+
                 // warp the camera
                 CameraEffects camEffects = playerCam.GetComponent<CameraEffects>();
                 camEffects.StartCoroutine(camEffects.WarpFOVForDash());
+
                 // add kickback to the guns
                 gunLag.AddDashRecoil();
                 grappleLag.AddDashRecoil();
 
+                // play dash sound
+                dashSource.Play();
             }
         }
     }

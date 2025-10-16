@@ -5,6 +5,7 @@ public class BoostSoundLogic : MonoBehaviour
     [SerializeField] AudioSource boostSource;
     [SerializeField] AudioClip boostStartClip;
     [SerializeField] AudioClip boostStopClip;
+    [SerializeField] AudioClip boostEmptyClip;
 
     public void PlayBoostStartSound()
     {
@@ -16,5 +17,9 @@ public class BoostSoundLogic : MonoBehaviour
         boostSource.clip = boostStopClip;
         boostSource.Play();
     }
-
+    public void PlayBoostEmptySound()
+    {
+        boostSource.clip = boostEmptyClip;
+        boostSource.Play();
+    }
 }
