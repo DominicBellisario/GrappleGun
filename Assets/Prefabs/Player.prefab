@@ -41,7 +41,7 @@ AudioSource:
   m_GameObject: {fileID: 190732715608924131}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 0965e5ac31382d748ba407b180f7efb8, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 2b50e89e9cf5cf14cbdfe6f2fd7905a9, type: 3}
   m_PlayOnAwake: 0
@@ -229,8 +229,9 @@ MonoBehaviour:
   lagAmount: 0.01
   lagSmooth: 10
   lagClamp: 0.15
-  recoilKickback: 0.5
-  recoilRotation: 0
+  recoilShootKickback: 0.5
+  recoilShootRotation: 0
+  recoilDashKickback: 0.5
   recoilReturnSpeed: 10
   vibrationMagnitude: 0.01
   lookInput: {x: 0, y: 0}
@@ -308,7 +309,7 @@ AudioSource:
   m_GameObject: {fileID: 1750518394142872017}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 0965e5ac31382d748ba407b180f7efb8, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: f1f33f8584f4d194da2db0afed4261f6, type: 3}
   m_PlayOnAwake: 0
@@ -597,7 +598,7 @@ AudioSource:
   m_GameObject: {fileID: 2118143242191631373}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 0965e5ac31382d748ba407b180f7efb8, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 67188ccc83eec4c4a9dbf929e94f6b8e, type: 3}
   m_PlayOnAwake: 0
@@ -11202,8 +11203,9 @@ MonoBehaviour:
   lagAmount: 0.01
   lagSmooth: 10
   lagClamp: 0.15
-  recoilKickback: 0.5
-  recoilRotation: 50
+  recoilShootKickback: 0.5
+  recoilShootRotation: 50
+  recoilDashKickback: 0.5
   recoilReturnSpeed: 5
   vibrationMagnitude: 0.01
   lookInput: {x: 0, y: 0}
@@ -11264,7 +11266,7 @@ AudioSource:
   m_GameObject: {fileID: 5633507446000132435}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 0965e5ac31382d748ba407b180f7efb8, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 7537565c6abdae043bbcb45e1c58dc14, type: 3}
   m_PlayOnAwake: 0
@@ -11520,7 +11522,7 @@ AudioSource:
   m_GameObject: {fileID: 7661135938491704558}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 0965e5ac31382d748ba407b180f7efb8, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: be701df411aa008459ef5ae63c0aff50, type: 3}
   m_PlayOnAwake: 0
@@ -11778,7 +11780,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCam: {fileID: 5014280314240808219}
-  grappleObject: {fileID: 5976852609743098317}
+  grappleLag: {fileID: 5976852609743098317}
   grappleStart: {fileID: 1328603308791807764}
   grappleHead: {fileID: 2831276443190014990}
   gun: {fileID: 9159966593861744583}

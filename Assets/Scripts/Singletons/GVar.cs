@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GVar : MonoBehaviour
 {
@@ -47,6 +48,19 @@ public class GVar : MonoBehaviour
         {
             mouseSensitivity = value;
             PlayerPrefs.SetFloat("Mouse Sensitivity", mouseSensitivity);
+        }
+    }
+
+    float masterVolume;
+    [SerializeField] AudioMixer masterMixer;
+    public float MasterVolume
+    {
+        get { return Instance.masterVolume; }
+        set
+        {
+            masterVolume = value;
+            PlayerPrefs.SetFloat("Master Volume", masterVolume);
+            masterMixer.SetFloat("Master Volume", masterVolume);
         }
     }
 
@@ -196,6 +210,8 @@ public class GVar : MonoBehaviour
     void Start()
     {
         mouseSensitivity = PlayerPrefs.GetFloat("Mouse Sensitivity", 0.25f);
+        masterVolume = PlayerPrefs.GetFloat("Master Volume", 0f);
+        masterMixer.SetFloat("Master Volume", masterVolume);
     }
 
 }
