@@ -9,7 +9,12 @@ public class GrappleHead : MonoBehaviour
 {
     // --- EVENTS --- 
     public static event Action OnStartGrappleReturnEvent;
-    public static event Action<float> OnGrappleReturnedEvent;
+    public static event Action<float> OnEndGrappleReturnEvent;
+    public static event Action<Collision, int> OnGrappleHitNormalEvent;
+    public static event Action OnGrappleHitNonNormalEvent;
+    public static event Action<Collision, int> OnGrappleHitReelEvent;
+    public static event Action<Collision, int> OnGrappleHitBirdEvent;
+
     Rigidbody rb;
     GameObject grapplePoint;
     SphereCollider col;
@@ -19,12 +24,10 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject grapplePointPrefab;
     [SerializeField] GameObject grappleStartPos;
-    [SerializeField] GrappleLag grappleLag;
     [SerializeField] GameObject sparksBurstPrefab;
 
     [Header("Audio Sources / Clips")]
     [SerializeField] GameObject audioSourcePrefab;
-    [SerializeField] AudioSource grappleReturnSource;
     [SerializeField] AudioClip hitNoGrappleClip;
     [SerializeField] AudioClip hitGrappleClip;
     [SerializeField] AudioClip hitReelClip;
@@ -50,6 +53,18 @@ public class GrappleHead : MonoBehaviour
         startColRadius = col.radius;
     }
 
+    void OnEnable()
+    {
+        PlayerController.OnShootGrappleEvent += (raycastHit) => Launch(raycastHit);
+        PlayerController.OnReturnGrappleEvent += () => StartCoroutine(ReturnToGun());
+    }
+
+    void OnDisable()
+    {
+        PlayerController.OnShootGrappleEvent -= (raycastHit) => Launch(raycastHit);
+        PlayerController.OnReturnGrappleEvent -= () => StartCoroutine(ReturnToGun());
+    }
+
     void Update()
     {
         // get the distance between the grapple head and the player ONCE so everything else can use it without recalculating
@@ -64,7 +79,7 @@ public class GrappleHead : MonoBehaviour
             }
         }
     }
-    public void Launch(RaycastHit hit)
+    private void Launch(RaycastHit hit)
     {
         // Stop any existing return coroutine
         StopAllCoroutines();
@@ -146,27 +161,22 @@ public class GrappleHead : MonoBehaviour
         // disable enemy collision
         rb.excludeLayers = 0;
 
-        // add recoil as long as the grapple head was actually coming back and not already back
-        grappleLag.AddReturnRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
-        transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
-
         // snap to the grapple start position
+        transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
         transform.SetParent(grappleStartPos.transform);
 
         rb.interpolation = RigidbodyInterpolation.None;
 
-        player.GetComponent<PlayerController>().CanUseGrapple = true;
-
         // spawn a burst of sparks
         if (timer != 0)
         {
-            GameObject sparks = Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
-            sparks.transform.SetParent(grappleStartPos.transform);
-            // play the return sound
-            grappleReturnSource.Play();
+            Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity).transform.SetParent(grappleStartPos.transform);
         }
 
-        OnGrappleReturnedEvent?.Invoke(timer);
+        // add recoil as long as the grapple head was actually coming back and not already back
+        // player can use grapple again
+        // play the return sound if timer != 0
+        OnEndGrappleReturnEvent?.Invoke(timer);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -178,45 +188,51 @@ public class GrappleHead : MonoBehaviour
         // If the grapple head collides with a standard surface, create a non elastic grapple
         if (collision.gameObject.CompareTag("Normal Grap Surface"))
         {
-            CreateGrapplePoint(collision, 0);
             // spawn a burst of sparks
             Instantiate(sparksBurstPrefab, transform.position, Quaternion.identity);
 
             // play the grappleable hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSourceLogic>().Constructor(hitGrappleClip, UnityEngine.Random.Range(0.9f, 1.1f));
+
+            // create a grapple point with a non-elastic grapple
+            CreateGrapplePoint(collision);
+            OnGrappleHitNormalEvent?.Invoke(collision, 0);
         }
         // If it collides with a reel, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Reel"))
         {
             if (Vector3.Distance(collision.GetContact(0).point, player.transform.position) < 2f)
             {
-                // if the player is too close to the bird, return the grapple
+                // if the player is too close to the reel, do not grapple it and return the grapple
                 StartCoroutine(ReturnToGun());
                 return;
             }
-            CreateGrapplePoint(collision, 1);
-            //player cannot use the grapple until they are pulled in fully
-            player.GetComponent<PlayerController>().CanUseGrapple = false;
-            player.GetComponent<PlayerController>().IsStuck = false;
-            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 
             // play the grappleable reel sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSourceLogic>().Constructor(hitReelClip, UnityEngine.Random.Range(0.9f, 1.1f));
+            
+            // player cannot use the grapple
+            // player is stuck
+            // player's rotation is frozen
+            // create a grapple point with an elastic grapple
+            CreateGrapplePoint(collision);
+            OnGrappleHitReelEvent?.Invoke(collision, 1);
         }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Bird"))
         {
-            CreateGrapplePoint(collision, 2);
-            //player cannot use the grapple until they are pulled in fully
-            player.GetComponent<PlayerController>().CanUseGrapple = false;
-            player.GetComponent<PlayerController>().IsStuck = false;
-            player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            CreateGrapplePoint(collision);
 
             // play the bird hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSourceLogic>().Constructor(hitBirdClip, UnityEngine.Random.Range(0.9f, 1.1f));
+
+            // player cannot use the grapple
+            // player is stuck
+            // player's rotation is frozen
+            OnGrappleHitBirdEvent?.Invoke(collision, 2);
         }
         // If it collides with anything else, send the grapple back
         else
@@ -232,10 +248,12 @@ public class GrappleHead : MonoBehaviour
             // play the non-grappleable hit sound at a random pitch amd half volume
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip, UnityEngine.Random.Range(0.9f, 1.1f));
+
+            OnGrappleHitNonNormalEvent?.Invoke();
         }
     }
 
-    private void CreateGrapplePoint(Collision collision, int grappleType)
+    private void CreateGrapplePoint(Collision collision)
     {
         rb.linearVelocity = Vector3.zero; // Stop movement
         rb.isKinematic = true; // Disable physics
@@ -246,9 +264,6 @@ public class GrappleHead : MonoBehaviour
         grapplePoint.transform.SetParent(collision.transform);
         //make the grapple head match the point's transform
         StartCoroutine(FollowTarget());
-
-        //create a configurable joint
-        player.GetComponent<GrapplePhysics>().CreateGrapple(collision.gameObject, grappleType);
     }
 
     /// <summary>

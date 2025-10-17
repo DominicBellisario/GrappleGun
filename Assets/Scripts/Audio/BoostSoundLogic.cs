@@ -7,17 +7,31 @@ public class BoostSoundLogic : SoundLogic
     [SerializeField] AudioClip boostStopClip;
     [SerializeField] AudioClip boostEmptyClip;
 
-    public void PlayBoostStartSound()
+    void OnEnable()
+    {
+        PlayerController.OnBoostStartEvent += () => PlayBoostStartSound();
+        PlayerController.OnBoostStopEvent += () => PlayBoostStopSound();
+        PlayerController.OnBoostEmptyEvent += () => PlayBoostEmptySound();
+    }
+    void OnDisable()
+    {
+        PlayerController.OnBoostStartEvent -= () => PlayBoostStartSound();
+        PlayerController.OnBoostStopEvent -= () => PlayBoostStopSound();
+        PlayerController.OnBoostEmptyEvent -= () => PlayBoostEmptySound();
+    }
+
+    private void PlayBoostStartSound()
     {
         audioSource.clip = boostStartClip;
         Play();
     }
-    public void PlayBoostStopSound()
+
+    private void PlayBoostStopSound()
     {
         audioSource.clip = boostStopClip;
         Play();
     }
-    public void PlayBoostEmptySound()
+    private void PlayBoostEmptySound()
     {
         audioSource.clip = boostEmptyClip;
         Play();

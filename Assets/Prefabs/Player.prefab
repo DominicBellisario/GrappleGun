@@ -1024,7 +1024,6 @@ MonoBehaviour:
   grappleLag: {fileID: 8041092287981657581}
   sparksBurstPrefab: {fileID: 266388715285006980, guid: 596a30dc601f1374e94775c282766c4e, type: 3}
   audioSourcePrefab: {fileID: 5763895986522015768, guid: dc57880049f9fde47829970fc6f50178, type: 3}
-  grappleShootSource: {fileID: 5434892697611356405}
   grappleReturnSource: {fileID: 1740512880364592555}
   hitNoGrappleClip: {fileID: 8300000, guid: 3b9bee4cf0575bd4b8990563b1a2b9a6, type: 3}
   hitGrappleClip: {fileID: 8300000, guid: f7140d8bf58610d4bb6e982d190d85e5, type: 3}
@@ -11581,6 +11580,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8377155338402632556}
   - component: {fileID: 1740512880364592555}
+  - component: {fileID: 1734495952659090874}
   m_Layer: 0
   m_Name: Return Source
   m_TagString: Untagged
@@ -11709,6 +11709,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1734495952659090874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5633507446000132435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99ab44d902ced0a4cbccab130ef67adf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6229923618714838206
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq.Expressions;
 using UnityEngine;
 
 public class WeaponLag : MonoBehaviour
@@ -46,11 +47,15 @@ public class WeaponLag : MonoBehaviour
     protected virtual void OnEnable()
     {
         PlayerController.OnDashEvent += AddDashRecoil;
+        PlayerController.OnBoostStartEvent += () => ToggleVibration(true);
+        PlayerController.OnBoostStopEvent += () => ToggleVibration(false);
     }
 
     protected virtual void OnDisable()
     {
         PlayerController.OnDashEvent -= AddDashRecoil;
+        PlayerController.OnBoostStartEvent -= () => ToggleVibration(true);
+        PlayerController.OnBoostStopEvent -= () => ToggleVibration(false);
     }
 
     void Update()
@@ -85,7 +90,7 @@ public class WeaponLag : MonoBehaviour
         );
     }
 
-    public virtual void AddShootRecoil()
+    protected virtual void AddShootRecoil()
     {
         // Kick gun backwards
         recoilOffset += recoilShootKickback * Vector3.back;
@@ -94,7 +99,7 @@ public class WeaponLag : MonoBehaviour
         recoilRotationOffset *= Quaternion.Euler(-recoilShootRotation, 0f, 0f);
     }
 
-    public void AddDashRecoil()
+    private void AddDashRecoil()
     {
         // Kick gun backwards
         recoilOffset += recoilDashKickback * Vector3.back;
@@ -108,7 +113,7 @@ public class WeaponLag : MonoBehaviour
         return Quaternion.AngleAxis(angle, axis);
     }
 
-    public void ToggleVibration(bool on)
+    private void ToggleVibration(bool on)
     {
         if (vibrationCoroutine != null) StopCoroutine(vibrationCoroutine);
         if (on) vibrationCoroutine = StartCoroutine(VibrateGun());

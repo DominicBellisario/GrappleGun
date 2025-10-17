@@ -7,7 +7,16 @@ public class Gun : MonoBehaviour
     [SerializeField] GameObject muzzleFlashPrefab;
     [SerializeField] Transform gunMuzzle;
 
-    public void FireGun(RaycastHit hit)
+    void OnEnable()
+    {
+        PlayerController.OnShootGunEvent += (raycastHit) => FireGun(raycastHit);
+    }
+    void OnDisable()
+    {
+        PlayerController.OnShootGunEvent -= (raycastHit) => FireGun(raycastHit);
+    }
+
+    private void FireGun(RaycastHit hit)
     {
         //spawn a new bullet
         GameObject newBullet = Instantiate(bulletPrefab, gunMuzzle.position, playerCam.transform.rotation);

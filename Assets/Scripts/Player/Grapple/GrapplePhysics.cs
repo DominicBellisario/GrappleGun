@@ -31,10 +31,16 @@ public class GrapplePhysics : MonoBehaviour
 
     void OnEnable()
     {
+        GrappleHead.OnGrappleHitNormalEvent += (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
+        GrappleHead.OnGrappleHitReelEvent += (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
+        GrappleHead.OnGrappleHitBirdEvent += (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
         GrappleHead.OnStartGrappleReturnEvent += DestroyGrapple;
     }
     void OnDisable()
     {
+        GrappleHead.OnGrappleHitNormalEvent -= (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
+        GrappleHead.OnGrappleHitReelEvent -= (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
+        GrappleHead.OnGrappleHitBirdEvent -= (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
         GrappleHead.OnStartGrappleReturnEvent -= DestroyGrapple;
     }
 

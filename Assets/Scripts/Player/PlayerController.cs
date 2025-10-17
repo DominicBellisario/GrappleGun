@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,14 +9,20 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     // --- EVENTS ---
-    public static event Action OnShootGrappleEvent;
+    public static event Action<RaycastHit> OnShootGrappleEvent;
+    public static event Action OnReturnGrappleEvent;
+    public static event Action<RaycastHit> OnShootGunEvent;
     public static event Action OnDashEvent;
+    public static event Action OnBoostStartEvent;
+    public static event Action OnBoostStopEvent;
+    public static event Action OnBoostEmptyEvent;
 
     /// <summary>
     /// the player's first person camera
     /// </summary>
     [SerializeField] GameObject playerCam;
     [SerializeField] GrappleLag grappleLag;
+    [SerializeField] GunLag gunLag;
     /// <summary>
     /// The Rigidbody component attached to the player.
     /// </summary>
@@ -34,21 +41,7 @@ public class PlayerController : MonoBehaviour
     Vector2 mouseRotation;
     Vector2 lookInput;
 
-    /// <summary>
-    /// The point where the grapple will be spawned from.
-    /// </summary>
-    [SerializeField] GameObject grappleStart;
-    [SerializeField] GameObject grappleHead;
-
-    [SerializeField] Gun gun;
-    [SerializeField] GunLag gunLag;
     bool isReloaded;
-
-    [SerializeField] ParticleSystem boostParticles;
-
-    [Header("Sounds")]
-    [SerializeField] BoostSoundLogic boostSource;
-    [SerializeField] AudioSource dashSource;
 
     /// <summary>
     /// wether or not the player is stuck to a reel surface
@@ -110,10 +103,36 @@ public class PlayerController : MonoBehaviour
     void OnEnable()
     {
         GrappleHead.OnStartGrappleReturnEvent += () => CanUseGrapple = false;
+        GrappleHead.OnEndGrappleReturnEvent += (time) => CanUseGrapple = true;
+        GrappleHead.OnGrappleHitReelEvent += (collision, grappleType) =>
+        {
+            CanUseGrapple = false;
+            IsStuck = false;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        };
+        GrappleHead.OnGrappleHitBirdEvent += (collision, grappleType) =>
+        {
+            CanUseGrapple = false;
+            IsStuck = false;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        };
     }
     void OnDisable()
     {
         GrappleHead.OnStartGrappleReturnEvent -= () => CanUseGrapple = false;
+        GrappleHead.OnEndGrappleReturnEvent -= (time) => CanUseGrapple = true;
+        GrappleHead.OnGrappleHitReelEvent -= (collision, grappleType) =>
+        {
+            CanUseGrapple = false;
+            IsStuck = false;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        };
+        GrappleHead.OnGrappleHitBirdEvent += (collision, grappleType) =>
+        {
+            CanUseGrapple = false;
+            IsStuck = false;
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        };
     }
 
     void Update()
@@ -144,10 +163,10 @@ public class PlayerController : MonoBehaviour
             else
             {
                 IsBoosting = false;
-                boostParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-                boostSource.PlayBoostStopSound();
-                gunLag.ToggleVibration(false);
-                grappleLag.ToggleVibration(false);
+                // start playing boost stop sound
+                // stop vibration for grapple and gun
+                // stop playing boost particles
+                OnBoostStopEvent?.Invoke();
             }
         }
         //recharge boost when grounded
@@ -216,7 +235,7 @@ public class PlayerController : MonoBehaviour
         camRight.y = 0f;
         camRight.Normalize();
 
-        //the force slligned to the camera
+        //the force alligned to the camera
         Vector3 worldForce = camRight * inputForce.x + camForward * inputForce.z;
 
         // apply the force tagental to the normal of the surface the player is on
@@ -269,26 +288,27 @@ public class PlayerController : MonoBehaviour
             else if (CurrentBoostFuel > 0f)
             {
                 IsBoosting = true;
-                boostParticles.Play();
-                boostSource.PlayBoostStartSound();
-                gunLag.ToggleVibration(true);
-                grappleLag.ToggleVibration(true);
+                // start playing boost sound
+                // start vibration for grapple and gun
+                // start playing boost particles
+                OnBoostStartEvent?.Invoke();
             }
             // they have no fuel, play empty boost sound
             else
             {
                 //play empty boost sound
-                boostSource.PlayBoostEmptySound();
+                OnBoostEmptyEvent?.Invoke();
             }
         }
         // if the button was released, stop boosting
         else if (IsBoosting)
         {
             IsBoosting = false;
-            boostParticles.Stop(false, ParticleSystemStopBehavior.StopEmitting);
-            boostSource.PlayBoostStopSound();
-            gunLag.ToggleVibration(false);
-            grappleLag.ToggleVibration(false);
+
+            // start playing boost stop sound
+            // stop vibration for grapple and gun
+            // stop playing boost particles
+            OnBoostStopEvent?.Invoke();
         }
     }
 
@@ -319,17 +339,15 @@ public class PlayerController : MonoBehaviour
         if (inputValue.isPressed)
         {
             // launch the grapple head towards the point hit by the forward raycast
-            grappleHead.GetComponent<GrappleHead>().Launch(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
-
             // add recoil
             // spawn muzzle flash on grapple muzzle
             // play grapple shoot sound
-            OnShootGrappleEvent?.Invoke();
+            OnShootGrappleEvent?.Invoke(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
         }
         else
         {
             // return the grapple head to the gun
-            grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+            OnReturnGrappleEvent?.Invoke();
         }
     }
 
@@ -394,16 +412,13 @@ public class PlayerController : MonoBehaviour
 
         if (inputValue.isPressed && isReloaded)
         {
-            gun.FireGun(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
-            gunLag.AddShootRecoil();
-            StartCoroutine(ReloadGun());
-        }
-    }
+            // reload the gun after a delay
+            isReloaded = false;
+            StartCoroutine(Helper.DoThisAfterDelay(gvar.GunReloadTime, () => isReloaded = true));
 
-    private IEnumerator ReloadGun()
-    {
-        isReloaded = false;
-        yield return new WaitForSeconds(gvar.GunReloadTime);
-        isReloaded = true;
+            // fire the gun
+            // apply recoil to the gun
+            OnShootGunEvent?.Invoke(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
+        }
     }
 }

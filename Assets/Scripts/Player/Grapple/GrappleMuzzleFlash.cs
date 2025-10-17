@@ -6,12 +6,12 @@ public class GrappleMuzzleFlash : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerController.OnShootGrappleEvent += SpawnFlash;
+        PlayerController.OnShootGrappleEvent += (raycastHit) => SpawnFlash();
     }
 
     void OnDisable()
     {
-        PlayerController.OnShootGrappleEvent -= SpawnFlash;
+        PlayerController.OnShootGrappleEvent -= (raycastHit) => SpawnFlash();
     }
 
     void SpawnFlash()
