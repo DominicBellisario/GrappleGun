@@ -1,15 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-public class DashSoundLogic : MonoBehaviour
+public class DashSoundLogic : SoundLogic
 {
-    AudioSource dashSource;
-
-    void Start()
-    {
-        dashSource = GetComponent<AudioSource>();
-    }
-    
     void OnEnable()
     {
         PlayerController.OnDashEvent += Play;
@@ -17,10 +9,5 @@ public class DashSoundLogic : MonoBehaviour
     void OnDisable()
     {
         PlayerController.OnDashEvent -= Play;
-    }
-
-    public void Play()
-    {
-        dashSource.Play();
     }
 }

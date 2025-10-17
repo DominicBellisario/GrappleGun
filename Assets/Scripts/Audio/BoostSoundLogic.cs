@@ -1,31 +1,25 @@
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public class BoostSoundLogic : MonoBehaviour
+public class BoostSoundLogic : SoundLogic
 {
-    AudioSource boostSource;
     [SerializeField] AudioClip boostStartClip;
     [SerializeField] AudioClip boostStopClip;
     [SerializeField] AudioClip boostEmptyClip;
 
-    void Start()
-    {
-        boostSource = GetComponent<AudioSource>();
-    }
-
     public void PlayBoostStartSound()
     {
-        boostSource.clip = boostStartClip;
-        boostSource.Play();
+        audioSource.clip = boostStartClip;
+        Play();
     }
     public void PlayBoostStopSound()
     {
-        boostSource.clip = boostStopClip;
-        boostSource.Play();
+        audioSource.clip = boostStopClip;
+        Play();
     }
     public void PlayBoostEmptySound()
     {
-        boostSource.clip = boostEmptyClip;
-        boostSource.Play();
+        audioSource.clip = boostEmptyClip;
+        Play();
     }
 }

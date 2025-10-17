@@ -29,6 +29,15 @@ public class GrapplePhysics : MonoBehaviour
         camEffects = playerCam.GetComponent<CameraEffects>();
     }
 
+    void OnEnable()
+    {
+        GrappleHead.OnStartGrappleReturnEvent += DestroyGrapple;
+    }
+    void OnDisable()
+    {
+        GrappleHead.OnStartGrappleReturnEvent -= DestroyGrapple;
+    }
+
     /// <summary>
     /// creates and sets up a configurable joint
     /// Called when the grapple head hits an object

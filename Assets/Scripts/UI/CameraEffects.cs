@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Camera))]
 public class CameraEffects : MonoBehaviour
 {
     [SerializeField] Camera weaponCam;
@@ -20,6 +21,16 @@ public class CameraEffects : MonoBehaviour
         startFOV = cam.fieldOfView;
     }
 
+    void OnEnable()
+    {
+        PlayerController.OnDashEvent += StartWarpFOVForDash;
+    }
+    void OnDisable()
+    {
+        PlayerController.OnDashEvent -= StartWarpFOVForDash;
+    }
+
+    private void StartWarpFOVForDash() { StartCoroutine(WarpFOVForDash()); }
     public IEnumerator WarpFOVForDash()
     {
         float t = 0;
@@ -43,7 +54,7 @@ public class CameraEffects : MonoBehaviour
         }
         cam.fieldOfView = startFOV;
     }
-    
+
     public IEnumerator WarpFOV(float time, float targetFOV, bool resetToStartFOVWhenDone)
     {
         float t = 0;

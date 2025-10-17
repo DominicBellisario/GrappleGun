@@ -1,10 +1,15 @@
+using System;
 using System.Collections;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
 [RequireComponent(typeof(Rigidbody))]
 public class GrappleHead : MonoBehaviour
 {
+    // --- EVENTS --- 
+    public static event Action OnStartGrappleReturnEvent;
+    public static event Action<float> OnGrappleReturnedEvent;
     Rigidbody rb;
     GameObject grapplePoint;
     SphereCollider col;
@@ -14,13 +19,11 @@ public class GrappleHead : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] GameObject grapplePointPrefab;
     [SerializeField] GameObject grappleStartPos;
-    [SerializeField] GunLag grappleLag;
+    [SerializeField] GrappleLag grappleLag;
     [SerializeField] GameObject sparksBurstPrefab;
-    [SerializeField] GameObject muzzleFlashPrefab;
 
     [Header("Audio Sources / Clips")]
     [SerializeField] GameObject audioSourcePrefab;
-    [SerializeField] AudioSource grappleShootSource;
     [SerializeField] AudioSource grappleReturnSource;
     [SerializeField] AudioClip hitNoGrappleClip;
     [SerializeField] AudioClip hitGrappleClip;
@@ -66,13 +69,6 @@ public class GrappleHead : MonoBehaviour
         // Stop any existing return coroutine
         StopAllCoroutines();
 
-        //add recoil
-        grappleLag.AddShootRecoil(1f);
-
-        // spawn a burst of sparks
-        GameObject flash = Instantiate(muzzleFlashPrefab, grappleStartPos.transform.position, Quaternion.identity);
-        flash.transform.SetParent(grappleStartPos.transform);
-
         // detatch the grapple head from the grapple
         transform.SetParent(null);
 
@@ -97,9 +93,6 @@ public class GrappleHead : MonoBehaviour
         // Set the velocity
         rb.linearVelocity = direction * gvar.GrappleLaunchSpeed;
 
-        // play the shoot sound
-        grappleShootSource.Play();
-
         //ignore collisions if the grapple is launched while already touching something
         Collider headCollider = GetComponent<Collider>();
         Collider[] overlaps = Physics.OverlapSphere(headCollider.bounds.center, 0.35f);
@@ -117,9 +110,9 @@ public class GrappleHead : MonoBehaviour
 
     public IEnumerator ReturnToGun()
     {
-        //Debug.Log("Returning to gun");
-        // cannot launch gun while returning
-        player.GetComponent<PlayerController>().CanUseGrapple = false;
+        // remove any possible grapple joint
+        // disable launching the gun while returning
+        OnStartGrappleReturnEvent?.Invoke();
 
         // Disable physics while returning
         rb.isKinematic = true;
@@ -129,9 +122,6 @@ public class GrappleHead : MonoBehaviour
         rb.useGravity = false;
         col.radius = startColRadius;
         rb.freezeRotation = false;
-
-        // remove any possible grapple joint
-        player.GetComponent<GrapplePhysics>().DestroyGrapple();
 
         // destroy the grapple point if it exists
         if (grapplePoint != null) { Destroy(grapplePoint); grapplePoint = null; }
@@ -157,7 +147,7 @@ public class GrappleHead : MonoBehaviour
         rb.excludeLayers = 0;
 
         // add recoil as long as the grapple head was actually coming back and not already back
-        grappleLag.AddShootRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
+        grappleLag.AddReturnRecoil(Mathf.Round(Mathf.Clamp(timer + 0.45f, 0f, 1f)));
         transform.SetPositionAndRotation(grappleStartPos.transform.position, grappleStartPos.transform.rotation);
 
         // snap to the grapple start position
@@ -175,6 +165,8 @@ public class GrappleHead : MonoBehaviour
             // play the return sound
             grappleReturnSource.Play();
         }
+
+        OnGrappleReturnedEvent?.Invoke(timer);
     }
 
     void OnCollisionEnter(Collision collision)
@@ -192,7 +184,7 @@ public class GrappleHead : MonoBehaviour
 
             // play the grappleable hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitGrappleClip, Random.Range(0.9f, 1.1f));
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitGrappleClip, UnityEngine.Random.Range(0.9f, 1.1f));
         }
         // If it collides with a reel, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Reel"))
@@ -211,7 +203,7 @@ public class GrappleHead : MonoBehaviour
 
             // play the grappleable reel sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitReelClip, Random.Range(0.9f, 1.1f));
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitReelClip, UnityEngine.Random.Range(0.9f, 1.1f));
         }
         // If it collides with a bird, create an elastic grapple that pulls the player toward it
         else if (collision.gameObject.CompareTag("Bird"))
@@ -224,7 +216,7 @@ public class GrappleHead : MonoBehaviour
 
             // play the bird hit sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitBirdClip, Random.Range(0.9f, 1.1f));
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitBirdClip, UnityEngine.Random.Range(0.9f, 1.1f));
         }
         // If it collides with anything else, send the grapple back
         else
@@ -239,7 +231,7 @@ public class GrappleHead : MonoBehaviour
 
             // play the non-grappleable hit sound at a random pitch amd half volume
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-            newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip, Random.Range(0.9f, 1.1f));
+            newSource.GetComponent<AudioSourceLogic>().Constructor(hitNoGrappleClip, UnityEngine.Random.Range(0.9f, 1.1f));
         }
     }
 

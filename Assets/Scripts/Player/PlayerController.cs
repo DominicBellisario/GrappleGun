@@ -8,13 +8,14 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     // --- EVENTS ---
+    public static event Action OnShootGrappleEvent;
     public static event Action OnDashEvent;
 
     /// <summary>
     /// the player's first person camera
     /// </summary>
     [SerializeField] GameObject playerCam;
-    [SerializeField] GunLag grappleLag;
+    [SerializeField] GrappleLag grappleLag;
     /// <summary>
     /// The Rigidbody component attached to the player.
     /// </summary>
@@ -104,6 +105,15 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(Helper.DoThisAfterDelay(0.25f, () => isReloaded = true));
 
         IsStuck = false;
+    }
+
+    void OnEnable()
+    {
+        GrappleHead.OnStartGrappleReturnEvent += () => CanUseGrapple = false;
+    }
+    void OnDisable()
+    {
+        GrappleHead.OnStartGrappleReturnEvent -= () => CanUseGrapple = false;
     }
 
     void Update()
@@ -310,6 +320,11 @@ public class PlayerController : MonoBehaviour
         {
             // launch the grapple head towards the point hit by the forward raycast
             grappleHead.GetComponent<GrappleHead>().Launch(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
+
+            // add recoil
+            // spawn muzzle flash on grapple muzzle
+            // play grapple shoot sound
+            OnShootGrappleEvent?.Invoke();
         }
         else
         {
@@ -355,12 +370,9 @@ public class PlayerController : MonoBehaviour
                 CanDash = false;
                 StartCoroutine(ChargeDash());
 
-                // warp the camera
-                CameraEffects camEffects = playerCam.GetComponent<CameraEffects>();
-                camEffects.StartCoroutine(camEffects.WarpFOVForDash());
-
                 // plays dash sound
                 // adds kickback to the grapple and gun
+                // warp the camera
                 OnDashEvent?.Invoke();
             }
         }
@@ -383,7 +395,7 @@ public class PlayerController : MonoBehaviour
         if (inputValue.isPressed && isReloaded)
         {
             gun.FireGun(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
-            gunLag.AddShootRecoil(1f);
+            gunLag.AddShootRecoil();
             StartCoroutine(ReloadGun());
         }
     }

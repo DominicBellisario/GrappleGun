@@ -1,31 +1,30 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class GunLag : MonoBehaviour
+public class WeaponLag : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] Transform cameraTransform;
-    [SerializeField] Rigidbody playerRb;
+    [SerializeField] protected Transform cameraTransform;
+    [SerializeField] protected Rigidbody playerRb;
 
     [Header("Sway Settings")]
-    [SerializeField] float swayAmount;
-    [SerializeField] float maxSway;
-    [SerializeField] float swaySmooth;
+    [SerializeField] protected float swayAmount;
+    [SerializeField] protected float maxSway;
+    [SerializeField] protected float swaySmooth;
 
     [Header("Lag Settings")]
-    [SerializeField] float lagAmount;
-    [SerializeField] float lagSmooth;
-    [SerializeField] float lagClamp;
+    [SerializeField] protected float lagAmount;
+    [SerializeField] protected float lagSmooth;
+    [SerializeField] protected float lagClamp;
 
     [Header("Recoil Settings")]
-    [SerializeField] float recoilShootKickback;   // backward position offset
-    [SerializeField] float recoilShootRotation;     // upward rotation angle
-    [SerializeField] float recoilDashKickback;
-    [SerializeField] float recoilReturnSpeed; // how fast it returns
+    [SerializeField] protected float recoilShootKickback;   // backward position offset
+    [SerializeField] protected float recoilShootRotation;     // upward rotation angle
+    [SerializeField] protected float recoilDashKickback;
+    [SerializeField] protected float recoilReturnSpeed; // how fast it returns
 
     [Header("Vibration Settings")]
-    [SerializeField] float vibrationMagnitude;
+    [SerializeField] protected float vibrationMagnitude;
     Coroutine vibrationCoroutine;
 
     [HideInInspector] public Vector2 lookInput;
@@ -33,8 +32,8 @@ public class GunLag : MonoBehaviour
     Quaternion originalRotation;
     Vector3 originalPosition;
 
-    Vector3 recoilOffset;       // positional recoil offset
-    Quaternion recoilRotationOffset; // rotational recoil offset
+    protected Vector3 recoilOffset;       // positional recoil offset
+    protected Quaternion recoilRotationOffset; // rotational recoil offset
 
     void Start()
     {
@@ -44,12 +43,12 @@ public class GunLag : MonoBehaviour
         vibrationCoroutine = null;
     }
 
-    void OnEnable()
+    protected virtual void OnEnable()
     {
         PlayerController.OnDashEvent += AddDashRecoil;
     }
 
-    void OnDisable()
+    protected virtual void OnDisable()
     {
         PlayerController.OnDashEvent -= AddDashRecoil;
     }
@@ -86,10 +85,10 @@ public class GunLag : MonoBehaviour
         );
     }
 
-    public void AddShootRecoil(float multiplier)
+    public virtual void AddShootRecoil()
     {
         // Kick gun backwards
-        recoilOffset += multiplier * recoilShootKickback * Vector3.back;
+        recoilOffset += recoilShootKickback * Vector3.back;
 
         // Rotate gun upwards (slight random side sway can be added)
         recoilRotationOffset *= Quaternion.Euler(-recoilShootRotation, 0f, 0f);

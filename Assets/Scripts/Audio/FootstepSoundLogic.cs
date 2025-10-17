@@ -1,17 +1,16 @@
 using UnityEngine;
 
-public class FootstepSoundLogic : MonoBehaviour
+public class FootstepSoundLogic : SoundLogic
 {
-    [SerializeField] AudioSource footstepSource;
     [SerializeField] AudioClip[] footstepClips;
     int lastClipIndex = -1;
     
-    public void PlayFootstepSound()
+    protected override void Play()
     {
         lastClipIndex++;
         if (lastClipIndex >= footstepClips.Length)
             lastClipIndex = 0;
-        footstepSource.clip = footstepClips[lastClipIndex];
-        footstepSource.Play();
+        audioSource.clip = footstepClips[lastClipIndex];
+        base.Play();
     }
 }
