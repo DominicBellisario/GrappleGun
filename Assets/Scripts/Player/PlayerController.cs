@@ -1,14 +1,15 @@
 using System;
 using System.Collections;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Raycasts))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
+    // --- EVENTS ---
+    public static event Action OnDashEvent;
+
     /// <summary>
     /// the player's first person camera
     /// </summary>
@@ -358,12 +359,9 @@ public class PlayerController : MonoBehaviour
                 CameraEffects camEffects = playerCam.GetComponent<CameraEffects>();
                 camEffects.StartCoroutine(camEffects.WarpFOVForDash());
 
-                // add kickback to the guns
-                gunLag.AddDashRecoil();
-                grappleLag.AddDashRecoil();
-
-                // play dash sound
-                dashSource.Play();
+                // plays dash sound
+                // adds kickback to the grapple and gun
+                OnDashEvent?.Invoke();
             }
         }
     }

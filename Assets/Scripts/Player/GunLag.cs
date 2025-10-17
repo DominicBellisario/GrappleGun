@@ -44,6 +44,16 @@ public class GunLag : MonoBehaviour
         vibrationCoroutine = null;
     }
 
+    void OnEnable()
+    {
+        PlayerController.OnDashEvent += AddDashRecoil;
+    }
+
+    void OnDisable()
+    {
+        PlayerController.OnDashEvent -= AddDashRecoil;
+    }
+
     void Update()
     {
         // --- Sway ---

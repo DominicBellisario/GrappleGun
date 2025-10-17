@@ -12,6 +12,9 @@ public class CameraBob : MonoBehaviour
     [SerializeField] float bobHeight = 0.05f;   // how high the camera moves
     [SerializeField] float smooth = 8f;         // smooths movement
 
+    [Header("Sounds")]
+    [SerializeField] FootstepSoundLogic footstepSource;
+
     private float timer = 0f;
     private Vector3 initialPosition;
 
@@ -42,5 +45,13 @@ public class CameraBob : MonoBehaviour
             timer = 0f;
             transform.localPosition = Vector3.Lerp(transform.localPosition, initialPosition, Time.deltaTime * smooth);
         }
+
+        if (timer % 1 > 0.98f)
+        {
+            // play footstep sound
+            
+        }
     }
+
+     
 }

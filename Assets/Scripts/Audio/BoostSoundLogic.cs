@@ -1,11 +1,17 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class BoostSoundLogic : MonoBehaviour
 {
-    [SerializeField] AudioSource boostSource;
+    AudioSource boostSource;
     [SerializeField] AudioClip boostStartClip;
     [SerializeField] AudioClip boostStopClip;
     [SerializeField] AudioClip boostEmptyClip;
+
+    void Start()
+    {
+        boostSource = GetComponent<AudioSource>();
+    }
 
     public void PlayBoostStartSound()
     {
