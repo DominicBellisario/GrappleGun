@@ -9,11 +9,11 @@ public class Gun : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerController.OnShootGunEvent += (raycastHit) => FireGun(raycastHit);
+        PlayerController.OnShootGunEvent += FireGun;
     }
     void OnDisable()
     {
-        PlayerController.OnShootGunEvent -= (raycastHit) => FireGun(raycastHit);
+        PlayerController.OnShootGunEvent -= FireGun;
     }
 
     private void FireGun(RaycastHit hit)

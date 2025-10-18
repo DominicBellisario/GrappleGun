@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerEvents))]
 public class PlayerTriggers : MonoBehaviour
 {
+    // --- EVENTS --- 
+    public static event Action OnPlayerReachedTarget;
+    
     [SerializeField] Timer timer;
 
     [Header("Sounds")]
@@ -34,12 +38,13 @@ public class PlayerTriggers : MonoBehaviour
         else if (trigger.gameObject.CompareTag("Target"))
         {
             //record the time they finished
-            gvar.LastRecordedTime = timer.RecordCurrentTime();
+            //display the time
+            OnPlayerReachedTarget?.Invoke();
 
-            //display time
-            if (timer != null) timer.TimerEnd();
             // reset the scene after a bit
             StartCoroutine(Helper.DoThisAfterDelay(3.0f, () => pEvents.OutOfBounds()));
+            
+            // reset the checkpoint
             gvar.ResetCheckpoint();
         }
 

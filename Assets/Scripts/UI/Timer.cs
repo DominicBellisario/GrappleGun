@@ -20,7 +20,23 @@ public class Timer : MonoBehaviour
         timer = 0f;
     }
 
-    public float RecordCurrentTime() { return timer; }
+    void OnEnable()
+    {
+        PlayerEvents.OnPlayerOutOfBounds += HandlePlayerOutOfBounds;
+        PlayerTriggers.OnPlayerReachedTarget += HandlePlayerReachingTarget;
+    }
+    void OnDisable()
+    {
+        PlayerEvents.OnPlayerOutOfBounds -= HandlePlayerOutOfBounds;
+        PlayerTriggers.OnPlayerReachedTarget -= HandlePlayerReachingTarget;
+    }
+
+    private void HandlePlayerOutOfBounds() { gvar.LastRecordedTime = timer; }
+    private void HandlePlayerReachingTarget()
+    {
+        gvar.LastRecordedTime = timer;
+        TimerEnd();
+    }
 
     public void TimerStart(float startTime = 0f)
     {

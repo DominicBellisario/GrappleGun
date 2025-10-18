@@ -1,13 +1,12 @@
-using UnityEngine;
-
 public class ShootSoundLogic : SoundLogic
 {
     void OnEnable()
     {
-        PlayerController.OnShootGrappleEvent += (raycastHit) => Play();
+        PlayerController.OnShootGrappleEvent += Play;
     }
+
     void OnDisable()
     {
-        PlayerController.OnShootGrappleEvent -= (raycastHit) => Play();
+        PlayerController.OnShootGrappleEvent -= Play;
     }
 }

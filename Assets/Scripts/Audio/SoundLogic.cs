@@ -10,8 +10,13 @@ public class SoundLogic : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    protected virtual void Play(RaycastHit unusedHit = default)
+    {
+        Play();
+    }
     protected virtual void Play()
     {
         audioSource.Play();
     }
+    
 }

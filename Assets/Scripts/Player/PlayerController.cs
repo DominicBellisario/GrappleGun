@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour
     /// if it is coming back to the player, it cannot be shot
     /// </summary>
     public bool CanUseGrapple { get; set; }
+    private void CanUseGrappleTrue() { CanUseGrapple = true; }
+    private void CanUseGrappleFalse() { CanUseGrapple = false; }
 
     /// <summary>
     /// the current amount of boost fuel
@@ -102,37 +104,35 @@ public class PlayerController : MonoBehaviour
 
     void OnEnable()
     {
-        GrappleHead.OnStartGrappleReturnEvent += () => CanUseGrapple = false;
-        GrappleHead.OnEndGrappleReturnEvent += (time) => CanUseGrapple = true;
-        GrappleHead.OnGrappleHitReelEvent += (collision, grappleType) =>
-        {
-            CanUseGrapple = false;
-            IsStuck = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
-        };
-        GrappleHead.OnGrappleHitBirdEvent += (collision, grappleType) =>
-        {
-            CanUseGrapple = false;
-            IsStuck = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
-        };
+        GrappleHead.OnStartGrappleReturnEvent += HandleStartReturn;
+        GrappleHead.OnEndGrappleReturnEvent += HandleEndReturn;
+        GrappleHead.OnGrappleHitReelEvent += HandleHitReel;
+        GrappleHead.OnGrappleHitBirdEvent += HandleHitBird;
     }
+
     void OnDisable()
     {
-        GrappleHead.OnStartGrappleReturnEvent -= () => CanUseGrapple = false;
-        GrappleHead.OnEndGrappleReturnEvent -= (time) => CanUseGrapple = true;
-        GrappleHead.OnGrappleHitReelEvent -= (collision, grappleType) =>
-        {
-            CanUseGrapple = false;
-            IsStuck = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
-        };
-        GrappleHead.OnGrappleHitBirdEvent += (collision, grappleType) =>
-        {
-            CanUseGrapple = false;
-            IsStuck = false;
-            rb.constraints = RigidbodyConstraints.FreezeRotation;
-        };
+        GrappleHead.OnStartGrappleReturnEvent -= HandleStartReturn;
+        GrappleHead.OnEndGrappleReturnEvent -= HandleEndReturn;
+        GrappleHead.OnGrappleHitReelEvent -= HandleHitReel;
+        GrappleHead.OnGrappleHitBirdEvent -= HandleHitBird;
+    }
+
+    void HandleStartReturn() => CanUseGrapple = false;
+    void HandleEndReturn(float time) => CanUseGrapple = true;
+
+    void HandleHitReel(Collision collision, int type)
+    {
+        CanUseGrapple = false;
+        IsStuck = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    void HandleHitBird(Collision collision, int type)
+    {
+        CanUseGrapple = false;
+        IsStuck = false;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     void Update()
@@ -378,7 +378,7 @@ public class PlayerController : MonoBehaviour
                     IsStuck = false;
                     rb.constraints = RigidbodyConstraints.FreezeRotation;
                 }
-                
+
                 // add a force in the direction the player is facing
                 Vector3 camForward = playerCam.transform.forward;
                 camForward.y = 0f;

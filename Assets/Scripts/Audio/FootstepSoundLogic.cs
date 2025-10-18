@@ -5,7 +5,7 @@ public class FootstepSoundLogic : SoundLogic
     [SerializeField] AudioClip[] footstepClips;
     int lastClipIndex = -1;
     
-    protected override void Play()
+    protected override void Play(RaycastHit unusedHit = default)
     {
         lastClipIndex++;
         if (lastClipIndex >= footstepClips.Length)

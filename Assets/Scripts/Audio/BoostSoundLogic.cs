@@ -9,15 +9,15 @@ public class BoostSoundLogic : SoundLogic
 
     void OnEnable()
     {
-        PlayerController.OnBoostStartEvent += () => PlayBoostStartSound();
-        PlayerController.OnBoostStopEvent += () => PlayBoostStopSound();
-        PlayerController.OnBoostEmptyEvent += () => PlayBoostEmptySound();
+        PlayerController.OnBoostStartEvent += PlayBoostStartSound;
+        PlayerController.OnBoostStopEvent += PlayBoostStopSound;
+        PlayerController.OnBoostEmptyEvent += PlayBoostEmptySound;
     }
     void OnDisable()
     {
-        PlayerController.OnBoostStartEvent -= () => PlayBoostStartSound();
-        PlayerController.OnBoostStopEvent -= () => PlayBoostStopSound();
-        PlayerController.OnBoostEmptyEvent -= () => PlayBoostEmptySound();
+        PlayerController.OnBoostStartEvent -= PlayBoostStartSound;
+        PlayerController.OnBoostStopEvent -= PlayBoostStopSound;
+        PlayerController.OnBoostEmptyEvent -= PlayBoostEmptySound;
     }
 
     private void PlayBoostStartSound()

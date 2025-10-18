@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class PlayerEvents : MonoBehaviour
 {
+    // --- EVENTS --- 
+    public static event Action OnPlayerOutOfBounds;
     [SerializeField] FadeOut fadePanel;
     [SerializeField] DamageBorder damagePanel;
     [SerializeField] Timer timer;
@@ -34,9 +37,9 @@ public class PlayerEvents : MonoBehaviour
     public void OutOfBounds()
     {
         //record the time they died
-        gvar.LastRecordedTime = timer.RecordCurrentTime();
         //fade to black
-        fadePanel.Fade(0f, 1f, fadeTime);
+        OnPlayerOutOfBounds?.Invoke();
+
         //wait, then reload the scene
         StartCoroutine(Helper.DoThisAfterDelay(fadeTime, () => sceneHelper.ReloadScene()));
     }

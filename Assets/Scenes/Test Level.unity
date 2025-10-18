@@ -7255,6 +7255,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2122118920}
+    - target: {fileID: 1306889831374300074, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: fadeTime
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 1448227815750506496, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

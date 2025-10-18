@@ -59,7 +59,7 @@ public class Pause : MonoBehaviour
             Cursor.visible = false;
             StartCoroutine(PauseFade(0f, fadeLength));
             // prevents grapple from staying mid-air if paused while traveling
-            grappleHead.StartCoroutine(grappleHead.ReturnToGun());
+            grappleHead.ReturnToGun();
         }
     }
 

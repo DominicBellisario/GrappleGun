@@ -55,14 +55,14 @@ public class GrappleHead : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerController.OnShootGrappleEvent += (raycastHit) => Launch(raycastHit);
-        PlayerController.OnReturnGrappleEvent += () => StartCoroutine(ReturnToGun());
+        PlayerController.OnShootGrappleEvent += Launch;
+        PlayerController.OnReturnGrappleEvent += ReturnToGun;
     }
 
     void OnDisable()
     {
-        PlayerController.OnShootGrappleEvent -= (raycastHit) => Launch(raycastHit);
-        PlayerController.OnReturnGrappleEvent -= () => StartCoroutine(ReturnToGun());
+        PlayerController.OnShootGrappleEvent -= Launch;
+        PlayerController.OnReturnGrappleEvent -= ReturnToGun;
     }
 
     void Update()
@@ -75,7 +75,7 @@ public class GrappleHead : MonoBehaviour
         {
             if (CurrentRopeLength > gvar.GrappleMaxDistance)
             {
-                StartCoroutine(ReturnToGun());
+                ReturnToGun();
             }
         }
     }
@@ -123,7 +123,8 @@ public class GrappleHead : MonoBehaviour
         }
     }
 
-    public IEnumerator ReturnToGun()
+    public void ReturnToGun() => StartCoroutine(ReturnToGunCoroutine());
+    private IEnumerator ReturnToGunCoroutine()
     {
         // remove any possible grapple joint
         // disable launching the gun while returning
@@ -205,14 +206,14 @@ public class GrappleHead : MonoBehaviour
             if (Vector3.Distance(collision.GetContact(0).point, player.transform.position) < 2f)
             {
                 // if the player is too close to the reel, do not grapple it and return the grapple
-                StartCoroutine(ReturnToGun());
+                ReturnToGun();
                 return;
             }
 
             // play the grappleable reel sound at a random pitch
             GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
             newSource.GetComponent<AudioSourceLogic>().Constructor(hitReelClip, UnityEngine.Random.Range(0.9f, 1.1f));
-            
+
             // player cannot use the grapple
             // player is stuck
             // player's rotation is frozen

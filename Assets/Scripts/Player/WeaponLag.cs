@@ -47,15 +47,15 @@ public class WeaponLag : MonoBehaviour
     protected virtual void OnEnable()
     {
         PlayerController.OnDashEvent += AddDashRecoil;
-        PlayerController.OnBoostStartEvent += () => ToggleVibration(true);
-        PlayerController.OnBoostStopEvent += () => ToggleVibration(false);
+        PlayerController.OnBoostStartEvent += StartVibration;
+        PlayerController.OnBoostStopEvent += StopVibration;
     }
 
     protected virtual void OnDisable()
     {
         PlayerController.OnDashEvent -= AddDashRecoil;
-        PlayerController.OnBoostStartEvent -= () => ToggleVibration(true);
-        PlayerController.OnBoostStopEvent -= () => ToggleVibration(false);
+        PlayerController.OnBoostStartEvent -= StartVibration;
+        PlayerController.OnBoostStopEvent -= StopVibration;
     }
 
     void Update()
@@ -113,10 +113,14 @@ public class WeaponLag : MonoBehaviour
         return Quaternion.AngleAxis(angle, axis);
     }
 
-    private void ToggleVibration(bool on)
+    private void StartVibration()
+    {
+        StopVibration();
+        vibrationCoroutine = StartCoroutine(VibrateGun());
+    }
+    private void StopVibration()
     {
         if (vibrationCoroutine != null) StopCoroutine(vibrationCoroutine);
-        if (on) vibrationCoroutine = StartCoroutine(VibrateGun());
     }
 
     private IEnumerator VibrateGun()

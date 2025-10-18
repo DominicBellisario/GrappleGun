@@ -31,16 +31,16 @@ public class GrapplePhysics : MonoBehaviour
 
     void OnEnable()
     {
-        GrappleHead.OnGrappleHitNormalEvent += (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
-        GrappleHead.OnGrappleHitReelEvent += (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
-        GrappleHead.OnGrappleHitBirdEvent += (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
+        GrappleHead.OnGrappleHitNormalEvent += CreateGrapple;
+        GrappleHead.OnGrappleHitReelEvent += CreateGrapple;
+        GrappleHead.OnGrappleHitBirdEvent += CreateGrapple;
         GrappleHead.OnStartGrappleReturnEvent += DestroyGrapple;
     }
     void OnDisable()
     {
-        GrappleHead.OnGrappleHitNormalEvent -= (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
-        GrappleHead.OnGrappleHitReelEvent -= (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
-        GrappleHead.OnGrappleHitBirdEvent -= (collision, grappleType) => CreateGrapple(collision.gameObject, grappleType);
+        GrappleHead.OnGrappleHitNormalEvent -= CreateGrapple;
+        GrappleHead.OnGrappleHitReelEvent -= CreateGrapple;
+        GrappleHead.OnGrappleHitBirdEvent -= CreateGrapple;
         GrappleHead.OnStartGrappleReturnEvent -= DestroyGrapple;
     }
 
@@ -48,8 +48,9 @@ public class GrapplePhysics : MonoBehaviour
     /// creates and sets up a configurable joint
     /// Called when the grapple head hits an object
     /// </summary>
-    public void CreateGrapple(GameObject hitObject, int grappleType)
+    public void CreateGrapple(Collision collision, int grappleType)
     {
+        GameObject hitObject = collision.gameObject;
         float elasticity;
         float damper;
 
@@ -165,7 +166,7 @@ public class GrapplePhysics : MonoBehaviour
                 playerCam.GetComponentInParent<PlayerController>().IsStuck = true;
                 rb.constraints = RigidbodyConstraints.FreezeAll;
                 // detatch the grapple
-                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                grappleHead.GetComponent<GrappleHead>().ReturnToGun();
                 camEffects.StartCoroutine(camEffects.WarpFOV(0.1f, 0, true));
             }
 
@@ -173,7 +174,7 @@ public class GrapplePhysics : MonoBehaviour
             if (timer >= gvar.ReelAutoDetatchTime)
             {
                 //detatch the grapple
-                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                grappleHead.GetComponent<GrappleHead>().ReturnToGun(); 
                 camEffects.StartCoroutine(camEffects.WarpFOV(0.1f, 0, true));
             }
             yield return null;
@@ -201,7 +202,7 @@ public class GrapplePhysics : MonoBehaviour
             {
                 rb.linearVelocity = playerCam.transform.forward * gvar.BirdLaunchSpeed;
                 bird.GetComponent<BirdEffects>().Hit(playerCam.transform);
-                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                grappleHead.GetComponent<GrappleHead>().ReturnToGun();
                 camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 0, true));
 
                 // play the bird launch sound at a random pitch
@@ -213,7 +214,7 @@ public class GrapplePhysics : MonoBehaviour
             if (timer >= gvar.ReelAutoDetatchTime)
             {
                 //detatch the grapple
-                grappleHead.GetComponent<GrappleHead>().StartCoroutine(grappleHead.GetComponent<GrappleHead>().ReturnToGun());
+                grappleHead.GetComponent<GrappleHead>().ReturnToGun();
                 camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 0, true));
             }
             yield return null;
