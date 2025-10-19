@@ -17,10 +17,12 @@ public class FadeOut : MonoBehaviour
     void OnEnable()
     {
         PlayerEvents.OnPlayerDie += FadeIn;
+        PlayerEvents.OnPlayerFinishedLevel += FadeIn;
     }
     void OnDisable()
     {
         PlayerEvents.OnPlayerDie -= FadeIn;
+        PlayerEvents.OnPlayerFinishedLevel -= FadeIn;
     }
     private void FadeIn() { Fade(0f, 1f, fadeTime); }
 

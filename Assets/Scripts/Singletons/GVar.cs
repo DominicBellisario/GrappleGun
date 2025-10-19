@@ -91,6 +91,8 @@ public class GVar : MonoBehaviour
     public Rigidbody PlayerRb { get; set; }
 
 
+    [SerializeField] int maxHealth;
+    public int MaxHealth => maxHealth;
 
     [Header("Player Movement")]
     /// <summary>

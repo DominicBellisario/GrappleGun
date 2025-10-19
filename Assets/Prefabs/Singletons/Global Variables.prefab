@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GVar
   masterMixer: {fileID: 24100000, guid: 0965e5ac31382d748ba407b180f7efb8, type: 2}
+  maxHealth: 5
   jumpForce: 5
   walkAcceleration: 40
   airAcceleration: 8

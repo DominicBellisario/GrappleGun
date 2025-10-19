@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerEvents : MonoBehaviour
 {
     // --- EVENTS --- 
+    public static event Action OnPlayerFinishedLevel;
     public static event Action OnPlayerDie;
     public static event Action OnPlayerOutOfBounds;
     public static event Action OnPlayerDecreaseHealth;
     public static event Action<float> OnPlayerRespawn;
     [SerializeField] float fadeTime;
-    int maxHealth;
     [SerializeField] float playerHealthRegenTime;
     [SerializeField] int playerInvulnTime;
     bool invulnerable;
@@ -24,11 +24,21 @@ public class PlayerEvents : MonoBehaviour
         gvar = GVar.Instance;
         sceneHelper = SceneHelper.Instance;
         invulnerable = false;
-        maxHealth = gvar.CurrentHealth;
+        gvar.CurrentHealth = gvar.MaxHealth;
         regenHealth = RegenHealth();
 
         //send the player to the current checkpoint
         if (gvar.CurrentCheckpointPos != Vector3.zero) { StartCoroutine(Respawn()); }
+    }
+
+    // player reached the end of a level
+    public void FinishedLevel()
+    {
+        // fade to black
+        OnPlayerFinishedLevel?.Invoke();
+
+        // wait, then reload the scene
+        StartCoroutine(Helper.DoThisAfterDelay(fadeTime, () => sceneHelper.ReloadScene()));
     }
 
     // player hits a death plain, reset them
@@ -92,7 +102,7 @@ public class PlayerEvents : MonoBehaviour
         // wait for a bit
         yield return new WaitForSeconds(playerHealthRegenTime);
         // stop loop if max health
-        if (gvar.CurrentHealth == maxHealth) yield break;
+        if (gvar.CurrentHealth == gvar.MaxHealth) yield break;
         // add health
         gvar.CurrentHealth++;
         // regen more health

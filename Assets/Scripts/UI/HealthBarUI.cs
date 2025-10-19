@@ -22,7 +22,7 @@ public class HealthBarUI : MonoBehaviour
     {
         slider = GetComponent<Slider>();
         gvar = GVar.Instance;
-        slider.maxValue = gvar.CurrentHealth * 100;
+        slider.maxValue = gvar.MaxHealth * 100;
         targetValue = slider.maxValue;
     }
 

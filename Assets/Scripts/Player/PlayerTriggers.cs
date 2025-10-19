@@ -39,7 +39,7 @@ public class PlayerTriggers : MonoBehaviour
             OnPlayerReachedTarget?.Invoke();
 
             // reset the scene after a bit
-            StartCoroutine(Helper.DoThisAfterDelay(3.0f, () => pEvents.OutOfBounds()));
+            StartCoroutine(Helper.DoThisAfterDelay(3.0f, () => pEvents.FinishedLevel()));
             
             // reset the checkpoint
             gvar.ResetCheckpoint();
