@@ -18,6 +18,7 @@ public class FootstepSoundLogic : SoundLogic
     void OnDisable()
     {
         CameraBob.OnWalkCycleComplete -= Play;
+        PlayerController.OnGroundedEvent -= PlayLandingSound;
     }
 
     protected override void Play()
@@ -38,7 +39,6 @@ public class FootstepSoundLogic : SoundLogic
     {
         // adjust the volume based on the player's landing speed
         audioSource.volume = Mathf.Clamp(-verticalSpeed / speedNeededForMaxLandingNoiseVolume, minVolume, 1f);
-        Debug.Log(-verticalSpeed / speedNeededForMaxLandingNoiseVolume);
         audioSource.PlayOneShot(landingClip);
         
     }

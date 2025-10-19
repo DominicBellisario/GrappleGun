@@ -5,6 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] GameObject bulletExplosion;
+    
     [SerializeField] float lifeSpan;
 
     [SerializeField] float bulletSpeed;
@@ -14,6 +15,11 @@ public class Bullet : MonoBehaviour
     public int Damage { get { return damage; } }
 
     bool hasCollided;
+
+    [SerializeField] GameObject audioSourcePrefab;
+    [SerializeField] AudioClip bulletExplosionClip;
+
+   
 
     void Start()
     {
@@ -46,7 +52,13 @@ public class Bullet : MonoBehaviour
 
     private void Die()
     {
+        // spawn an explosion
         Instantiate(bulletExplosion, transform.position, Quaternion.identity);
+
+        // play the non-grappleable hit sound at a random pitch amd half volume
+        GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
+        newSource.GetComponent<AudioSourceLogic>().Constructor(bulletExplosionClip, Random.Range(0.9f, 1.1f));
+        
         Destroy(gameObject);
     }
 }
