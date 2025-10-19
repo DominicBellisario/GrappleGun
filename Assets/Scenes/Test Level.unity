@@ -6181,6 +6181,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: fovResetTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: fovMaxWarpForDash
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: fovWaitTimeForDash
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: fovWarpInTimeForDash
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: fovMaxWarpForBirdReel
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: fovWarpOutTimeForDash
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
+      propertyPath: fovWarpTimeForBirdReel
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
       value: Player

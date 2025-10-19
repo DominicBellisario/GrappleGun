@@ -108,6 +108,7 @@ public class PlayerController : MonoBehaviour
         GrappleHead.OnEndGrappleReturnEvent += HandleEndReturn;
         GrappleHead.OnGrappleHitReelEvent += HandleHitReel;
         GrappleHead.OnGrappleHitBirdEvent += HandleHitBird;
+        GrapplePhysics.OnReelStick += HandleReelStick;
     }
 
     void OnDisable()
@@ -116,6 +117,7 @@ public class PlayerController : MonoBehaviour
         GrappleHead.OnEndGrappleReturnEvent -= HandleEndReturn;
         GrappleHead.OnGrappleHitReelEvent -= HandleHitReel;
         GrappleHead.OnGrappleHitBirdEvent -= HandleHitBird;
+        GrapplePhysics.OnReelStick -= HandleReelStick;
     }
 
     void HandleStartReturn() => CanUseGrapple = false;
@@ -126,6 +128,11 @@ public class PlayerController : MonoBehaviour
         CanUseGrapple = false;
         IsStuck = false;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
+    }
+    void HandleReelStick()
+    {
+        IsStuck = true; 
+        rb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     void HandleHitBird(Collision collision, int type)

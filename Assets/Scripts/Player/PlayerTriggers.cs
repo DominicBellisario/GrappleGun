@@ -7,12 +7,9 @@ using UnityEngine;
 public class PlayerTriggers : MonoBehaviour
 {
     // --- EVENTS --- 
+    public static event Action<float> OnPlayerStartLevel;
     public static event Action OnPlayerReachedTarget;
-    
-    [SerializeField] Timer timer;
 
-    [Header("Sounds")]
-    [SerializeField] AudioSource deathSource;
     Rigidbody rb;
     GVar gvar;
     PlayerEvents pEvents;
@@ -51,7 +48,7 @@ public class PlayerTriggers : MonoBehaviour
         // start the timer once they start the level
         else if (trigger.gameObject.CompareTag("Start Level"))
         {
-            if (timer != null) { timer.TimerStart(); }
+            OnPlayerStartLevel?.Invoke(0);
         }
 
         // launch the player away from the explosion
@@ -78,8 +75,6 @@ public class PlayerTriggers : MonoBehaviour
         // reset the scene and tp the player to the last checkpoint if they hit one
         else if (trigger.gameObject.CompareTag("Death Plain"))
         {
-            // play death sound
-            deathSource.Play();
             pEvents.OutOfBounds();
         }
     }

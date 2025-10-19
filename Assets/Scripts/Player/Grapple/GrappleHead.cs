@@ -57,12 +57,18 @@ public class GrappleHead : MonoBehaviour
     {
         PlayerController.OnShootGrappleEvent += Launch;
         PlayerController.OnReturnGrappleEvent += ReturnToGun;
+        GrapplePhysics.OnBirdLaunch += ReturnToGun;
+        GrapplePhysics.OnFailsafeBirdReelDetatch += ReturnToGun;
+        GrapplePhysics.OnReelStick += ReturnToGun;
     }
 
     void OnDisable()
     {
         PlayerController.OnShootGrappleEvent -= Launch;
         PlayerController.OnReturnGrappleEvent -= ReturnToGun;
+        GrapplePhysics.OnBirdLaunch -= ReturnToGun;
+        GrapplePhysics.OnFailsafeBirdReelDetatch -= ReturnToGun;
+        GrapplePhysics.OnReelStick -= ReturnToGun;
     }
 
     void Update()
@@ -217,6 +223,7 @@ public class GrappleHead : MonoBehaviour
             // player cannot use the grapple
             // player is stuck
             // player's rotation is frozen
+            // warp the FOV
             // create a grapple point with an elastic grapple
             CreateGrapplePoint(collision);
             OnGrappleHitReelEvent?.Invoke(collision, 1);
@@ -232,6 +239,7 @@ public class GrappleHead : MonoBehaviour
 
             // player cannot use the grapple
             // player is stuck
+            // warp the FOV
             // player's rotation is frozen
             OnGrappleHitBirdEvent?.Invoke(collision, 2);
         }

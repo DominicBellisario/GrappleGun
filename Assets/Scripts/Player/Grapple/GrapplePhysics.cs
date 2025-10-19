@@ -1,9 +1,15 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class GrapplePhysics : MonoBehaviour
 {
+    // --- EVENTS --- 
+    public static event Action OnReelStick;
+    public static event Action OnBirdLaunch;
+    public static event Action OnFailsafeBirdReelDetatch;
+
     ConfigurableJoint joint;
     float currentRopeLength;
     Rigidbody rb;
@@ -20,13 +26,11 @@ public class GrapplePhysics : MonoBehaviour
     [SerializeField] AudioClip birdLaunchClip;
 
     GVar gvar;
-    CameraEffects camEffects;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         gvar = GVar.Instance;
-        camEffects = playerCam.GetComponent<CameraEffects>();
     }
 
     void OnEnable()
@@ -93,10 +97,12 @@ public class GrapplePhysics : MonoBehaviour
         joint.angularZMotion = ConfigurableJointMotion.Free;
 
         // set elasticity
-        JointDrive drive = new();
-        drive.positionSpring = elasticity; // How elastic it is
-        drive.positionDamper = damper; // How much it resists movement
-        drive.maximumForce = Mathf.Infinity;
+        JointDrive drive = new()
+        {
+            positionSpring = elasticity, // How elastic it is
+            positionDamper = damper, // How much it resists movement
+            maximumForce = Mathf.Infinity
+        };
 
         // Apply to axes you want to be elastic
         joint.xDrive = drive;
@@ -111,13 +117,12 @@ public class GrapplePhysics : MonoBehaviour
         {
             StartCoroutine(ClampDistance());
             StartCoroutine(ReelLogic());
-            camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 90, false));
+            
         }
         else
         {
             StartCoroutine(ClampDistance());
             StartCoroutine(BirdLogic(hitObject));
-            camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 90, false));
         }
     }
 
@@ -162,20 +167,17 @@ public class GrapplePhysics : MonoBehaviour
             }
             else
             {
-                // stick the player to the wall
-                playerCam.GetComponentInParent<PlayerController>().IsStuck = true;
-                rb.constraints = RigidbodyConstraints.FreezeAll;
+                // stick the player to the reel
                 // detatch the grapple
-                grappleHead.GetComponent<GrappleHead>().ReturnToGun();
-                camEffects.StartCoroutine(camEffects.WarpFOV(0.1f, 0, true));
+                OnReelStick?.Invoke();
             }
 
             // if the player is grappling for too long, they are stuck. detatch them
             if (timer >= gvar.ReelAutoDetatchTime)
             {
-                //detatch the grapple
-                grappleHead.GetComponent<GrappleHead>().ReturnToGun(); 
-                camEffects.StartCoroutine(camEffects.WarpFOV(0.1f, 0, true));
+                // detatch the grapple
+                // reset FOV
+                OnFailsafeBirdReelDetatch?.Invoke();
             }
             yield return null;
         }
@@ -202,20 +204,22 @@ public class GrapplePhysics : MonoBehaviour
             {
                 rb.linearVelocity = playerCam.transform.forward * gvar.BirdLaunchSpeed;
                 bird.GetComponent<BirdEffects>().Hit(playerCam.transform);
-                grappleHead.GetComponent<GrappleHead>().ReturnToGun();
-                camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 0, true));
 
                 // play the bird launch sound at a random pitch
                 GameObject newSource = Instantiate(audioSourcePrefab, transform.position, Quaternion.identity);
-                newSource.GetComponent<AudioSourceLogic>().Constructor(birdLaunchClip, Random.Range(0.9f, 1.1f));
+                newSource.GetComponent<AudioSourceLogic>().Constructor(birdLaunchClip, UnityEngine.Random.Range(0.9f, 1.1f));
+
+                // detatch the grapple
+                // reset the FOV
+                OnBirdLaunch?.Invoke();
             }
 
             // if the player is grappling for too long, they are stuck. detatch them
             if (timer >= gvar.ReelAutoDetatchTime)
             {
                 //detatch the grapple
-                grappleHead.GetComponent<GrappleHead>().ReturnToGun();
-                camEffects.StartCoroutine(camEffects.WarpFOV(0.25f, 0, true));
+                // reset FOV
+                OnFailsafeBirdReelDetatch?.Invoke();
             }
             yield return null;
         }

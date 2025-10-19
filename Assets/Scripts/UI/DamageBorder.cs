@@ -12,7 +12,16 @@ public class DamageBorder : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void PlayDamageEffect()
+    void OnEnable()
+    {
+        PlayerEvents.OnPlayerDecreaseHealth += PlayDamageEffect;
+    }
+    void OnDisable()
+    {
+        PlayerEvents.OnPlayerDecreaseHealth -= PlayDamageEffect;
+    }
+
+    private void PlayDamageEffect()
     {
         StartCoroutine(_PlayDamageEffect());
     }

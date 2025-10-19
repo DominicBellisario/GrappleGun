@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -6,11 +7,16 @@ public class CameraEffects : MonoBehaviour
 {
     [SerializeField] Camera weaponCam;
 
+    [Header("General FOV Warp Settings")]
+    [SerializeField] float fovResetTime; //.1
+    [SerializeField] float fovWarpTimeForBirdReel; //.25
+    [SerializeField] float fovMaxWarpForBirdReel; // 90
+
     [Header("FOV Warp Settings for Dash")]
-    [SerializeField] float fovMaxWarp;
-    [SerializeField] float fovWarpInTime;
-    [SerializeField] float fovWaitTime;
-    [SerializeField] float fovWarpOutTime;
+    [SerializeField] float fovMaxWarpForDash;
+    [SerializeField] float fovWarpInTimeForDash;
+    [SerializeField] float fovWaitTimeForDash;
+    [SerializeField] float fovWarpOutTimeForDash;
 
     Camera cam;
     float startFOV;
@@ -24,38 +30,48 @@ public class CameraEffects : MonoBehaviour
     void OnEnable()
     {
         PlayerController.OnDashEvent += StartWarpFOVForDash;
+        GrapplePhysics.OnBirdLaunch += ResetFOV;
+        GrappleHead.OnGrappleHitReelEvent += WarpFOVForBirdReel;
+        GrappleHead.OnGrappleHitBirdEvent += WarpFOVForBirdReel;
+        GrapplePhysics.OnFailsafeBirdReelDetatch += ResetFOV;
     }
     void OnDisable()
     {
         PlayerController.OnDashEvent -= StartWarpFOVForDash;
+        GrapplePhysics.OnBirdLaunch -= ResetFOV;
+        GrappleHead.OnGrappleHitReelEvent -= WarpFOVForBirdReel;
+        GrappleHead.OnGrappleHitBirdEvent -= WarpFOVForBirdReel;
+        GrapplePhysics.OnFailsafeBirdReelDetatch -= ResetFOV;
     }
-
+    private void ResetFOV() { StartCoroutine(WarpFOV(fovResetTime, 0f, true)); }
     private void StartWarpFOVForDash() { StartCoroutine(WarpFOVForDash()); }
-    public IEnumerator WarpFOVForDash()
+    private void WarpFOVForBirdReel(Collision unused1, int unused2) { StartCoroutine(WarpFOV(fovWarpTimeForBirdReel, fovMaxWarpForBirdReel, false)); }
+
+    private IEnumerator WarpFOVForDash()
     {
         float t = 0;
-        while (t < fovWarpInTime)
+        while (t < fovWarpInTimeForDash)
         {
-            cam.fieldOfView = Mathf.Lerp(startFOV, fovMaxWarp, t / fovWarpInTime);
-            weaponCam.fieldOfView = Mathf.Lerp(startFOV, fovMaxWarp, t / fovWarpInTime);
+            cam.fieldOfView = Mathf.Lerp(startFOV, fovMaxWarpForDash, t / fovWarpInTimeForDash);
+            weaponCam.fieldOfView = Mathf.Lerp(startFOV, fovMaxWarpForDash, t / fovWarpInTimeForDash);
             t += Time.deltaTime;
             yield return null;
         }
 
         t = 0;
-        yield return new WaitForSeconds(fovWaitTime);
+        yield return new WaitForSeconds(fovWaitTimeForDash);
 
-        while (t < fovWarpOutTime)
+        while (t < fovWarpOutTimeForDash)
         {
-            cam.fieldOfView = Mathf.Lerp(fovMaxWarp, startFOV, t / fovWarpOutTime);
-            weaponCam.fieldOfView = Mathf.Lerp(fovMaxWarp, startFOV, t / fovWarpOutTime);
+            cam.fieldOfView = Mathf.Lerp(fovMaxWarpForDash, startFOV, t / fovWarpOutTimeForDash);
+            weaponCam.fieldOfView = Mathf.Lerp(fovMaxWarpForDash, startFOV, t / fovWarpOutTimeForDash);
             t += Time.deltaTime;
             yield return null;
         }
         cam.fieldOfView = startFOV;
     }
 
-    public IEnumerator WarpFOV(float time, float targetFOV, bool resetToStartFOVWhenDone)
+    private IEnumerator WarpFOV(float time, float targetFOV, bool resetToStartFOVWhenDone)
     {
         float t = 0;
         float fovBefore = cam.fieldOfView;
@@ -63,7 +79,7 @@ public class CameraEffects : MonoBehaviour
         while (t < time)
         {
             cam.fieldOfView = Mathf.Lerp(fovBefore, targetFOV, t / time);
-            weaponCam.fieldOfView = Mathf.Lerp(fovBefore, fovMaxWarp, t / time);
+            weaponCam.fieldOfView = Mathf.Lerp(fovBefore, fovMaxWarpForDash, t / time);
             t += Time.deltaTime;
             yield return null;
         }

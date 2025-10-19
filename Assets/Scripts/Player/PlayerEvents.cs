@@ -5,10 +5,10 @@ using UnityEngine;
 public class PlayerEvents : MonoBehaviour
 {
     // --- EVENTS --- 
+    public static event Action OnPlayerDie;
     public static event Action OnPlayerOutOfBounds;
-    [SerializeField] FadeOut fadePanel;
-    [SerializeField] DamageBorder damagePanel;
-    [SerializeField] Timer timer;
+    public static event Action OnPlayerDecreaseHealth;
+    public static event Action<float> OnPlayerRespawn;
     [SerializeField] float fadeTime;
     [SerializeField] int health;
     int maxHealth;
@@ -36,9 +36,22 @@ public class PlayerEvents : MonoBehaviour
     // player hits a death plain, reset them
     public void OutOfBounds()
     {
-        //record the time they died
-        //fade to black
+        // record the time they died
+        // fade to black
+        // play out of bounds sound
         OnPlayerOutOfBounds?.Invoke();
+
+        // wait, then reload the scene
+        StartCoroutine(Helper.DoThisAfterDelay(fadeTime, () => sceneHelper.ReloadScene()));
+    }
+
+    // player runs out of health, reset them
+    private void NoMoreHealth()
+    {
+        // record the time they died
+        // fade to black
+        // play death sound
+        OnPlayerDie?.Invoke();
 
         //wait, then reload the scene
         StartCoroutine(Helper.DoThisAfterDelay(fadeTime, () => sceneHelper.ReloadScene()));
@@ -49,16 +62,16 @@ public class PlayerEvents : MonoBehaviour
         // dont do anything if the player is invulnerable
         if (invulnerable) return;
 
+        // make the screen flash red
+        OnPlayerDecreaseHealth?.Invoke();
+
         // make player invulnerable for a bit
         invulnerable = true;
         StartCoroutine(Helper.DoThisAfterDelay(playerInvulnTime, () => invulnerable = false));
 
-        // Ui stuff
-        damagePanel.PlayDamageEffect();
-
         // change player health and check if they die
         health -= healthChange;
-        if (health <= 0) OutOfBounds();
+        if (health <= 0) NoMoreHealth();
 
         // start regening health
         StopCoroutine(regenHealth);
@@ -71,9 +84,9 @@ public class PlayerEvents : MonoBehaviour
         // tp the player to last checkpoint
         yield return new WaitForEndOfFrame();
         transform.position = gvar.CurrentCheckpointPos;
-        
+
         // start the timer with their last recorded time
-        timer.TimerStart(gvar.LastRecordedTime);
+        OnPlayerRespawn?.Invoke(gvar.LastRecordedTime);
     }
 
     private IEnumerator RegenHealth()

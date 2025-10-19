@@ -22,13 +22,17 @@ public class Timer : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerEvents.OnPlayerOutOfBounds += HandlePlayerOutOfBounds;
+        PlayerTriggers.OnPlayerStartLevel += TimerStart;
+        PlayerEvents.OnPlayerDie += HandlePlayerOutOfBounds;
         PlayerTriggers.OnPlayerReachedTarget += HandlePlayerReachingTarget;
+        PlayerEvents.OnPlayerRespawn += TimerStart;
     }
     void OnDisable()
     {
-        PlayerEvents.OnPlayerOutOfBounds -= HandlePlayerOutOfBounds;
+        PlayerTriggers.OnPlayerStartLevel -= TimerStart;
+        PlayerEvents.OnPlayerDie -= HandlePlayerOutOfBounds;
         PlayerTriggers.OnPlayerReachedTarget -= HandlePlayerReachingTarget;
+        PlayerEvents.OnPlayerRespawn -= TimerStart;
     }
 
     private void HandlePlayerOutOfBounds() { gvar.LastRecordedTime = timer; }
@@ -38,14 +42,14 @@ public class Timer : MonoBehaviour
         TimerEnd();
     }
 
-    public void TimerStart(float startTime = 0f)
+    private void TimerStart(float startTime = 0f)
     {
         if (timerCoroutine != null) StopCoroutine(timerCoroutine);
         timer = startTime;
         timerCoroutine = StartCoroutine(UpdateTimer());
     }
 
-    public void TimerEnd()
+    private void TimerEnd()
     {
         StartCoroutine(DisplayResults());
         timer = 0f;
