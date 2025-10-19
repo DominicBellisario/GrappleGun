@@ -1021,10 +1021,8 @@ MonoBehaviour:
   player: {fileID: 8899434119458475185}
   grapplePointPrefab: {fileID: 6912725287927576319, guid: 21654e6ec6198434eb36abd09e33977e, type: 3}
   grappleStartPos: {fileID: 1328603308791807764}
-  grappleLag: {fileID: 8041092287981657581}
   sparksBurstPrefab: {fileID: 266388715285006980, guid: 596a30dc601f1374e94775c282766c4e, type: 3}
   audioSourcePrefab: {fileID: 5763895986522015768, guid: dc57880049f9fde47829970fc6f50178, type: 3}
-  grappleReturnSource: {fileID: 1740512880364592555}
   hitNoGrappleClip: {fileID: 8300000, guid: 3b9bee4cf0575bd4b8990563b1a2b9a6, type: 3}
   hitGrappleClip: {fileID: 8300000, guid: f7140d8bf58610d4bb6e982d190d85e5, type: 3}
   hitReelClip: {fileID: 8300000, guid: 37efee04a59ade0418535b4496e6e034, type: 3}
@@ -11335,10 +11333,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponCam: {fileID: 3047158697476794252}
-  fovMaxWarp: 90
-  fovWarpInTime: 0.1
-  fovWaitTime: 0.1
-  fovWarpOutTime: 0.8
+  fovResetTime: 0.1
+  fovWarpTimeForBirdReel: 0.25
+  fovMaxWarpForBirdReel: 90
+  fovMaxWarpForDash: 90
+  fovWarpInTimeForDash: 0.1
+  fovWaitTimeForDash: 0.1
+  fovWarpOutTimeForDash: 0.25
 --- !u!1 &5195612471131520075
 GameObject:
   m_ObjectHideFlags: 0
@@ -12139,13 +12140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCam: {fileID: 5014280314240808219}
   grappleLag: {fileID: 8041092287981657581}
-  grappleStart: {fileID: 1328603308791807764}
-  grappleHead: {fileID: 2831276443190014990}
-  gun: {fileID: 9159966593861744583}
   gunLag: {fileID: 2892630343540249449}
-  boostParticles: {fileID: 1583547697946788831}
-  boostSource: {fileID: 4167566882626256927}
-  dashSource: {fileID: 3145357539178027020}
 --- !u!114 &72448625921142688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12195,8 +12190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4dae2a28cc8f34797369d9b1b90781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 0}
-  deathSource: {fileID: 6101296084190946075}
 --- !u!114 &2294464338297261211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12209,9 +12202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a1ed9ff4dd9dd4d862a90ba98809a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEvents
-  fadePanel: {fileID: 0}
-  damagePanel: {fileID: 0}
-  timer: {fileID: 0}
   fadeTime: 0.4
   health: 5
   playerHealthRegenTime: 3

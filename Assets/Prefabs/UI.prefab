@@ -2778,7 +2778,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 9148809888024355099}
   m_Direction: 0
   m_MinValue: -80
-  m_MaxValue: 20
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -4199,6 +4199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a0e81b5c1dffe4aa1484f86e5a597e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VisualEffects
+  fadeTime: 0.25
 --- !u!1 &6356142595834311899
 GameObject:
   m_ObjectHideFlags: 0
@@ -4961,7 +4962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9498d51518bb4a247919b9a9efad9754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Crosshair
-  defaultColor: {r: 1, g: 0, b: 0, a: 1}
+  defaultGrappleColor: {r: 1, g: 0, b: 0, a: 1}
   standardGrappleColor: {r: 0, g: 1, b: 0, a: 1}
   specialGrappleColor: {r: 0, g: 1, b: 1, a: 1}
 --- !u!1 &7180883081657947222
@@ -6236,7 +6237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aecdaab85c54ba6418c1545253a59aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pause
-  grappleHead: {fileID: 0}
   options: {fileID: 6914100749929631508}
   control: {fileID: 299129428931485811}
   fadeLength: 0.25

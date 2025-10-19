@@ -1,10 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class Crosshair : MonoBehaviour
 {
     [Header("Colors")]
-    [SerializeField] Color defaultColor;
+    [SerializeField] Color defaultGrappleColor;
     [SerializeField] Color standardGrappleColor;
     [SerializeField] Color specialGrappleColor;
 
@@ -15,25 +16,28 @@ public class Crosshair : MonoBehaviour
         crosshair = GetComponent<Image>();
     }
 
-    public void UpdateCrosshair(Collider hitObject)
+    void OnEnable()
     {
-        if (hitObject == null)
-        {
-            crosshair.color = defaultColor;
-            return;
-        }
-        
-        if (hitObject.gameObject.CompareTag("Normal Grap Surface"))
+        GrappleRangeRaycast.OnDetectedSurfaceChange += UpdateCrosshair;
+    }
+    void OnDisable()
+    {
+        GrappleRangeRaycast.OnDetectedSurfaceChange += UpdateCrosshair;
+    }
+
+    private void UpdateCrosshair(string tag)
+    {
+        if (tag == "Normal Grap Surface")
         {
             crosshair.color = standardGrappleColor;
         }
-        else if (hitObject.gameObject.CompareTag("No Grap Surface"))
+        else if (tag == "Reel" || tag == "Bird")
         {
-            crosshair.color = defaultColor;
+            crosshair.color = specialGrappleColor;
         }
         else
         {
-            crosshair.color = specialGrappleColor;
+            crosshair.color = defaultGrappleColor;
         }
     }
 }

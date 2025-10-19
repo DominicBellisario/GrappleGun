@@ -6125,22 +6125,6 @@ PrefabInstance:
       propertyPath: crosshair
       value: 
       objectReference: {fileID: 1601435998}
-    - target: {fileID: 57737250660311644, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: timer
-      value: 
-      objectReference: {fileID: 2033147376}
-    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: timer
-      value: 
-      objectReference: {fileID: 2033147376}
-    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: fadePanel
-      value: 
-      objectReference: {fileID: 1601435999}
-    - target: {fileID: 2294464338297261211, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: damagePanel
-      value: 
-      objectReference: {fileID: 1601435997}
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6180,34 +6164,6 @@ PrefabInstance:
     - target: {fileID: 4186052352721140227, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: fovResetTime
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: fovMaxWarpForDash
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: fovWaitTimeForDash
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: fovWarpInTimeForDash
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: fovMaxWarpForBirdReel
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: fovWarpOutTimeForDash
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4229133297676976200, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
-      propertyPath: fovWarpTimeForBirdReel
-      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8899434119458475185, guid: 59e7586e0e95ec64b9c122a63dcf9ad2, type: 3}
       propertyPath: m_Name
@@ -7283,10 +7239,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 2122118920}
-    - target: {fileID: 1306889831374300074, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-      propertyPath: fadeTime
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 1448227815750506496, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -7315,9 +7267,21 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3338879100167986229, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-      propertyPath: m_MaxValue
+    - target: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: defaultGrappleColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: defaultGrappleColor.b
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: defaultGrappleColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
+      propertyPath: defaultGrappleColor.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3499961159931284858, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7364,17 +7328,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
---- !u!114 &1601435997 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2483548023883077819, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-  m_PrefabInstance: {fileID: 1601435996}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02239a8e45930b24eb7dce540322c161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageBorder
 --- !u!114 &1601435998 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
@@ -7386,17 +7339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9498d51518bb4a247919b9a9efad9754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Crosshair
---- !u!114 &1601435999 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1306889831374300074, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-  m_PrefabInstance: {fileID: 1601435996}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a0e81b5c1dffe4aa1484f86e5a597e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::VisualEffects
 --- !u!1001 &1620665247
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9679,17 +9621,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 915743734714696572, guid: 62c98ebe88c4d7446801d4cdde51ddbd, type: 3}
   m_PrefabInstance: {fileID: 5339511825395829483}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2033147376 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3957374296144659931, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-  m_PrefabInstance: {fileID: 1601435996}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28762ccc9f2be7d41bdfb842c5d2941d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Timer
 --- !u!1001 &2048744321
 PrefabInstance:
   m_ObjectHideFlags: 0

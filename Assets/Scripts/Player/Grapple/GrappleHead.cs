@@ -60,6 +60,7 @@ public class GrappleHead : MonoBehaviour
         GrapplePhysics.OnBirdLaunch += ReturnToGun;
         GrapplePhysics.OnFailsafeBirdReelDetatch += ReturnToGun;
         GrapplePhysics.OnReelStick += ReturnToGun;
+        Pause.OnUnpauseEvent += ReturnToGun;
     }
 
     void OnDisable()
@@ -69,6 +70,7 @@ public class GrappleHead : MonoBehaviour
         GrapplePhysics.OnBirdLaunch -= ReturnToGun;
         GrapplePhysics.OnFailsafeBirdReelDetatch -= ReturnToGun;
         GrapplePhysics.OnReelStick -= ReturnToGun;
+        Pause.OnUnpauseEvent -= ReturnToGun;
     }
 
     void Update()
