@@ -1,9 +1,12 @@
+using System;
 using UnityEngine;
 
 public class CameraBob : MonoBehaviour
 {
+    // --- EVENTS ---
+    public static event Action OnWalkCycleComplete;
+
     [Header("References")]
-    [SerializeField] Rigidbody playerRb;
     [SerializeField] Raycasts playerRays;
 
     [Header("Settings")]
@@ -14,22 +17,24 @@ public class CameraBob : MonoBehaviour
 
     private float timer = 0f;
     private Vector3 initialPosition;
+    GVar gvar;
 
     void Start()
     {
         initialPosition = transform.localPosition;
+        gvar = GVar.Instance;
     }
 
     void Update()
     {
         // check if player is moving on the ground
-        if (playerRb.linearVelocity.magnitude > 0.1f && playerRays.DownRaycastHit.collider != null)
+        if (gvar.PlayerRb.linearVelocity.magnitude > 0.1f && playerRays.DownRaycastHit.collider != null)
         {
             // increment timer based on movement speed
-            timer += Time.deltaTime * bobFrequency * Mathf.Clamp(playerRb.linearVelocity.magnitude, 0, 2);
+            timer += Time.deltaTime * bobFrequency * Mathf.Clamp(gvar.PlayerRb.linearVelocity.magnitude, 0, 2);
 
             // vertical bobbing
-            float bobOffset = (bobCurve.Evaluate(timer % 1) - 0.5f) * 2f * bobHeight;
+            float bobOffset = bobCurve.Evaluate(timer - 0.5f) * 2f * bobHeight;
 
             // apply to position
             Vector3 targetPosition = initialPosition + Vector3.up * bobOffset;
@@ -43,10 +48,11 @@ public class CameraBob : MonoBehaviour
             transform.localPosition = Vector3.Lerp(transform.localPosition, initialPosition, Time.deltaTime * smooth);
         }
 
-        if (timer % 1 > 0.98f)
+        if (timer >= 1f)
         {
+            timer = 0f;
             // play footstep sound
-            
+            OnWalkCycleComplete?.Invoke();
         }
     }
 

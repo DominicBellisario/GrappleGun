@@ -24,6 +24,10 @@ public class WeaponLag : MonoBehaviour
     [SerializeField] protected float recoilDashKickback;
     [SerializeField] protected float recoilReturnSpeed; // how fast it returns
 
+    [Header("Landing Settings")]
+    [SerializeField] protected float maxLandingRecoil;
+    [SerializeField] protected float landingSpeedForMaxRecoil;
+
     [Header("Vibration Settings")]
     [SerializeField] protected float vibrationMagnitude;
     Coroutine vibrationCoroutine;
@@ -49,6 +53,7 @@ public class WeaponLag : MonoBehaviour
         PlayerController.OnDashEvent += AddDashRecoil;
         PlayerController.OnBoostStartEvent += StartVibration;
         PlayerController.OnBoostStopEvent += StopVibration;
+        PlayerController.OnGroundedEvent += AddLandingRecoil;
     }
 
     protected virtual void OnDisable()
@@ -56,6 +61,7 @@ public class WeaponLag : MonoBehaviour
         PlayerController.OnDashEvent -= AddDashRecoil;
         PlayerController.OnBoostStartEvent -= StartVibration;
         PlayerController.OnBoostStopEvent -= StopVibration;
+        PlayerController.OnGroundedEvent -= AddLandingRecoil;
     }
 
     void Update()
@@ -97,6 +103,12 @@ public class WeaponLag : MonoBehaviour
 
         // Rotate gun upwards (slight random side sway can be added)
         recoilRotationOffset *= Quaternion.Euler(-recoilShootRotation, 0f, 0f);
+    }
+
+    private void AddLandingRecoil(float landingSpeed)
+    {
+        // Kick gun downwards
+        recoilOffset += Mathf.Lerp(0, maxLandingRecoil, -landingSpeed / landingSpeedForMaxRecoil) * -Vector3.up;
     }
 
     private void AddDashRecoil()

@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public static event Action OnBoostStartEvent;
     public static event Action OnBoostStopEvent;
     public static event Action OnBoostEmptyEvent;
+    public static event Action<float> OnGroundedEvent;
 
     /// <summary>
     /// the player's first person camera
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
     Vector2 lookInput;
 
     bool isReloaded;
+    bool touchedGroundAlready;
 
     /// <summary>
     /// wether or not the player is stuck to a reel surface
@@ -86,6 +88,7 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(Helper.DoThisAfterDelay(0.25f, () => isReloaded = true));
 
         IsStuck = false;
+        touchedGroundAlready = false;
     }
 
     void OnEnable()
@@ -132,12 +135,13 @@ public class PlayerController : MonoBehaviour
     {
         //get the current surface the player is on, if any
         RaycastHit downRaycastHit = GetComponent<Raycasts>().DownRaycastHit;
+        bool touchingGround = downRaycastHit.collider != null;
 
         // Apply the current movement force to the Rigidbody2D
         if (movementInputThisFrame != Vector2.zero)
         {
             // If the player is grounded, apply the walk acceleration
-            if (downRaycastHit.collider != null) { MovePlayer(downRaycastHit, gvar.WalkAcceleration); }
+            if (touchingGround) { MovePlayer(downRaycastHit, gvar.WalkAcceleration); }
             // If the player is in the air and boosting, apply the boost acceleration
             else if (IsBoosting) { MovePlayer(downRaycastHit, gvar.BoostAcceleration); }
             // If the player is in the air and not boosting, apply the air acceleration
@@ -163,13 +167,13 @@ public class PlayerController : MonoBehaviour
             }
         }
         //recharge boost when grounded
-        else if ((downRaycastHit.collider != null || IsStuck) && gvar.CurrentBoostFuel < 100f)
+        else if ((touchingGround || IsStuck) && gvar.CurrentBoostFuel < 100f)
         {
             gvar.CurrentBoostFuel += gvar.BoostFuelRegen * Time.deltaTime;
         }
 
         //speed is hard capped while grounded, prevents sliding at high entry speeds
-        if (downRaycastHit.collider != null || IsStuck)
+        if (touchingGround || IsStuck)
         {
             // rb.linearVelocity = new Vector3(
             // Mathf.Clamp(rb.linearVelocity.x, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed),
@@ -178,6 +182,17 @@ public class PlayerController : MonoBehaviour
 
             // dash is reset when grounded
             gvar.CanDash = true;
+        }
+
+        if (touchingGround && !touchedGroundAlready)
+        {
+            touchedGroundAlready = true;
+            if (gvar.PlayerRb.linearVelocity.y >= 0) return;
+            OnGroundedEvent?.Invoke(gvar.PlayerRb.linearVelocity.y);
+        }
+        else if (!touchingGround)
+        {
+            touchedGroundAlready = false;
         }
     }
 

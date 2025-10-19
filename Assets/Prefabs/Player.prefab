@@ -248,6 +248,8 @@ MonoBehaviour:
   recoilShootRotation: 0
   recoilDashKickback: 0.5
   recoilReturnSpeed: 10
+  maxLandingRecoil: 0.5
+  landingSpeedForMaxRecoil: 30
   vibrationMagnitude: 0.01
   lookInput: {x: 0, y: 0}
 --- !u!1 &1328603308791807764
@@ -447,7 +449,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcb8ed622cf4ad04d97607dff0f1f97f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grappleHead: {fileID: 4075675839506298894}
   grappleChainClips:
   - {fileID: 8300000, guid: f1f33f8584f4d194da2db0afed4261f6, type: 3}
   - {fileID: 8300000, guid: db1d8f9eda9d05446ac5c4c140b512a6, type: 3}
@@ -10727,7 +10728,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0576d6a31f537d498e5425dfeb77bf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grappleHead: {fileID: 4075675839506298894}
   distanceChangeToStart: 30
 --- !u!1 &3564179851792418289
 GameObject:
@@ -11268,7 +11268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09a2bef176965147a56e488e8e6118b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraBob
-  playerRb: {fileID: 6193393544656630102}
   playerRays: {fileID: 72448625921142688}
   bobCurve:
     serializedVersion: 2
@@ -11306,7 +11305,6 @@ MonoBehaviour:
   bobFrequency: 0.7
   bobHeight: 0.3
   smooth: 8
-  footstepSource: {fileID: 0}
 --- !u!114 &6914831251893390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11319,7 +11317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93eb6789e69003c4a8261e78ed04003a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GrappleRangeRaycast
-  crosshair: {fileID: 0}
 --- !u!114 &4229133297676976200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11399,6 +11396,8 @@ MonoBehaviour:
   recoilShootRotation: 50
   recoilDashKickback: 0.5
   recoilReturnSpeed: 5
+  maxLandingRecoil: 0.5
+  landingSpeedForMaxRecoil: 30
   vibrationMagnitude: 0.01
   lookInput: {x: 0, y: 0}
 --- !u!114 &9159966593861744583
@@ -11571,6 +11570,9 @@ MonoBehaviour:
   footstepClips:
   - {fileID: 8300000, guid: e8c780f75d273bd4eb84ff86387e83da, type: 3}
   - {fileID: 8300000, guid: ea76611c1bbccd74aa9a521c883765a1, type: 3}
+  landingClip: {fileID: 8300000, guid: 725b990a285b74143b201eec7ebed3ce, type: 3}
+  minVolume: 0.25
+  speedNeededForMaxLandingNoiseVolume: 30
 --- !u!1 &5633507446000132435
 GameObject:
   m_ObjectHideFlags: 0
@@ -12203,7 +12205,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerEvents
   fadeTime: 0.4
-  health: 5
   playerHealthRegenTime: 3
   playerInvulnTime: 1
 --- !u!135 &5647756632889494307

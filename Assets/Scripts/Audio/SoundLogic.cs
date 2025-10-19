@@ -4,10 +4,12 @@ using UnityEngine;
 public class SoundLogic : MonoBehaviour
 {
     protected AudioSource audioSource;
+    protected float startingVolume;
 
     protected virtual void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        startingVolume = audioSource.volume;
     }
 
     protected virtual void Play(RaycastHit unusedHit = default)
