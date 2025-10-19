@@ -6,6 +6,7 @@ public class EnemyFlyBomb : EnemyBasic
     [SerializeField] GameObject explosion;
     [SerializeField] AnimationCurve explosionPulseCurve;
     [SerializeField] float maxSpeed;
+    [SerializeField] FlyingEnemySoundLogic soundLogic;
 
     protected override void Idle()
     {
@@ -48,6 +49,7 @@ public class EnemyFlyBomb : EnemyBasic
     private IEnumerator PrimeExplosion()
     {
         float t = 0f;
+        soundLogic.PlayPrimeAndExplodeClips(deathTime - 0.01f);
         while (t < deathTime)
         {
             float currentCurveValue = explosionPulseCurve.Evaluate(t / deathTime);

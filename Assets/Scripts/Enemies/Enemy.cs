@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected Color damagedColor;
 
     [SerializeField] protected EnemyState currentState;
+
     protected Rigidbody rb;
     protected GameObject player;
     protected Vector3 startPos;
