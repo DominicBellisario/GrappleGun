@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4400b3ef823802c4894c4ca890744d2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reloadClip: {fileID: 8300000, guid: daa551cd856cb0049b64bc8f85e41832, type: 3}
 --- !u!1 &190732715608924131
 GameObject:
   m_ObjectHideFlags: 0
@@ -12295,6 +12296,7 @@ MonoBehaviour:
   playerCam: {fileID: 5014280314240808219}
   grappleLag: {fileID: 8041092287981657581}
   gunLag: {fileID: 2892630343540249449}
+  reelReleaseClip: {fileID: 8300000, guid: 5276417c996a35c48b8ff033a65750d1, type: 3}
 --- !u!114 &72448625921142688
 MonoBehaviour:
   m_ObjectHideFlags: 0

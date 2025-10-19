@@ -51,8 +51,11 @@ public class GVar : MonoBehaviour
         }
     }
 
-    float masterVolume;
+
     [SerializeField] AudioMixer masterMixer;
+    [SerializeField] GameObject audioSourcePrefab;
+    public GameObject AudioSourcePrefab { get { return Instance.audioSourcePrefab; } }
+    float masterVolume;
     public float MasterVolume
     {
         get { return Instance.masterVolume; }

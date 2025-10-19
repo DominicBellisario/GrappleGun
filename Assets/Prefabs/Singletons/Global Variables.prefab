@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GVar
   masterMixer: {fileID: 24100000, guid: 0965e5ac31382d748ba407b180f7efb8, type: 2}
+  audioSourcePrefab: {fileID: 5763895986522015768, guid: dc57880049f9fde47829970fc6f50178, type: 3}
   maxHealth: 5
   jumpForce: 5
   walkAcceleration: 40

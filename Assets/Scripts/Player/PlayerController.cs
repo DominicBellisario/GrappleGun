@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     public static event Action<RaycastHit> OnShootGrappleEvent;
     public static event Action OnReturnGrappleEvent;
     public static event Action<RaycastHit> OnShootGunEvent;
+    public static event Action OnUnloadedShootGunEvent;
+    public static event Action OnGunReloadedEvent;
     public static event Action OnDashEvent;
     public static event Action OnBoostStartEvent;
     public static event Action OnBoostStopEvent;
@@ -24,6 +26,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject playerCam;
     [SerializeField] GrappleLag grappleLag;
     [SerializeField] GunLag gunLag;
+
+    [SerializeField] AudioClip reelReleaseClip;
 
     /// <summary>
     /// The current force applied to the player this frame.
@@ -120,7 +124,7 @@ public class PlayerController : MonoBehaviour
     }
     void HandleReelStick()
     {
-        IsStuck = true; 
+        IsStuck = true;
         gvar.PlayerRb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
@@ -284,6 +288,10 @@ public class PlayerController : MonoBehaviour
                 gvar.PlayerRb.constraints = RigidbodyConstraints.FreezeRotation;
                 //apply a force to the player in the direction the player is looking
                 gvar.PlayerRb.AddForce(playerCam.transform.forward * gvar.ReelLaunchForce, ForceMode.Impulse);
+
+                // play the reel release hit sound
+                GameObject newSource = Instantiate(gvar.AudioSourcePrefab, transform.position, Quaternion.identity);
+                newSource.GetComponent<AudioSourceLogic>().Constructor(reelReleaseClip, UnityEngine.Random.Range(0.9f, 1.1f));
                 return;
             }
             // if the player is grounded, jump
@@ -418,15 +426,23 @@ public class PlayerController : MonoBehaviour
     {
         if (gvar.IsPaused) return;
 
-        if (inputValue.isPressed && isReloaded)
+        if (inputValue.isPressed)
         {
-            // reload the gun after a delay
-            isReloaded = false;
-            StartCoroutine(Helper.DoThisAfterDelay(gvar.GunReloadTime, () => isReloaded = true));
+            if (isReloaded)
+            {
+                // reload the gun after a delay
+                isReloaded = false;
+                StartCoroutine(Helper.DoThisAfterDelay(gvar.GunReloadTime - 0.3f, () => OnGunReloadedEvent?.Invoke()));
+                StartCoroutine(Helper.DoThisAfterDelay(gvar.GunReloadTime, () => isReloaded = true));
 
-            // fire the gun
-            // apply recoil to the gun
-            OnShootGunEvent?.Invoke(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
+                // fire the gun
+                // apply recoil to the gun
+                OnShootGunEvent?.Invoke(playerCam.GetComponent<Raycasts>().ForwardRaycastHit);
+            }
+            else
+            {
+                OnUnloadedShootGunEvent?.Invoke();
+            }
         }
     }
 }
