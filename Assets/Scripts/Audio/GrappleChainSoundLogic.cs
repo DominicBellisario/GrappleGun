@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class GrappleChainSoundLogic : SoundLogic
 {
-    [SerializeField] GrappleHead grappleHead;
     [SerializeField] AudioClip[] grappleChainClips;
     [SerializeField] float distanceToPlaySound;
     [SerializeField] Vector2 pitchRange;
@@ -19,11 +18,11 @@ public class GrappleChainSoundLogic : SoundLogic
     void Update()
     {
         // play a random sound from the array when the grapple head moves a certain distance
-        if (Mathf.Abs(grappleHead.CurrentRopeLength - lastRecordedDistance) >= distanceToPlaySound)
+        if (Mathf.Abs(gvar.CurrentRopeLength - lastRecordedDistance) >= distanceToPlaySound)
         {
-            audioSource.pitch = Mathf.Lerp(pitchRange.x, pitchRange.y, grappleHead.CurrentRopeLength / gvar.GrappleMaxDistance);
+            audioSource.pitch = Mathf.Lerp(pitchRange.x, pitchRange.y, gvar.CurrentRopeLength / gvar.GrappleMaxDistance);
             audioSource.PlayOneShot(grappleChainClips[Random.Range(0, grappleChainClips.Length)]);
-            lastRecordedDistance = grappleHead.CurrentRopeLength;
+            lastRecordedDistance = gvar.CurrentRopeLength;
         }
     }
 }

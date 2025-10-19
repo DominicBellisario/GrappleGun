@@ -1,13 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class HealthBarUI : MonoBehaviour
 {
     Slider slider;
     GVar gvar;
 
     [Header("References")]
-    [SerializeField] PlayerEvents player;
     [SerializeField] Image bar;
     [SerializeField] Image background;
 
@@ -22,7 +22,7 @@ public class HealthBarUI : MonoBehaviour
     {
         slider = GetComponent<Slider>();
         gvar = GVar.Instance;
-        slider.maxValue = player.Health * 100;
+        slider.maxValue = gvar.CurrentHealth * 100;
         targetValue = slider.maxValue;
     }
 
@@ -32,9 +32,9 @@ public class HealthBarUI : MonoBehaviour
         slider.value = Mathf.Lerp(slider.value, targetValue, Time.deltaTime * smoothSpeed);
 
         //update health if it is different
-        if (targetValue != player.Health * 100)
+        if (targetValue != gvar.CurrentHealth * 100)
         {
-            targetValue = player.Health * 100;
+            targetValue = gvar.CurrentHealth * 100;
         }
 
         // hide the bar if at full health

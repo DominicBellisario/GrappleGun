@@ -10,7 +10,6 @@ public class DashBarUI : MonoBehaviour
     [Header("References")]
     [SerializeField] Image bar;
     //[SerializeField] Image background;
-    [SerializeField] PlayerController player;
 
     [Header ("Colors")]
     [SerializeField] Color chargeColor;
@@ -28,7 +27,7 @@ public class DashBarUI : MonoBehaviour
     {
         slider = GetComponent<Slider>();
         gvar = GVar.Instance;
-        targetValue = (player.CurrentDashCharge / gvar.DashChargeTime) * 100;
+        targetValue = (gvar.CurrentDashCharge / gvar.DashChargeTime) * 100;
     }
 
     void Update()
@@ -37,17 +36,17 @@ public class DashBarUI : MonoBehaviour
         slider.value = Mathf.Lerp(slider.value, targetValue, Time.deltaTime * smoothSpeed);
 
         //update dash charge if it is different
-        if (targetValue != (player.CurrentDashCharge / gvar.DashChargeTime) * 100)
+        if (targetValue != (gvar.CurrentDashCharge / gvar.DashChargeTime) * 100)
         {
-            targetValue = (player.CurrentDashCharge / gvar.DashChargeTime) * 100;
+            targetValue = (gvar.CurrentDashCharge / gvar.DashChargeTime) * 100;
         }
 
         // change the bars color if it reaches the max
-        if (targetValue >= slider.maxValue && player.CanDash)
+        if (targetValue >= slider.maxValue && gvar.CanDash)
         {
             bar.color = fullColor;
         }
-        else if (player.CanDash)
+        else if (gvar.CanDash)
         {
             bar.color = chargeColor;
         }

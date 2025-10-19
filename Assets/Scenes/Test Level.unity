@@ -7251,10 +7251,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2207945450847079208, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-      propertyPath: grappleHead
-      value: 
-      objectReference: {fileID: 1438032875}
     - target: {fileID: 3007937011579583112, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -7266,22 +7262,6 @@ PrefabInstance:
     - target: {fileID: 3036037890272863608, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-      propertyPath: defaultGrappleColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-      propertyPath: defaultGrappleColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-      propertyPath: defaultGrappleColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3192031105183789967, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
-      propertyPath: defaultGrappleColor.r
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3499961159931284858, guid: 8fcecebbee16b21499df3f5a53f98bff, type: 3}
       propertyPath: m_AnchorMax.y

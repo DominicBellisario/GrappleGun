@@ -6,6 +6,14 @@ using UnityEngine;
 public class GrapplePhysics : MonoBehaviour
 {
     // --- EVENTS --- 
+    /// <summary>
+    /// invoked whenever a grapple configurable joint is made
+    /// </summary>
+    public static event Action OnGrappleAttatched;
+    /// <summary>
+    /// invoked whenever a grapple configurable joint is destroyed
+    /// </summary>
+    public static event Action OnGrappleReleased;
     public static event Action OnReelStick;
     public static event Action OnBirdLaunch;
     public static event Action OnFailsafeBirdReelDetatch;
@@ -117,13 +125,16 @@ public class GrapplePhysics : MonoBehaviour
         {
             StartCoroutine(ClampDistance());
             StartCoroutine(ReelLogic());
-            
+
         }
         else
         {
             StartCoroutine(ClampDistance());
             StartCoroutine(BirdLogic(hitObject));
         }
+
+        // change the grapple bar UI color
+        OnGrappleAttatched?.Invoke();
     }
 
     void Update()
@@ -234,7 +245,12 @@ public class GrapplePhysics : MonoBehaviour
 
     public void DestroyGrapple()
     {
+        if (joint == null) return;
+
         Destroy(joint);
         joint = null;
+        
+        // change the grapple bar UI color
+        OnGrappleReleased?.Invoke();
     }
 }

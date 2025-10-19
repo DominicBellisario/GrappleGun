@@ -5,9 +5,10 @@ using UnityEngine.UI;
 public class Crosshair : MonoBehaviour
 {
     [Header("Colors")]
-    [SerializeField] Color defaultGrappleColor;
-    [SerializeField] Color standardGrappleColor;
-    [SerializeField] Color specialGrappleColor;
+    [SerializeField] Color noGrappleColor;
+    [SerializeField] Color normalGrappleColor;
+    [SerializeField] Color enemyColor;
+    [SerializeField] Color specialSurfaceColor;
 
     Image crosshair;
 
@@ -22,22 +23,26 @@ public class Crosshair : MonoBehaviour
     }
     void OnDisable()
     {
-        GrappleRangeRaycast.OnDetectedSurfaceChange += UpdateCrosshair;
+        GrappleRangeRaycast.OnDetectedSurfaceChange -= UpdateCrosshair;
     }
 
     private void UpdateCrosshair(string tag)
     {
         if (tag == "Normal Grap Surface")
         {
-            crosshair.color = standardGrappleColor;
+            crosshair.color = normalGrappleColor;
         }
         else if (tag == "Reel" || tag == "Bird")
         {
-            crosshair.color = specialGrappleColor;
+            crosshair.color = specialSurfaceColor;
+        }
+        else if (tag == "Enemy")
+        {
+            crosshair.color = enemyColor;
         }
         else
         {
-            crosshair.color = defaultGrappleColor;
+            crosshair.color = noGrappleColor;
         }
     }
 }

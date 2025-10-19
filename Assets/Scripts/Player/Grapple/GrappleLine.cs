@@ -8,12 +8,12 @@ public class GrappleLine : MonoBehaviour
     [SerializeField] GameObject grappleHead;
 
     LineRenderer line;
-    GrappleHead grappleHeadScript;
+    GVar gvar;
 
     void Start()
     {
+        gvar = GVar.Instance;
         line = GetComponent<LineRenderer>();
-        grappleHeadScript = grappleHead.GetComponent<GrappleHead>();
     }
     void Update()
     {
@@ -26,6 +26,6 @@ public class GrappleLine : MonoBehaviour
         line.SetPosition(1, end);
 
         // scroll the texture based on distance to the PLAYER (not grapple head bc the joint is on player and it would scroll when it wasnt supposed to) (im a genius)
-        line.material.mainTextureOffset = new Vector2(-grappleHeadScript.CurrentRopeLength * 2.0f, 0);
+        line.material.mainTextureOffset = new Vector2(-gvar.CurrentRopeLength * 2.0f, 0);
     }
 }

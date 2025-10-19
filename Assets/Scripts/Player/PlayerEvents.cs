@@ -10,10 +10,8 @@ public class PlayerEvents : MonoBehaviour
     public static event Action OnPlayerDecreaseHealth;
     public static event Action<float> OnPlayerRespawn;
     [SerializeField] float fadeTime;
-    [SerializeField] int health;
     int maxHealth;
     [SerializeField] float playerHealthRegenTime;
-    public int Health {  get { return health; } }
     [SerializeField] int playerInvulnTime;
     bool invulnerable;
 
@@ -26,7 +24,7 @@ public class PlayerEvents : MonoBehaviour
         gvar = GVar.Instance;
         sceneHelper = SceneHelper.Instance;
         invulnerable = false;
-        maxHealth = health;
+        maxHealth = gvar.CurrentHealth;
         regenHealth = RegenHealth();
 
         //send the player to the current checkpoint
@@ -70,8 +68,8 @@ public class PlayerEvents : MonoBehaviour
         StartCoroutine(Helper.DoThisAfterDelay(playerInvulnTime, () => invulnerable = false));
 
         // change player health and check if they die
-        health -= healthChange;
-        if (health <= 0) NoMoreHealth();
+        gvar.CurrentHealth -= healthChange;
+        if (gvar.CurrentHealth <= 0) NoMoreHealth();
 
         // start regening health
         StopCoroutine(regenHealth);
@@ -94,9 +92,9 @@ public class PlayerEvents : MonoBehaviour
         // wait for a bit
         yield return new WaitForSeconds(playerHealthRegenTime);
         // stop loop if max health
-        if (health == maxHealth) yield break;
+        if (gvar.CurrentHealth == maxHealth) yield break;
         // add health
-        health++;
+        gvar.CurrentHealth++;
         // regen more health
         regenHealth = RegenHealth();
         StartCoroutine(regenHealth);

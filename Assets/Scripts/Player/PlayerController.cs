@@ -23,10 +23,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] GameObject playerCam;
     [SerializeField] GrappleLag grappleLag;
     [SerializeField] GunLag gunLag;
-    /// <summary>
-    /// The Rigidbody component attached to the player.
-    /// </summary>
-    Rigidbody rb;
 
     /// <summary>
     /// The current force applied to the player this frame.
@@ -59,24 +55,14 @@ public class PlayerController : MonoBehaviour
     private void CanUseGrappleFalse() { CanUseGrapple = false; }
 
     /// <summary>
-    /// the current amount of boost fuel
-    /// </summary>
-    public float CurrentBoostFuel { get; set; }
-
-    /// <summary>
     /// keeps track of whether the player is boosting or not.
     /// </summary>
     public bool IsBoosting { get; set; }
 
-    public float CurrentDashCharge { get; set; }
-
-    public bool CanDash { get; set; }
-
-
     void Start()
     {
         gvar = GVar.Instance;
-        rb = GetComponent<Rigidbody>();
+        gvar.PlayerRb = GetComponent<Rigidbody>();
 
         movementInputThisFrame = Vector2.zero;
         lookInput = Vector2.zero;
@@ -88,10 +74,10 @@ public class PlayerController : MonoBehaviour
         mouseRotation = gvar.CurrentCheckpointRotation;
 
         IsBoosting = false;
-        CurrentBoostFuel = 100f;
+        gvar.CurrentBoostFuel = 100f;
 
-        CanDash = true;
-        CurrentDashCharge = gvar.DashChargeTime;
+        gvar.CanDash = true;
+        gvar.CurrentDashCharge = gvar.DashChargeTime;
 
         // wait a bit before allowing the grapple or gun to be used so they dont shoot before teleporting
         CanUseGrapple = false;
@@ -127,19 +113,19 @@ public class PlayerController : MonoBehaviour
     {
         CanUseGrapple = false;
         IsStuck = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        gvar.PlayerRb.constraints = RigidbodyConstraints.FreezeRotation;
     }
     void HandleReelStick()
     {
         IsStuck = true; 
-        rb.constraints = RigidbodyConstraints.FreezeAll;
+        gvar.PlayerRb.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     void HandleHitBird(Collision collision, int type)
     {
         CanUseGrapple = false;
         IsStuck = false;
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        gvar.PlayerRb.constraints = RigidbodyConstraints.FreezeRotation;
     }
 
     void Update()
@@ -162,10 +148,10 @@ public class PlayerController : MonoBehaviour
         if (IsBoosting)
         {
             // keep boosting if there is fuel and the player is not grounded
-            if (CurrentBoostFuel > 0f && downRaycastHit.collider == null)
+            if (gvar.CurrentBoostFuel > 0f && downRaycastHit.collider == null)
             {
-                rb.AddForce(gvar.BoostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
-                CurrentBoostFuel -= gvar.BoostFuelUse * Time.deltaTime;
+                gvar.PlayerRb.AddForce(gvar.BoostForce * Time.deltaTime * Vector3.up, ForceMode.Impulse);
+                gvar.CurrentBoostFuel -= gvar.BoostFuelUse * Time.deltaTime;
             }
             else
             {
@@ -177,9 +163,9 @@ public class PlayerController : MonoBehaviour
             }
         }
         //recharge boost when grounded
-        else if ((downRaycastHit.collider != null || IsStuck) && CurrentBoostFuel < 100f)
+        else if ((downRaycastHit.collider != null || IsStuck) && gvar.CurrentBoostFuel < 100f)
         {
-            CurrentBoostFuel += gvar.BoostFuelRegen * Time.deltaTime;
+            gvar.CurrentBoostFuel += gvar.BoostFuelRegen * Time.deltaTime;
         }
 
         //speed is hard capped while grounded, prevents sliding at high entry speeds
@@ -191,7 +177,7 @@ public class PlayerController : MonoBehaviour
             // Mathf.Clamp(rb.linearVelocity.z, -gvar.GroundMaxHorizSpeed, gvar.GroundMaxHorizSpeed));
 
             // dash is reset when grounded
-            CanDash = true;
+            gvar.CanDash = true;
         }
     }
 
@@ -249,7 +235,7 @@ public class PlayerController : MonoBehaviour
         Vector3 slopeNormal = downRaycastHit.collider ? downRaycastHit.normal : Vector3.up;
         Vector3 slopeForce = Vector3.ProjectOnPlane(worldForce, slopeNormal);
 
-        Vector3 horizVel = new(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
+        Vector3 horizVel = new(gvar.PlayerRb.linearVelocity.x, 0f, gvar.PlayerRb.linearVelocity.z);
         if (horizVel.magnitude >= gvar.GroundMaxHorizSpeed)
         {
             // Already at/above max speed = only keep sideways input
@@ -263,7 +249,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Apply velocity change
-        rb.linearVelocity += slopeForce * Time.deltaTime;
+        gvar.PlayerRb.linearVelocity += slopeForce * Time.deltaTime;
     }
 
     /// <summary>
@@ -280,19 +266,19 @@ public class PlayerController : MonoBehaviour
             if (IsStuck)
             {
                 IsStuck = false;
-                rb.constraints = RigidbodyConstraints.FreezeRotation;
+                gvar.PlayerRb.constraints = RigidbodyConstraints.FreezeRotation;
                 //apply a force to the player in the direction the player is looking
-                rb.AddForce(playerCam.transform.forward * gvar.ReelLaunchForce, ForceMode.Impulse);
+                gvar.PlayerRb.AddForce(playerCam.transform.forward * gvar.ReelLaunchForce, ForceMode.Impulse);
                 return;
             }
             // if the player is grounded, jump
             else if (GetComponent<Raycasts>().DownRaycastHit.collider != null)
             {
                 // Apply an impulse force to the Rigidbody2D to make the player jump
-                rb.AddForce(Vector3.up * gvar.JumpForce, ForceMode.Impulse);
+                gvar.PlayerRb.AddForce(Vector3.up * gvar.JumpForce, ForceMode.Impulse);
             }
             // if the player is not grounded and has fuel, activate the boost, particles, and sound
-            else if (CurrentBoostFuel > 0f)
+            else if (gvar.CurrentBoostFuel > 0f)
             {
                 IsBoosting = true;
                 // start playing boost sound
@@ -377,22 +363,22 @@ public class PlayerController : MonoBehaviour
 
         if (inputValue.isPressed)
         {
-            if (CurrentDashCharge == gvar.DashChargeTime && CanDash)
+            if (gvar.CurrentDashCharge == gvar.DashChargeTime && gvar.CanDash)
             {
                 // unstick the player if they are stuck
                 if (IsStuck)
                 {
                     IsStuck = false;
-                    rb.constraints = RigidbodyConstraints.FreezeRotation;
+                    gvar.PlayerRb.constraints = RigidbodyConstraints.FreezeRotation;
                 }
 
                 // add a force in the direction the player is facing
                 Vector3 camForward = playerCam.transform.forward;
                 camForward.y = 0f;
                 camForward.Normalize();
-                rb.AddForce(camForward * gvar.DashForce, ForceMode.VelocityChange);
-                CurrentDashCharge = 0f;
-                CanDash = false;
+                gvar.PlayerRb.AddForce(camForward * gvar.DashForce, ForceMode.VelocityChange);
+                gvar.CurrentDashCharge = 0f;
+                gvar.CanDash = false;
                 StartCoroutine(ChargeDash());
 
                 // plays dash sound
@@ -405,12 +391,12 @@ public class PlayerController : MonoBehaviour
 
     private IEnumerator ChargeDash()
     {
-        while (CurrentDashCharge < gvar.DashChargeTime)
+        while (gvar.CurrentDashCharge < gvar.DashChargeTime)
         {
-            CurrentDashCharge += Time.deltaTime;
+            gvar.CurrentDashCharge += Time.deltaTime;
             yield return null;
         }
-        CurrentDashCharge = gvar.DashChargeTime;
+        gvar.CurrentDashCharge = gvar.DashChargeTime;
     }
 
     private void OnShoot(InputValue inputValue)

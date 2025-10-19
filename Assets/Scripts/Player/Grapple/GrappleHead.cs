@@ -38,11 +38,6 @@ public class GrappleHead : MonoBehaviour
 
     public bool IsAttached { get { return !detectCollisions; } }
 
-    /// <summary>
-    /// the current distance between the grapple head and the launcher
-    /// </summary>
-    public float CurrentRopeLength { get; set; }
-
     void Start()
     {
         gvar = GVar.Instance;
@@ -76,12 +71,12 @@ public class GrappleHead : MonoBehaviour
     void Update()
     {
         // get the distance between the grapple head and the player ONCE so everything else can use it without recalculating
-        CurrentRopeLength = Vector3.Distance(transform.position, player.transform.position);
+        gvar.CurrentRopeLength = Vector3.Distance(transform.position, player.transform.position);
 
         //if not attached and at max diatnce, return to gun
         if (!rb.isKinematic)
         {
-            if (CurrentRopeLength > gvar.GrappleMaxDistance)
+            if (gvar.CurrentRopeLength > gvar.GrappleMaxDistance)
             {
                 ReturnToGun();
             }
@@ -152,7 +147,7 @@ public class GrappleHead : MonoBehaviour
 
         float timer = 0f;
         // come back to the player until it gets there or until it takes too long
-        while (CurrentRopeLength > gvar.GrappleReturnRadius + timer && timer < gvar.ReelAutoDetatchTime)
+        while (gvar.CurrentRopeLength > gvar.GrappleReturnRadius + timer && timer < gvar.ReelAutoDetatchTime)
         {
             timer += Time.deltaTime;
             // get the direction the grapple should move in

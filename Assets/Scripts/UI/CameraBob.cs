@@ -12,9 +12,6 @@ public class CameraBob : MonoBehaviour
     [SerializeField] float bobHeight = 0.05f;   // how high the camera moves
     [SerializeField] float smooth = 8f;         // smooths movement
 
-    [Header("Sounds")]
-    [SerializeField] FootstepSoundLogic footstepSource;
-
     private float timer = 0f;
     private Vector3 initialPosition;
 

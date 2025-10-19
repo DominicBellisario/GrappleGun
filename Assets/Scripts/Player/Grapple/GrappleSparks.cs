@@ -3,18 +3,19 @@ using UnityEngine;
 [RequireComponent(typeof(ParticleSystem))]
 public class GrappleSparks : MonoBehaviour
 {
-    [SerializeField] GrappleHead grappleHead;
     /// <summary>
     /// the change in the distance between the grapple head and the player to start the sparks
     /// </summary>
     [SerializeField] float distanceChangeToStart;
     float lastDistance;
     ParticleSystem ps;
+    GVar gvar;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        lastDistance = grappleHead.CurrentRopeLength;
+        gvar = GVar.Instance;
+        lastDistance = gvar.CurrentRopeLength;
         ps = GetComponent<ParticleSystem>();
     }
 
@@ -22,7 +23,7 @@ public class GrappleSparks : MonoBehaviour
     void Update()
     {
         float distanceChangeToStartDT = distanceChangeToStart * Time.deltaTime;
-        if (Mathf.Abs(grappleHead.CurrentRopeLength - lastDistance) > distanceChangeToStartDT)
+        if (Mathf.Abs(gvar.CurrentRopeLength - lastDistance) > distanceChangeToStartDT)
         {
             if (!ps.isPlaying) ps.Play();
         }
@@ -30,6 +31,6 @@ public class GrappleSparks : MonoBehaviour
         {
             if (ps.isPlaying) ps.Stop();
         }
-        lastDistance = grappleHead.CurrentRopeLength;
+        lastDistance = gvar.CurrentRopeLength;
     }
 }

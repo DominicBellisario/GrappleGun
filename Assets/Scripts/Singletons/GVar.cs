@@ -64,6 +64,34 @@ public class GVar : MonoBehaviour
         }
     }
 
+    /// ------------- CURRENT PLAYER STATS -------------
+    /// <summary>
+    /// the current distance between the grapple head and the launcher
+    /// </summary>
+    public float CurrentRopeLength { get; set; }
+    /// <summary>
+    /// the current amount of boost fuel the player has
+    /// </summary>
+    public float CurrentBoostFuel { get; set; }
+    /// <summary>
+    /// the current dash charge the player has
+    /// </summary>
+    public float CurrentDashCharge { get; set; }
+    /// <summary>
+    /// whether or not the player can dash
+    /// </summary>
+    public bool CanDash { get; set; }
+    /// <summary>
+    /// the current health the player has
+    /// </summary>
+    public int CurrentHealth { get; set; }
+    /// <summary>
+    /// the player's rigidbody
+    /// </summary>
+    public Rigidbody PlayerRb { get; set; }
+
+
+
     [Header("Player Movement")]
     /// <summary>
     /// The force applied when the player jumps.
