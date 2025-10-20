@@ -14,9 +14,13 @@ public class JumpPad : MonoBehaviour
     [SerializeField] float timeStep = 0.1f;
     [SerializeField] LayerMask gizmoMask;
 
+    [SerializeField] AudioSource audioSource;
+
     public Vector3 GetLaunchForceAndActivatePad()
     {
         StartCoroutine(DisableJumpPad());
+        // play sound
+        audioSource.Play();
         return transform.up * launchForce;
     }
 
