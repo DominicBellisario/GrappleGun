@@ -33,6 +33,7 @@ public class CameraEffects : MonoBehaviour
         GrapplePhysics.OnBirdLaunch += ResetFOV;
         GrappleHead.OnGrappleHitReelEvent += WarpFOVForBirdReel;
         GrappleHead.OnGrappleHitBirdEvent += WarpFOVForBirdReel;
+        GrapplePhysics.OnReelStick += ResetFOV;
         GrapplePhysics.OnFailsafeBirdReelDetatch += ResetFOV;
     }
     void OnDisable()
@@ -41,6 +42,7 @@ public class CameraEffects : MonoBehaviour
         GrapplePhysics.OnBirdLaunch -= ResetFOV;
         GrappleHead.OnGrappleHitReelEvent -= WarpFOVForBirdReel;
         GrappleHead.OnGrappleHitBirdEvent -= WarpFOVForBirdReel;
+        GrapplePhysics.OnReelStick -= ResetFOV;
         GrapplePhysics.OnFailsafeBirdReelDetatch -= ResetFOV;
     }
     private void ResetFOV() { StartCoroutine(WarpFOV(fovResetTime, 0f, true)); }

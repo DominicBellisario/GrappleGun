@@ -243,7 +243,7 @@ public class GVar : MonoBehaviour
     void Start()
     {
         mouseSensitivity = PlayerPrefs.GetFloat("Mouse Sensitivity", 0.25f);
-        masterVolume = PlayerPrefs.GetFloat("Master Volume", 0f);
+        masterVolume = PlayerPrefs.GetFloat("Master Volume", -20f);
         masterMixer.SetFloat("Master Volume", masterVolume);
     }
 
