@@ -732,7 +732,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 640
+    m_Bits: 896
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -12464,7 +12464,7 @@ MonoBehaviour:
   forwardRaycastDistance: 0
   targetableLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 64
 --- !u!114 &721245642031836973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12525,7 +12525,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 8191
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0

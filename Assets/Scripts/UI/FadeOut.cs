@@ -18,11 +18,13 @@ public class FadeOut : MonoBehaviour
     {
         PlayerEvents.OnPlayerDie += FadeIn;
         PlayerEvents.OnPlayerFinishedLevel += FadeIn;
+        PlayerEvents.OnPlayerOutOfBounds += FadeIn;
     }
     void OnDisable()
     {
         PlayerEvents.OnPlayerDie -= FadeIn;
         PlayerEvents.OnPlayerFinishedLevel -= FadeIn;
+        PlayerEvents.OnPlayerOutOfBounds -= FadeIn;
     }
     private void FadeIn() { Fade(0f, 1f, fadeTime); }
 
