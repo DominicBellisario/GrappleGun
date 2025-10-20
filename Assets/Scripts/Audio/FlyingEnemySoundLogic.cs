@@ -1,9 +1,7 @@
-using System.Collections;
 using UnityEngine;
 
 public class FlyingEnemySoundLogic : SoundLogic
 {
-    [SerializeField] AudioClip primeClip;
     [SerializeField] AudioClip explodeClip;
 
     GVar gvar;
@@ -14,15 +12,13 @@ public class FlyingEnemySoundLogic : SoundLogic
         gvar = GVar.Instance;
     }
 
-    public void PlayPrimeAndExplodeClips(float primeTime)
-    {
-        StartCoroutine(PlayClips(primeTime));
-    }
-
-    private IEnumerator PlayClips(float primeTime)
+    public void PlayPrimeClip()
     {
         audioSource.Play();
-        yield return new WaitForSeconds(primeTime);
+    }
+
+    public void PlayExplodeClip()
+    {
         // play the explode sound at a random pitch amd half volume
         GameObject newSource = Instantiate(gvar.AudioSourcePrefab, transform.position, Quaternion.identity);
         newSource.GetComponent<AudioSourceLogic>().Constructor(explodeClip, Random.Range(0.9f, 1.1f));

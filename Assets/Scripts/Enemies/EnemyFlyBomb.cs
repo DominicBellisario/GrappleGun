@@ -49,7 +49,7 @@ public class EnemyFlyBomb : EnemyBasic
     private IEnumerator PrimeExplosion()
     {
         float t = 0f;
-        soundLogic.PlayPrimeAndExplodeClips(deathTime - 0.01f);
+        soundLogic.PlayPrimeClip();
         while (t < deathTime)
         {
             float currentCurveValue = explosionPulseCurve.Evaluate(t / deathTime);
@@ -66,6 +66,7 @@ public class EnemyFlyBomb : EnemyBasic
     private void Explode()
     {
         Instantiate(explosion, transform.position, Quaternion.identity);
+        soundLogic.PlayExplodeClip();
         Destroy(gameObject);
     }
 

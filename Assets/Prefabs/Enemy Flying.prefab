@@ -44,7 +44,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 0965e5ac31382d748ba407b180f7efb8, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: be701df411aa008459ef5ae63c0aff50, type: 3}
+  m_Resource: {fileID: 8300000, guid: 28f5c81255c657f44b430719debd3e94, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b850aa0b7f439445b4ad448bc7202c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  primeClip: {fileID: 8300000, guid: be701df411aa008459ef5ae63c0aff50, type: 3}
-  explodeClip: {fileID: 8300000, guid: cf3c969e4b6078d4d9296cef84d4ea1a, type: 3}
+  primeClip: {fileID: 8300000, guid: 28f5c81255c657f44b430719debd3e94, type: 3}
+  explodeClip: {fileID: 8300000, guid: 75bbee93a8194774b964199afb6da15a, type: 3}
 --- !u!1 &2025370094361952775
 GameObject:
   m_ObjectHideFlags: 0
