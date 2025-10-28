@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2487694087108207783}
   - component: {fileID: 4589131372727767223}
   m_Layer: 6
-  m_Name: Plane No Grap
+  m_Name: Plane NG
   m_TagString: No Grap Surface
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
